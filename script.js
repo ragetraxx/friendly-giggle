@@ -1,6 +1,10 @@
 document.addEventListener("DOMContentLoaded", async () => {
     const videoElement = document.getElementById("videoPlayer");
 
+    // Ensure sound is enabled
+    videoElement.muted = false; // Unmute video
+    videoElement.volume = 1.0; // Set volume to full
+
     // List of 10 DRM-protected MPD videos with ClearKey
     const videoSources = [
         { url: "https://d1qfpvemzhsbpm.cloudfront.net/video/P02029_FF_FM_CRACKED/dash/hd.mpd", key: { keys: { "d4cdc45e32f4272bea5aac2cf4f47419": "1c4878a93b13dec518e98240baeeacb2" } } },
