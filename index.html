@@ -3,15 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Stream Simulation (DRM / MPD)</title>
+    <title>RAGETV STREAM</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.4.0/shaka-player.ui.min.js"></script>
 </head>
 <body>
 
     <div class="video-container">
+        <h1 id="videoTitle">Loading...</h1>
         <video id="videoPlayer" autoplay playsinline controls></video>
-        <img src="https://i.imgur.com/XPuHjmj.png" alt="On-Screen Bug" class="bug-overlay">
+        <div class="controls">
+            <button id="prevButton">Previous</button>
+            <button id="nextButton">Next</button>
+            <select id="videoSelect"></select>
+        </div>
+        <h2 class="stream-title">RAGETV STREAM</h2>
     </div>
 
     <script src="script.js"></script>
