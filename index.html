@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RageTV</title>
+    <title>Live Stream Simulation (DRM / MPD)</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.4.0/shaka-player.ui.min.js"></script>
 </head>
@@ -11,7 +11,9 @@
 
     <div class="video-container">
         <video id="videoPlayer" autoplay playsinline controls></video>
-        <img src="https://i.imgur.com/XPuHjmj.png" alt="On-Screen Bug" class="on-screen-bug">
+        <div class="bug-overlay">
+            <img src="https://i.imgur.com/XPuHjmj.png" alt="On-Screen Bug">
+        </div>
     </div>
 
     <script src="script.js"></script>
