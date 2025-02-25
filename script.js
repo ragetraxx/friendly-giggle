@@ -2,8 +2,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const videoElement = document.getElementById("videoPlayer");
 
     // Ensure sound is enabled
-    videoElement.muted = false; // Unmute video
-    videoElement.volume = 1.0; // Set volume to full
+    videoElement.muted = false;
+    videoElement.volume = 1.0;
 
     // List of 10 DRM-protected MPD videos with ClearKey
     const videoSources = [
