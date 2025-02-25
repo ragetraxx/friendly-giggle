@@ -39,5 +39,3 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     await playRandomVideo();
 });
-
-
