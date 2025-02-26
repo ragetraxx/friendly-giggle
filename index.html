@@ -3,19 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shaka Player - Clear Key DRM</title>
+    <title>Shaka Player - Free Stream</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.6/shaka-player.compiled.min.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
+    <header>
+        <img src="https://i.imgur.com/Ym32WqZ.png" alt="Website Logo" id="logo">
+        <h1>FREE STREAM</h1>
+    </header>
+
     <div id="channel-name">Loading...</div>
+    
     <video id="video" controls autoplay></video>
+
     <div class="controls">
         <button onclick="prevChannel()">Previous</button>
         <button onclick="nextChannel()">Next</button>
+        <select id="channelSelect" onchange="selectChannel()">
+            <!-- Options will be added dynamically -->
+        </select>
     </div>
 
     <script src="script.js"></script>
+
 </body>
 </html>
