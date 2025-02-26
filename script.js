@@ -1,5 +1,6 @@
 const video = document.getElementById('video');
 const channelNameDisplay = document.getElementById('channel-name');
+const channelSelect = document.getElementById('channelSelect');
 const player = new shaka.Player(video);
 
 const channels = [
@@ -10,11 +11,23 @@ const channels = [
     { name: "IBC 13", url: "https://qp-pldt-live-grp-07-prod.akamaized.net/out/u/ibc13_sd.mpd", keyId: "04e292bc99bd4ccba89e778651914254", key: "ff0a62bdf8920ce453fe680330b563a5" },
     { name: "TRUETV", url: "https://qp-pldt-live-grp-08-prod.akamaized.net/out/u/truefm_tv.mpd", keyId: "0559c95496d44fadb94105b9176c3579", key: "40d8bb2a46ffd03540e0c6210ece57ce" },
     { name: "A2Z", url: "https://qp-pldt-live-grp-02-prod.akamaized.net/out/u/cg_a2z.mpd", keyId: "f703e4c8ec9041eeb5028ab4248fa094", key: "c22f2162e176eee6273a5d0b68d19530" },
-    { name: "ONE News HD", url: "https://qp-pldt-live-grp-04-prod.akamaized.net/out/u/onenews_hd1.mpd", keyId: "d39eb201ae494a0b98583df4d110e8dd", key: "6797066880d344422abd3f5eda41f45f" }
+    { name: "ONE News HD", url: "https://qp-pldt-live-grp-04-prod.akamaized.net/out/u/onenews_hd1.mpd", keyId: "d39eb201ae494a0b98583df4d110e8dd", key: "6797066880d344422abd3f5eda41f45f" },
+    { name: "NBA TV Philippines", url: "https://qp-pldt-live-grp-02-prod.akamaized.net/out/u/pl_nba.mpd", keyId: "f36eed9e95f140fabbc88a08abbeafff", key: "0125600d0eb13359c28bdab4a2ebe75a" },
+    { name: "PBA Rush", url: "https://qp-pldt-live-grp-01-prod.akamaized.net/out/u/cg_pbarush_hd1.mpd", keyId: "76dc29dd87a244aeab9e8b7c5da1e5f3", key: "95b2f2ffd4e14073620506213b62ac82" },
+    { name: "One Sports", url: "https://qp-pldt-live-grp-07-prod.akamaized.net/out/u/cg_onesports_hd.mpd", keyId: "53c3bf2eba574f639aa21f2d4409ff11", key: "3de28411cf08a64ea935b9578f6d0edd" }
 ];
 
 let currentChannel = 0;
 let fadeTimeout;
+
+function populateDropdown() {
+    channels.forEach((channel, index) => {
+        let option = document.createElement("option");
+        option.value = index;
+        option.textContent = channel.name;
+        channelSelect.appendChild(option);
+    });
+}
 
 async function loadChannel(index) {
     if (index < 0 || index >= channels.length) return;
@@ -31,6 +44,7 @@ async function loadChannel(index) {
 
         await player.load(url);
         showChannelName(name);
+        channelSelect.value = currentChannel;
         console.log(`Playing: ${name}`);
     } catch (e) {
         console.error('Error loading channel:', e);
@@ -45,6 +59,10 @@ function prevChannel() {
     loadChannel((currentChannel - 1 + channels.length) % channels.length);
 }
 
+function selectChannel() {
+    loadChannel(parseInt(channelSelect.value));
+}
+
 function showChannelName(name) {
     channelNameDisplay.textContent = name;
     channelNameDisplay.style.opacity = "1";
@@ -56,6 +74,7 @@ function showChannelName(name) {
 
 shaka.polyfill.installAll();
 if (shaka.Player.isBrowserSupported()) {
+    populateDropdown();
     loadChannel(0);
 } else {
     console.error('Shaka Player is not supported!');
