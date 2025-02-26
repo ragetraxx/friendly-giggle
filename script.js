@@ -1,74 +1,58 @@
-document.addEventListener("DOMContentLoaded", async () => {
-    const videoElement = document.getElementById("videoPlayer");
-    const videoTitleElement = document.getElementById("videoTitle");
-    const prevButton = document.getElementById("prevButton");
-    const nextButton = document.getElementById("nextButton");
-    const videoSelect = document.getElementById("videoSelect");
+const video = document.getElementById('video');
+const channelNameDisplay = document.getElementById('channel-name');
+const player = new shaka.Player(video);
 
-    let currentIndex = 0;
-    let player;
+const channels = [
+    { name: "One News", url: "https://qp-pldt-live-grp-04-prod.akamaized.net/out/u/oneph_sd.mpd", drm: "92834ab4a7e1499b90886c5d49220e46:a7108d9a6cfcc1b7939eb111daf09ab3" },
+    { name: "PTV Four", url: "https://qp-pldt-live-grp-02-prod.akamaized.net/out/u/cg_ptv4_sd.mpd", drm: "71a130a851b9484bb47141c8966fb4a3:ad1f003b4f0b31b75ea4593844435600" },
+    { name: "TV5", url: "https://qp-pldt-live-grp-02-prod.akamaized.net/out/u/tv5_hd.mpd", drm: "2615129ef2c846a9bbd43a641c7303ef:07c7f996b1734ea288641a68e1cfdc4d" },
+    { name: "RPTV", url: "https://qp-pldt-live-grp-03-prod.akamaized.net/out/u/cnn_rptv_prod_hd.mpd", drm: "1917f4caf2364e6d9b1507326a85ead6:a1340a251a5aa63a9b0ea5d9d7f67595" },
+    { name: "IBC 13", url: "https://qp-pldt-live-grp-07-prod.akamaized.net/out/u/ibc13_sd.mpd", drm: "04e292bc99bd4ccba89e778651914254:ff0a62bdf8920ce453fe680330b563a5" },
+    { name: "TRUETV", url: "https://qp-pldt-live-grp-08-prod.akamaized.net/out/u/truefm_tv.mpd", drm: "0559c95496d44fadb94105b9176c3579:40d8bb2a46ffd03540e0c6210ece57ce" },
+    { name: "A2Z", url: "https://qp-pldt-live-grp-02-prod.akamaized.net/out/u/cg_a2z.mpd", drm: "f703e4c8ec9041eeb5028ab4248fa094:c22f2162e176eee6273a5d0b68d19530" },
+    { name: "ONE News", url: "https://qp-pldt-live-grp-04-prod.akamaized.net/out/u/onenews_hd1.mpd", drm: "d39eb201ae494a0b98583df4d110e8dd:6797066880d344422abd3f5eda41f45f" }
+];
 
-    const videoSources = [
-        { title: "Cracked", url: "https://d1qfpvemzhsbpm.cloudfront.net/video/P02029_FF_FM_CRACKED/dash/hd.mpd", key: { keys: { "d4cdc45e32f4272bea5aac2cf4f47419": "1c4878a93b13dec518e98240baeeacb2" } } },
-        { title: "Peninsula", url: "https://d1qfpvemzhsbpm.cloudfront.net/video/P01241_FF_FM_PENINSULA/dash/hd.mpd", key: { keys: { "54c20cfed8345010bcb8fea65bfbb666": "e810f257c044656bc5e5b0b45b45e89f" } } },
-        { title: "Parasite", url: "https://d1qfpvemzhsbpm.cloudfront.net/video/P00709_FF_FM_PARASITE/dash/hd.mpd", key: { keys: { "89bc7e0b6f1487bf3532ac53b8fc31a1": "ad6b84cdccf82683a50ff49927f82dd2" } } }
-    ];
+let currentChannel = 0;
+let fadeTimeout;
 
-    async function initializeShakaPlayer() {
-        if (!shaka.Player.isBrowserSupported()) {
-            console.error("Shaka Player is not supported on this browser.");
-            return;
-        }
+async function loadChannel(index) {
+    if (index < 0 || index >= channels.length) return;
 
-        player = new shaka.Player(videoElement);
+    currentChannel = index;
+    const { name, url, drm } = channels[currentChannel];
+
+    try {
+        player.configure({ drm: { servers: { "com.widevine.alpha": "LICENSE_SERVER_URL" } } });
+        await player.load(url);
+        showChannelName(name);
+        console.log(`Playing: ${name}`);
+    } catch (e) {
+        console.error('Error loading channel:', e);
     }
+}
 
-    async function loadVideo(index) {
-        currentIndex = index;
-        const selectedVideo = videoSources[index];
+function nextChannel() {
+    loadChannel((currentChannel + 1) % channels.length);
+}
 
-        if (!player) {
-            console.error("Shaka Player is not initialized.");
-            return;
-        }
+function prevChannel() {
+    loadChannel((currentChannel - 1 + channels.length) % channels.length);
+}
 
-        player.configure({ drm: { clearKeys: selectedVideo.key.keys } });
+function showChannelName(name) {
+    channelNameDisplay.textContent = name;
+    channelNameDisplay.style.opacity = "1";
+    clearTimeout(fadeTimeout);
+    fadeTimeout = setTimeout(() => {
+        channelNameDisplay.style.opacity = "0";
+    }, 10000);
+}
 
-        try {
-            await player.load(selectedVideo.url);
-            console.log("Playing: " + selectedVideo.title);
-            videoTitleElement.innerText = selectedVideo.title;
-        } catch (error) {
-            console.error("Error loading video", error);
-        }
-    }
-
-    function nextVideo() {
-        currentIndex = (currentIndex + 1) % videoSources.length;
-        loadVideo(currentIndex);
-    }
-
-    function prevVideo() {
-        currentIndex = (currentIndex - 1 + videoSources.length) % videoSources.length;
-        loadVideo(currentIndex);
-    }
-
-    function selectVideo(event) {
-        loadVideo(parseInt(event.target.value));
-    }
-
-    videoSources.forEach((video, index) => {
-        const option = document.createElement("option");
-        option.value = index;
-        option.innerText = video.title;
-        videoSelect.appendChild(option);
-    });
-
-    videoElement.addEventListener("ended", nextVideo);
-    nextButton.addEventListener("click", nextVideo);
-    prevButton.addEventListener("click", prevVideo);
-    videoSelect.addEventListener("change", selectVideo);
-
-    await initializeShakaPlayer();
-    loadVideo(currentIndex);
-});
+shaka.polyfill.installAll();
+if (shaka.Player.isBrowserSupported()) {
+    player.configure({ drm: { servers: { "com.widevine.alpha": "LICENSE_SERVER_URL" } } });
+    loadChannel(0);
+} else {
+    console.error('Shaka Player is not supported!');
+}
