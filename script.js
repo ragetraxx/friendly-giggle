@@ -14,7 +14,9 @@ const channels = [
     { name: "ONE News HD", url: "https://qp-pldt-live-grp-04-prod.akamaized.net/out/u/onenews_hd1.mpd", keyId: "d39eb201ae494a0b98583df4d110e8dd", key: "6797066880d344422abd3f5eda41f45f" },
     { name: "NBA TV Philippines", url: "https://qp-pldt-live-grp-02-prod.akamaized.net/out/u/pl_nba.mpd", keyId: "f36eed9e95f140fabbc88a08abbeafff", key: "0125600d0eb13359c28bdab4a2ebe75a" },
     { name: "PBA Rush", url: "https://qp-pldt-live-grp-01-prod.akamaized.net/out/u/cg_pbarush_hd1.mpd", keyId: "76dc29dd87a244aeab9e8b7c5da1e5f3", key: "95b2f2ffd4e14073620506213b62ac82" },
-    { name: "One Sports", url: "https://qp-pldt-live-grp-07-prod.akamaized.net/out/u/cg_onesports_hd.mpd", keyId: "53c3bf2eba574f639aa21f2d4409ff11", key: "3de28411cf08a64ea935b9578f6d0edd" }
+    { name: "One Sports", url: "https://qp-pldt-live-grp-07-prod.akamaized.net/out/u/cg_onesports_hd.mpd", keyId: "53c3bf2eba574f639aa21f2d4409ff11", key: "3de28411cf08a64ea935b9578f6d0edd" },
+    { name: "Kapamilya Channel", url: "https://d1uf7s78uqso1e.cloudfront.net/out/v1/efa01372657648be830e7c23ff68bea2/index.mpd", keyId: "bd17afb5dc9648a39be79ee3634dd4b8", key: "3ecf305d54a7729299b93a3d69c02ea5" },
+    { name: "GMA", url: "http://143.44.136.111:6910/001/2/ch00000090990000001093/manifest.mpd?virtualDomain=001.live_hls.zte.com", keyId: "31363231383438333031323033393138", key: "38694e34324d543478316b7455753437" }
 ];
 
 let currentChannel = 0;
