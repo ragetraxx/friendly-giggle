@@ -3,19 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Stream</title>
+    <title>Shaka Player Streaming</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.6/shaka-player.compiled.min.js"></script>
-    <script defer src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.6/shaka-player.compiled.js"></script>
 </head>
 <body>
+
     <header>
-        <img src="https://i.imgur.com/Ym32WqZ.png" alt="Website Logo" id="logo">
+        <img src="https://i.imgur.com/Ym32WqZ.png" alt="Logo" class="logo">
         <h1>FREE STREAM</h1>
     </header>
 
-    <video id="video" controls autoplay></video>
+    <div class="container">
+        <select id="channelSelect"></select>
+        <video id="video" controls></video>
+    </div>
 
-    <select id="channelSelect" onchange="selectChannel()"></select>
+    <script src="script.js"></script>
+
 </body>
 </html>
