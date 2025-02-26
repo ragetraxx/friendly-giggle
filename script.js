@@ -23,7 +23,6 @@ async function loadChannel(index) {
     const { name, url, keyId, key } = channels[currentChannel];
 
     try {
-        // Configure clear keys
         player.configure({
             drm: {
                 clearKeys: { [keyId]: key }
