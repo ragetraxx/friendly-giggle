@@ -50,3 +50,9 @@ video {
     border: 2px solid white;
     border-radius: 8px;
 }
+
+#errorMessage {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}
