@@ -3,7 +3,7 @@ const channelSelect = document.getElementById('channelSelect');
 const player = new shaka.Player(video);
 
 const channels = [
-    { name: "One PH", url: "https://qp-pldt-live-grp-04-prod.akamaized.net/out/u/oneph_sd.mpd", keyId: "92834ab4a7e1499b90886c5d49220e46", key: "a7108d9a6cfcc1b7939eb111daf09ab3" },
+    { name: "One News", url: "https://qp-pldt-live-grp-04-prod.akamaized.net/out/u/oneph_sd.mpd", keyId: "92834ab4a7e1499b90886c5d49220e46", key: "a7108d9a6cfcc1b7939eb111daf09ab3" },
     { name: "PTV Four", url: "https://qp-pldt-live-grp-02-prod.akamaized.net/out/u/cg_ptv4_sd.mpd", keyId: "71a130a851b9484bb47141c8966fb4a3", key: "ad1f003b4f0b31b75ea4593844435600" },
     { name: "TV5", url: "https://qp-pldt-live-grp-02-prod.akamaized.net/out/u/tv5_hd.mpd", keyId: "2615129ef2c846a9bbd43a641c7303ef", key: "07c7f996b1734ea288641a68e1cfdc4d" },
     { name: "RPTV", url: "https://qp-pldt-live-grp-03-prod.akamaized.net/out/u/cnn_rptv_prod_hd.mpd", keyId: "1917f4caf2364e6d9b1507326a85ead6", key: "a1340a251a5aa63a9b0ea5d9d7f67595" },
@@ -14,7 +14,9 @@ const channels = [
     { name: "NBA TV Philippines", url: "https://qp-pldt-live-grp-02-prod.akamaized.net/out/u/pl_nba.mpd", keyId: "f36eed9e95f140fabbc88a08abbeafff", key: "0125600d0eb13359c28bdab4a2ebe75a" },
     { name: "PBA Rush", url: "https://qp-pldt-live-grp-01-prod.akamaized.net/out/u/cg_pbarush_hd1.mpd", keyId: "76dc29dd87a244aeab9e8b7c5da1e5f3", key: "95b2f2ffd4e14073620506213b62ac82" },
     { name: "One Sports", url: "https://qp-pldt-live-grp-07-prod.akamaized.net/out/u/cg_onesports_hd.mpd", keyId: "53c3bf2eba574f639aa21f2d4409ff11", key: "3de28411cf08a64ea935b9578f6d0edd" },
-    { name: "Kapamilya Channel", url: "https://d1uf7s78uqso1e.cloudfront.net/out/v1/efa01372657648be830e7c23ff68bea2/index.mpd", keyId: "bd17afb5dc9648a39be79ee3634dd4b8", key: "3ecf305d54a7729299b93a3d69c02ea5" }
+    { name: "Kapamilya Channel", url: "https://d1uf7s78uqso1e.cloudfront.net/out/v1/efa01372657648be830e7c23ff68bea2/index.mpd", keyId: "bd17afb5dc9648a39be79ee3634dd4b8", key: "3ecf305d54a7729299b93a3d69c02ea5" },
+    { name: "GMA", url: "http://143.44.136.111:6910/001/2/ch00000090990000001093/manifest.mpd?virtualDomain=001.live_hls.zte.com", license: "http://143.44.136.74:9443/widevine/?deviceId=02:00:00:00:00:00" },
+    { name: "GTV", url: "http://143.44.136.113:6910/001/2/ch00000090990000001143/manifest.mpd?virtualDomain=001.live_hls.zte.com", license: "http://143.44.136.74:9443/widevine/?deviceId=02:00:00:00:00:00" }
 ];
 
 function populateDropdown() {
@@ -27,13 +29,24 @@ function populateDropdown() {
 }
 
 async function loadChannel(index) {
-    const { name, url, keyId, key } = channels[index];
+    const { name, url, keyId, key, license } = channels[index];
 
     try {
-        player.configure({
-            drm: { clearKeys: { [keyId]: key } }
-        });
+        let config = {};
 
+        if (keyId && key) {
+            config.drm = { clearKeys: { [keyId]: key } };
+        }
+
+        if (license) {
+            config.drm = {
+                servers: {
+                    'com.widevine.alpha': license
+                }
+            };
+        }
+
+        player.configure(config);
         await player.load(url);
         console.log(`Playing: ${name}`);
         channelSelect.value = index;
