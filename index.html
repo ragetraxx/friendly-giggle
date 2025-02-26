@@ -3,30 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart TV Shaka Player</title>
+    <title>Shaka Player - Clear Key DRM</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.6/shaka-player.compiled.min.js"></script>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.4.2/shaka-player.compiled.min.js"></script>
 </head>
 <body>
-    <div class="tv-container">
-        <div class="tv-frame">
-            <div id="channel-name" class="channel-name"></div>
-            <video id="video" autoplay muted playsinline></video>
-        </div>
-        <div class="controls">
-            <button onclick="prevChannel()">Previous</button>
-            <button onclick="nextChannel()">Next</button>
-        </div>
-        <div class="channel-buttons">
-            <button onclick="loadChannel(0)">One News</button>
-            <button onclick="loadChannel(1)">PTV Four</button>
-            <button onclick="loadChannel(2)">TV5</button>
-            <button onclick="loadChannel(3)">RPTV</button>
-            <button onclick="loadChannel(4)">IBC 13</button>
-            <button onclick="loadChannel(5)">TRUETV</button>
-            <button onclick="loadChannel(6)">A2Z</button>
-            <button onclick="loadChannel(7)">ONE News</button>
-        </div>
+
+    <div id="channel-name">Loading...</div>
+    <video id="video" controls autoplay></video>
+    <div class="controls">
+        <button onclick="prevChannel()">Previous</button>
+        <button onclick="nextChannel()">Next</button>
     </div>
 
     <script src="script.js"></script>
