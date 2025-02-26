@@ -28,11 +28,6 @@ h1 {
     font-size: 24px;
 }
 
-#channel-name {
-    margin-top: 10px;
-    font-size: 18px;
-}
-
 video {
     width: 100%;
     height: auto;
