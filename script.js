@@ -37,7 +37,8 @@ document.addEventListener("DOMContentLoaded", () => {
     { name: "Thrill", url: "https://qp-pldt-live-grp-06-prod.akamaized.net/out/u/cg_thrill_sd.mpd", keyId: "928114ffb2394d14b5585258f70ed183", key: "a82edc340bc73447bac16cdfed0a4c62" },  
     { name: "Hits Movies", url: "https://qp-pldt-live-grp-12-prod.akamaized.net/out/u/dr_hitsmovies.mpd", keyId: "f56b57b32d7e4b2cb21748c0b56761a7", key: "3df06a89aa01b32655a77d93e09e266f" },  
     { name: "Tap ActionFlix", url: "https://qp-pldt-live-grp-06-prod.akamaized.net/out/u/cg_tapactionflix_hd1.mpd", keyId: "bee1066160c0424696d9bf99ca0645e3", key: "f5b72bf3b89b9848de5616f37de040b7" },  
-    { name: "Tap Sports", url: "https://qp-pldt-live-grp-11-prod.akamaized.net/out/u/dr_tapsports.mpd", keyId: "eabd2d95c89e42f2b0b0b40ce4179ea0", key: "0e7e35a07e2c12822316c0dc4873903f" }
+    { name: "Tap Sports", url: "https://qp-pldt-live-grp-11-prod.akamaized.net/out/u/dr_tapsports.mpd", keyId: "eabd2d95c89e42f2b0b0b40ce4179ea0", key: "0e7e35a07e2c12822316c0dc4873903f" }, 
+    { name: "TVN Premium", url: "https://qp-pldt-live-grp-09-prod.akamaized.net/out/u/cg_tvnpre.mpd", keyId: "e1bde543e8a140b38d3f84ace746553e", key: "b712c4ec307300043333a6899a402c10" }
     ];
 
     function populateDropdown() {
