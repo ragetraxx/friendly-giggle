@@ -51,6 +51,15 @@ video {
     border-radius: 0;
 }
 
+/* Fullscreen video in landscape mode */
+@media (orientation: landscape) {
+    video {
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+    }
+}
+
 #errorMessage {
     color: red;
     font-size: 14px;
