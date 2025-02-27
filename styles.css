@@ -46,16 +46,20 @@ select {
 
 video {
     width: 100%;
+video {
+    width: 100%;
     max-width: 800px;
     border: none;
     border-radius: 0;
 }
 
-/* Fullscreen video in landscape mode */
+/* Set video to 1920x1080 in landscape mode */
 @media (orientation: landscape) {
     video {
-        width: 100vw;
-        height: 100vh;
+        width: 1920px;
+        height: 1080px;
+        max-width: 100vw;
+        max-height: 100vh;
         object-fit: cover;
     }
 }
