@@ -45,8 +45,10 @@ select {
 }
 
 video {
-    width: 1920px;
-    height: 1080px;
+    width: auto;
+    height: auto;
+    max-width: 1920px;
+    max-height: 1080px;
     border: none;
     border-radius: 0;
 }
