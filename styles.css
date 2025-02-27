@@ -45,19 +45,10 @@ select {
 }
 
 video {
-    width: 100%;
-    max-width: 800px;
-    border: none;
-    border-radius: 0;
-}
-
-/* Make video fit the entire screen in landscape mode */
-@media (orientation: landscape) {
-    video {
-        width: 100vw;
-        height: 100vh;
-        object-fit: cover;
-    }
+width: 100%;
+max-width: 800px;
+border: none;
+border-radius: 0;
 }
 
 #errorMessage {
