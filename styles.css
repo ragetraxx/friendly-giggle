@@ -51,12 +51,11 @@ video {
     border-radius: 0;
 }
 
-/* Maintain 16:9 aspect ratio in landscape mode */
+/* Make video fit the entire screen in landscape mode */
 @media (orientation: landscape) {
     video {
         width: 100vw;
-        height: calc(100vw * 9 / 16); /* Maintain 16:9 aspect ratio */
-        max-height: 100vh; /* Ensure it does not exceed viewport height */
+        height: 100vh;
         object-fit: cover;
     }
 }
