@@ -32,7 +32,12 @@ document.addEventListener("DOMContentLoaded", () => {
     { name: "HBO Hits", url: "https://qp-pldt-live-grp-09-prod.akamaized.net/out/u/cg_hbohits.mpd", keyId: "b04ae8017b5b4601a5a0c9060f6d5b7d", key: "a8795f3bdb8a4778b7e888ee484cc7a1" },
     { name: "HBO Family", url: "https://qp-pldt-live-grp-03-prod.akamaized.net/out/u/cg_hbofam.mpd", keyId: "872910c843294319800d85f9a0940607", key: "f79fd895b79c590708cf5e8b5c6263be" },
     { name: "HBO Signature", url: "https://qp-pldt-live-grp-01-prod.akamaized.net/out/u/cg_hbosign.mpd", keyId: "a06ca6c275744151895762e0346380f5", key: "559da1b63eec77b5a942018f14d3f56f" },
-    { name: "Cinemax", url: "https://qp-pldt-live-grp-01-prod.akamaized.net/out/u/cg_cinemax.mpd", keyId: "b207c44332844523a3a3b0469e5652d7", key: "fe71aea346db08f8c6fbf0592209f955" }
+    { name: "Cinemax", url: "https://qp-pldt-live-grp-01-prod.akamaized.net/out/u/cg_cinemax.mpd", keyId: "b207c44332844523a3a3b0469e5652d7", key: "fe71aea346db08f8c6fbf0592209f955" }, 
+    { name: "Tap Movies", url: "https://qp-pldt-live-grp-06-prod.akamaized.net/out/u/cg_tapmovies_hd1.mpd", keyId: "71cbdf02b595468bb77398222e1ade09", key: "c3f2aa420b8908ab8761571c01899460" },  
+    { name: "Thrill", url: "https://qp-pldt-live-grp-06-prod.akamaized.net/out/u/cg_thrill_sd.mpd", keyId: "928114ffb2394d14b5585258f70ed183", key: "a82edc340bc73447bac16cdfed0a4c62" },  
+    { name: "Hits Movies", url: "https://qp-pldt-live-grp-12-prod.akamaized.net/out/u/dr_hitsmovies.mpd", keyId: "f56b57b32d7e4b2cb21748c0b56761a7", key: "3df06a89aa01b32655a77d93e09e266f" },  
+    { name: "Tap ActionFlix", url: "https://qp-pldt-live-grp-06-prod.akamaized.net/out/u/cg_tapactionflix_hd1.mpd", keyId: "bee1066160c0424696d9bf99ca0645e3", key: "f5b72bf3b89b9848de5616f37de040b7" },  
+    { name: "Tap Sports", url: "https://qp-pldt-live-grp-11-prod.akamaized.net/out/u/dr_tapsports.mpd", keyId: "eabd2d95c89e42f2b0b0b40ce4179ea0", key: "0e7e35a07e2c12822316c0dc4873903f" }
     ];
 
     function populateDropdown() {
