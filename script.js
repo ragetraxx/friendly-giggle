@@ -39,7 +39,10 @@ document.addEventListener("DOMContentLoaded", () => {
     { name: "Tap ActionFlix", url: "https://qp-pldt-live-grp-06-prod.akamaized.net/out/u/cg_tapactionflix_hd1.mpd", keyId: "bee1066160c0424696d9bf99ca0645e3", key: "f5b72bf3b89b9848de5616f37de040b7" },  
     { name: "Tap Sports", url: "https://qp-pldt-live-grp-11-prod.akamaized.net/out/u/dr_tapsports.mpd", keyId: "eabd2d95c89e42f2b0b0b40ce4179ea0", key: "0e7e35a07e2c12822316c0dc4873903f" }, 
     { name: "TVN Premium", url: "https://qp-pldt-live-grp-09-prod.akamaized.net/out/u/cg_tvnpre.mpd", keyId: "e1bde543e8a140b38d3f84ace746553e", key: "b712c4ec307300043333a6899a402c10" },
-    { name: "Premier Sports 1", url: "https://qp-pldt-live-grp-03-prod.akamaized.net/out/u/cg_premiersports_hd1.mpd", keyId: "fc19c98cb9504a0fb78b22fea0a4b814", key: "ea683112a96d4ae6c32d4ea13923e8c7" }
+    { name: "Premier Sports 1", url: "https://qp-pldt-live-grp-03-prod.akamaized.net/out/u/cg_premiersports_hd1.mpd", keyId: "fc19c98cb9504a0fb78b22fea0a4b814", key: "ea683112a96d4ae6c32d4ea13923e8c7" },
+    { name: "Premier Sports 2", url: "https://qp-pldt-live-grp-13-prod.akamaized.net/out/u/dr_premiertennishd.mpd", keyId: "59454adb530b4e0784eae62735f9d850", key: "61100d0b8c4dd13e4eb8b4851ba192cc" },
+    { name: "Spotv", url: "https://qp-pldt-live-grp-11-prod.akamaized.net/out/u/dr_spotvhd.mpd", keyId: "ec7ee27d83764e4b845c48cca31c8eef", key: "9c0e4191203fccb0fde34ee29999129e" },
+    { name: "Spotv 2", url: "https://qp-pldt-live-grp-13-prod.akamaized.net/out/u/dr_spotv2hd.mpd", keyId: "7eea72d6075245a99ee3255603d58853", key: "6848ef60575579bf4d415db1032153ed" }
     ];
 
     function populateDropdown() {
