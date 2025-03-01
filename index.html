@@ -19,55 +19,9 @@
         <select id="channelSelect"></select>
         <video id="video" controls autoplay width="100%" height="100%"></video>
         <div id="errorMessage"></div>
-        
-        <!-- Bitrate Selection Dropdown -->
-        <label for="bitrateSelect">Select Bitrate:</label>
-        <select id="bitrateSelect">
-            <option value="auto">Auto</option>
-        </select>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', async function () {
-            const video = document.getElementById('video');
-            const bitrateSelect = document.getElementById('bitrateSelect');
-            const player = new shaka.Player(video);
-
-            // Load the stream (Replace with actual URL)
-            await player.load('YOUR_STREAM_URL_HERE').catch(error => {
-                console.error('Error loading video:', error);
-                document.getElementById('errorMessage').textContent = "Failed to load stream.";
-            });
-
-            // Populate bitrate selection
-            function updateBitrateOptions() {
-                const tracks = player.getVariantTracks();
-                tracks.forEach(track => {
-                    let option = document.createElement('option');
-                    option.value = track.bandwidth;
-                    option.textContent = `${track.bandwidth / 1000} kbps`;
-                    bitrateSelect.appendChild(option);
-                });
-            }
-
-            // Update bitrates when available
-            player.addEventListener('trackschanged', updateBitrateOptions);
-            updateBitrateOptions(); // Run initially in case tracks are already available
-
-            // Handle bitrate selection
-            bitrateSelect.addEventListener('change', function () {
-                if (bitrateSelect.value === 'auto') {
-                    player.configure({ abr: { enabled: true } }); // Enable Auto Bitrate
-                } else {
-                    player.configure({ abr: { enabled: false } }); // Disable Auto Bitrate
-                    let selectedTrack = player.getVariantTracks().find(track => track.bandwidth == bitrateSelect.value);
-                    if (selectedTrack) {
-                        player.selectVariantTrack(selectedTrack, true);
-                    }
-                }
-            });
-        });
-    </script>
+    <script src="script.js"></script>
 
 </body>
 </html>
