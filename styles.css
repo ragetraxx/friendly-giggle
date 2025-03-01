@@ -45,10 +45,12 @@ select {
 }
 
 video {
-width: 100%;
-max-width: 800px;
-border: none;
-border-radius: 0;
+    width: 100%;
+    height: 100vh; /* Full screen height */
+    max-width: 800px;
+    object-fit: cover; /* Ensures video fills the screen without distortion */
+    border: none;
+    border-radius: 0;
 }
 
 #errorMessage {
