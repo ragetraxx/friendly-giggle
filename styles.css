@@ -45,10 +45,9 @@ select {
 }
 
 video {
-width: 100%;
-max-width: 800px;
-border: none;
-border-radius: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
 }
 
 #errorMessage {
