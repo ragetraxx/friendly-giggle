@@ -55,3 +55,12 @@ video {
     font-size: 14px;
     margin-top: 10px;
 }
+
+h2 {
+    font-size: 20px;
+}
+
+.container {
+    margin: 20px auto;
+    max-width: 800px;
+}
