@@ -119,3 +119,37 @@ document.addEventListener("DOMContentLoaded", () => {
     populateDropdown();
     loadChannel(0); // Load first channel by default
 });
+
+
+async function fetchEPG() {
+    try {
+        const response = await fetch("https://epgshare01.online/epgshare01/epg_ripper_PH2.xml.gz");
+        const blob = await response.blob();
+        const decompressed = await blob.arrayBuffer();
+        
+        const textDecoder = new TextDecoder("utf-8");
+        const xmlText = textDecoder.decode(decompressed);
+
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+
+        const programs = xmlDoc.getElementsByTagName("programme");
+        const epgList = document.getElementById("epg-list");
+
+        epgList.innerHTML = ""; // Clear previous entries
+
+        for (let i = 0; i < Math.min(10, programs.length); i++) {
+            const title = programs[i].getElementsByTagName("title")[0]?.textContent || "No title";
+            const start = programs[i].getAttribute("start");
+            const stop = programs[i].getAttribute("stop");
+
+            const li = document.createElement("li");
+            li.textContent = `${title} (${start} - ${stop})`;
+            epgList.appendChild(li);
+        }
+    } catch (error) {
+        console.error("Failed to fetch EPG:", error);
+    }
+}
+
+document.addEventListener("DOMContentLoaded", fetchEPG);
