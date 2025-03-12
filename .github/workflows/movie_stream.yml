@@ -28,6 +28,15 @@ jobs:
       - name: Run Movie Streaming Script
         run: python stream.py
 
+      - name: Verify EPG File
+        run: |
+          if [ ! -f epg.xml ]; then
+            echo "❌ epg.xml not found! Failing workflow."
+            exit 1
+          else
+            echo "✅ epg.xml exists. Proceeding with commit."
+          fi
+
       - name: Commit and Push Updated EPG
         run: |
           git config --global user.name "github-actions"
