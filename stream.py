@@ -14,18 +14,33 @@ EPG_DURATION_HOURS = 6
 
 def load_movies():
     """Load movies from JSON file."""
+    if not os.path.exists(MOVIE_FILE):
+        print(f"❌ ERROR: {MOVIE_FILE} not found!")
+        return []
+
     with open(MOVIE_FILE, "r") as f:
-        return json.load(f)
+        try:
+            movies = json.load(f)
+            if not movies:
+                print("❌ ERROR: movies.json is empty!")
+            return movies
+        except json.JSONDecodeError:
+            print("❌ ERROR: Failed to parse movies.json!")
+            return []
 
 def generate_epg(movies):
     """Generate a new EPG XML file for the next 6 hours with random movies."""
+    if not movies:
+        print("❌ ERROR: No movies available to create EPG!")
+        return
+
     start_time = datetime.datetime.utcnow()
     epg_data = """<?xml version="1.0" encoding="UTF-8"?>\n<tv>\n"""
 
-    movie_pool = movies.copy()  # Create a copy to shuffle
+    movie_pool = movies.copy()  # Copy to shuffle
     random.shuffle(movie_pool)  # Shuffle for randomness
 
-    for i in range(EPG_DURATION_HOURS * 2):  # Assuming each movie is ~3 hours
+    for i in range(EPG_DURATION_HOURS * 2):  # Assuming ~3 hours per movie
         if not movie_pool:  # Refill if all movies are used
             movie_pool = movies.copy()
             random.shuffle(movie_pool)
@@ -41,49 +56,24 @@ def generate_epg(movies):
         <desc>{movie.get("description", "No description available")}</desc>
     </programme>\n"""
 
-        start_time = end_time  # Move to the next time slot
+        start_time = end_time  # Move to next slot
 
     epg_data += "</tv>"
 
+    # Write the EPG to file
     with open(EPG_FILE, "w") as f:
         f.write(epg_data)
-    
-    if os.path.exists(EPG_FILE):
-        print(f"✅ EPG generated successfully: {EPG_FILE}")
+
+    # Confirm file was created
+    if os.path.exists(EPG_FILE) and os.path.getsize(EPG_FILE) > 0:
+        print(f"✅ SUCCESS: EPG generated and saved as {EPG_FILE}")
     else:
-        print("❌ Failed to generate EPG.")
-
-def stream_movie(movie):
-    """Stream a single movie using FFmpeg."""
-    title = movie["title"]
-    url = movie["url"]
-
-    # Escape paths to prevent issues
-    video_url_escaped = shlex.quote(url)
-    overlay_path_escaped = shlex.quote(OVERLAY)
-    overlay_text = shlex.quote(title)
-
-    command = f"""
-    ffmpeg -re -fflags nobuffer -rtbufsize 128M -probesize 10M -analyzeduration 1000000 \
-    -threads 2 -i {video_url_escaped} -i {overlay_path_escaped} \
-    -filter_complex "[1:v]scale2ref=w=main_w:h=main_h:force_original_aspect_ratio=decrease[ovr][base];[base][ovr]overlay=0:0,drawtext=text='{overlay_text}':fontcolor=white:fontsize=24:x=20:y=20,fps=30" \
-    -c:v libx264 -preset fast -tune zerolatency -b:v 2500k -maxrate 3000k -bufsize 6000k -pix_fmt yuv420p -g 50 \
-    -c:a aac -b:a 192k -ar 48000 -f flv {shlex.quote(RTMP_URL)}
-    """
-
-    subprocess.run(command, shell=True)
+        print("❌ ERROR: EPG file is empty!")
 
 def main():
     """Main function to generate EPG and stream movies."""
     movies = load_movies()
     generate_epg(movies)  # Generate EPG before starting the stream
-
-    start_time = time.time()
-    while time.time() - start_time < EPG_DURATION_HOURS * 3600:
-        random.shuffle(movies)  # Shuffle movies each loop for variety
-        for movie in movies:
-            print(f"Streaming: {movie['title']}")
-            stream_movie(movie)
 
 if __name__ == "__main__":
     main()
