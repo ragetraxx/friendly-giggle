@@ -1,10 +1,10 @@
 import json
 import random
-import time
-import subprocess
-import shlex
 import datetime
 import os
+import subprocess
+import shlex
+import time
 
 MOVIE_FILE = "movies.json"
 EPG_FILE = "epg.xml"
@@ -38,9 +38,14 @@ def generate_epg(movies):
 
     start_time = datetime.datetime.utcnow()
     epg_data = """<?xml version="1.0" encoding="UTF-8"?>\n<tv>\n"""
-    selected_movies = random.sample(movies, min(TOTAL_MOVIES, len(movies)))  # Select movies without repeats
 
-    schedule = []  # Store the exact order of movies
+    # Select random movies for the schedule
+    selected_movies = random.sample(movies, min(TOTAL_MOVIES, len(movies)))
+    if not selected_movies:
+        print("❌ ERROR: No movies were selected for EPG!")
+        return []
+
+    schedule = []  # Store selected movies
 
     for movie in selected_movies:
         start_str = start_time.strftime("%Y%m%d%H%M%S") + " +0000"
@@ -52,20 +57,22 @@ def generate_epg(movies):
         <desc>{movie.get("description", "No description available")}</desc>
     </programme>\n"""
 
-        schedule.append(movie)  # Save movie order
-        start_time = end_time  # Move to next time slot
+        schedule.append(movie)
+        start_time = end_time  
 
     epg_data += "</tv>"
 
+    # Write the EPG to a file
     with open(EPG_FILE, "w") as f:
         f.write(epg_data)
 
+    # Check if EPG file was created
     if os.path.exists(EPG_FILE) and os.path.getsize(EPG_FILE) > 0:
         print(f"✅ SUCCESS: EPG generated with {len(schedule)} movies")
     else:
-        print("❌ ERROR: EPG file is empty!")
+        print("❌ ERROR: EPG file is empty after writing!")
 
-    return schedule  # Return the exact movie schedule
+    return schedule  
 
 def stream_movie(movie):
     """Stream a single movie using FFmpeg."""
@@ -89,15 +96,20 @@ def stream_movie(movie):
 
 def main():
     """Main function to generate EPG and stream movies."""
-    movies = load_movies()
-    scheduled_movies = generate_epg(movies)  # Generate EPG and get exact schedule
+    while True:
+        movies = load_movies()
+        scheduled_movies = generate_epg(movies)  # Generate EPG before streaming
 
-    if not scheduled_movies:
-        print("❌ ERROR: No movies scheduled to stream!")
-        return
+        if not scheduled_movies:
+            print("❌ ERROR: No movies scheduled to stream!")
+            time.sleep(60)  # Wait before retrying
+            continue
 
-    for movie in scheduled_movies:
-        stream_movie(movie)
+        for movie in scheduled_movies:
+            stream_movie(movie)
+
+        print("🔄 Regenerating EPG after 6 hours...")
+        time.sleep(EPG_DURATION_HOURS * 3600)  # Wait 6 hours before regenerating EPG
 
 if __name__ == "__main__":
     main()
