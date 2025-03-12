@@ -4,6 +4,7 @@ import time
 import subprocess
 import shlex
 import datetime
+import os
 
 MOVIE_FILE = "movies.json"
 EPG_FILE = "epg.xml"
@@ -17,12 +18,20 @@ def load_movies():
         return json.load(f)
 
 def generate_epg(movies):
-    """Generate a new EPG XML file for the next 6 hours."""
+    """Generate a new EPG XML file for the next 6 hours with random movies."""
     start_time = datetime.datetime.utcnow()
     epg_data = """<?xml version="1.0" encoding="UTF-8"?>\n<tv>\n"""
-    
-    for i in range(EPG_DURATION_HOURS * 2):  # Assuming average movie length is ~3 hours
-        movie = random.choice(movies)
+
+    movie_pool = movies.copy()  # Create a copy to shuffle
+    random.shuffle(movie_pool)  # Shuffle for randomness
+
+    for i in range(EPG_DURATION_HOURS * 2):  # Assuming each movie is ~3 hours
+        if not movie_pool:  # Refill if all movies are used
+            movie_pool = movies.copy()
+            random.shuffle(movie_pool)
+
+        movie = movie_pool.pop()  # Take a random movie
+
         start_str = start_time.strftime("%Y%m%d%H%M%S") + " +0000"
         end_time = start_time + datetime.timedelta(hours=3)  # Adjust based on movie length
         end_str = end_time.strftime("%Y%m%d%H%M%S") + " +0000"
@@ -38,10 +47,14 @@ def generate_epg(movies):
 
     with open(EPG_FILE, "w") as f:
         f.write(epg_data)
-    print("Generated new EPG.")
+    
+    if os.path.exists(EPG_FILE):
+        print(f"✅ EPG generated successfully: {EPG_FILE}")
+    else:
+        print("❌ Failed to generate EPG.")
 
 def stream_movie(movie):
-    """Stream a movie to the RTMP server."""
+    """Stream a single movie using FFmpeg."""
     title = movie["title"]
     url = movie["url"]
 
@@ -61,16 +74,16 @@ def stream_movie(movie):
     subprocess.run(command, shell=True)
 
 def main():
-    """Main function to control movie streaming and EPG generation."""
-    while True:
-        movies = load_movies()
-        generate_epg(movies)  # Generate a new EPG every cycle
+    """Main function to generate EPG and stream movies."""
+    movies = load_movies()
+    generate_epg(movies)  # Generate EPG before starting the stream
 
-        start_time = time.time()
-        while time.time() - start_time < EPG_DURATION_HOURS * 3600:
-            for movie in movies:
-                print(f"Streaming: {movie['title']}")
-                stream_movie(movie)
+    start_time = time.time()
+    while time.time() - start_time < EPG_DURATION_HOURS * 3600:
+        random.shuffle(movies)  # Shuffle movies each loop for variety
+        for movie in movies:
+            print(f"Streaming: {movie['title']}")
+            stream_movie(movie)
 
 if __name__ == "__main__":
     main()
