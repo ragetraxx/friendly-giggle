@@ -1,46 +1,92 @@
 import json
+import random
+import datetime
+import os
 import subprocess
 import shlex
 import time
-from datetime import datetime
 
-# RTMP Destination
+MOVIE_FILE = "movies.json"
+EPG_FILE = "epg.xml"
 RTMP_URL = "rtmp://ssh101.bozztv.com:1935/ssh101/bihm"
+OVERLAY = "overlay.png"
+EPG_DURATION_HOURS = 6
+MOVIES_PER_HOUR = 2  # Adjust based on movie length
+TOTAL_MOVIES = EPG_DURATION_HOURS * MOVIES_PER_HOUR
+MAX_RETRIES = 3  # Maximum retry attempts if no movies are found
 
-# Overlay Image Path
-OVERLAY = "overlay.png"  # Ensure this file exists
-
-# Load Now Showing Movies
-def load_now_showing():
-    try:
-        with open("now_showing.json", "r") as file:
-            return json.load(file)
-    except FileNotFoundError:
-        print("❌ ERROR: now_showing.json not found!")
-        return []
-    except json.JSONDecodeError:
-        print("❌ ERROR: now_showing.json is invalid!")
+def load_movies():
+    """Load movies from JSON file."""
+    if not os.path.exists(MOVIE_FILE):
+        print(f"❌ ERROR: {MOVIE_FILE} not found!")
         return []
 
-# Get the current playing movie based on the schedule
-def get_current_movie(movies):
-    now = datetime.now()
+    with open(MOVIE_FILE, "r") as f:
+        try:
+            movies = json.load(f)
+            if not movies:
+                print("❌ ERROR: movies.json is empty!")
+            return movies
+        except json.JSONDecodeError:
+            print("❌ ERROR: Failed to parse movies.json!")
+            return []
 
-    for movie in movies:
-        start_dt = datetime.strptime(movie["start_time"], "%Y-%m-%d %H:%M:%S")
-        end_dt = datetime.strptime(movie["end_time"], "%Y-%m-%d %H:%M:%S")
+def generate_epg(movies):
+    """Generate a new EPG XML file for the next 6 hours with selected movies."""
+    if not movies:
+        print("❌ ERROR: No movies available for EPG!")
+        return []
 
-        if start_dt <= now < end_dt:
-            return movie
-    
-    return None  # No movie is scheduled at this time
+    start_time = datetime.datetime.utcnow()
+    epg_data = """<?xml version="1.0" encoding="UTF-8"?>\n<tv>\n"""
 
-# Stream Movie
-def stream_video(url, title):
+    total_movies = min(TOTAL_MOVIES, len(movies))
+    if total_movies == 0:
+        print("❌ ERROR: No movies available to create EPG!")
+        return []
+
+    selected_movies = random.sample(movies, total_movies)
+    schedule = []
+
+    for movie in selected_movies:
+        start_str = start_time.strftime("%Y%m%d%H%M%S +0000")
+        end_time = start_time + datetime.timedelta(minutes=180)  # Approx. 3-hour runtime
+        end_str = end_time.strftime("%Y%m%d%H%M%S +0000")
+
+        epg_data += f"""    <programme start="{start_str}" stop="{end_str}" channel="bihm">
+        <title>{movie["title"]}</title>
+        <desc>{movie.get("description", "No description available")}</desc>
+    </programme>\n"""
+
+        schedule.append(movie)
+        start_time = end_time  
+
+    epg_data += "</tv>"
+
+    with open(EPG_FILE, "w") as f:
+        f.write(epg_data)
+
+    if os.path.exists(EPG_FILE) and os.path.getsize(EPG_FILE) > 0:
+        print(f"✅ SUCCESS: EPG generated with {len(schedule)} movies")
+    else:
+        print("❌ ERROR: EPG file is empty after writing!")
+
+    return schedule  
+
+def stream_movie(movie):
+    """Stream a single movie using FFmpeg."""
+    title = movie.get("title", "Unknown Title")
+    url = movie.get("url")
+
+    if not url:
+        print(f"❌ ERROR: Missing URL for movie '{title}'")
+        return
+
     video_url_escaped = shlex.quote(url)
     overlay_path_escaped = shlex.quote(OVERLAY)
+    overlay_text = shlex.quote(title)
 
-    # Fix special characters in title
+    # Fix the colon issue in the title
     overlay_text = title.replace(":", r"\:").replace("'", r"\'").replace('"', r'\"')
 
     command = [
@@ -71,39 +117,31 @@ def stream_video(url, title):
     ]
 
     print(f"🎬 Now Streaming: {title}")
-    return subprocess.Popen(command)
+    subprocess.run(command)
 
-# Continuous Streaming Loop
 def main():
-    movies = load_now_showing()
-    if not movies:
-        print("❌ No movies found in now_showing.json!")
-        return
+    """Main function to generate EPG and stream movies."""
+    retry_attempts = 0
 
-    current_process = None
-    current_movie = None
+    while retry_attempts < MAX_RETRIES:
+        movies = load_movies()
+        scheduled_movies = generate_epg(movies)  # Generate EPG before streaming
 
-    while True:
-        now_movie = get_current_movie(movies)
+        if not scheduled_movies:
+            retry_attempts += 1
+            print(f"❌ ERROR: No movies scheduled to stream! Retrying ({retry_attempts}/{MAX_RETRIES})...")
+            time.sleep(60)
+            continue
 
-        if now_movie:
-            if current_movie != now_movie:
-                if current_process:
-                    current_process.terminate()
-                    current_process.wait()
+        retry_attempts = 0  # Reset retry counter on success
 
-                title = now_movie["title"]
-                url = now_movie["url"]
-                print(f"▶️ Switching to: {title}")
+        for movie in scheduled_movies:
+            stream_movie(movie)
 
-                current_process = stream_video(url, title)
-                current_movie = now_movie
-        else:
-            print("⏳ No movie scheduled, waiting...")
-            time.sleep(30)  # Check again in 30 seconds
+        print("🔄 Regenerating EPG after 6 hours...")
+        time.sleep(EPG_DURATION_HOURS * 3600)  # Wait 6 hours before regenerating EPG
 
-        time.sleep(10)  # Check for schedule changes every 10 seconds
+    print("❌ ERROR: Maximum retry attempts reached. Exiting.")
 
-# Run the script
 if __name__ == "__main__":
     main()
