@@ -3,6 +3,7 @@ import os
 import subprocess
 import shlex
 import time
+import random
 
 MOVIE_FILE = "movies.json"
 RTMP_URL = "rtmp://ssh101.bozztv.com:1935/ssh101/bihm"
@@ -69,7 +70,7 @@ def stream_movie(movie):
     subprocess.run(command)
 
 def main():
-    """Main function to continuously stream movies in order."""
+    """Main function to continuously stream random movies."""
     retry_attempts = 0
 
     while retry_attempts < MAX_RETRIES:
@@ -83,12 +84,13 @@ def main():
 
         retry_attempts = 0  # Reset retry counter on success
 
-        # Stream movies in sequence (loop forever)
+        # Stream movies in **random** order (loop forever)
         while True:
+            random.shuffle(movies)  # Shuffle movie list before playing
             for movie in movies:
                 stream_movie(movie)
 
-            print("🔄 Restarting movie playlist...")
+            print("🔄 Restarting random movie playlist...")
     
     print("❌ ERROR: Maximum retry attempts reached. Exiting.")
 
