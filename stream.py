@@ -13,6 +13,7 @@ OVERLAY = "overlay.png"
 EPG_DURATION_HOURS = 6
 MOVIES_PER_HOUR = 2  # Adjust based on movie length
 TOTAL_MOVIES = EPG_DURATION_HOURS * MOVIES_PER_HOUR
+MAX_RETRIES = 3  # Maximum retry attempts if no movies are found
 
 def load_movies():
     """Load movies from JSON file."""
@@ -33,24 +34,25 @@ def load_movies():
 def generate_epg(movies):
     """Generate a new EPG XML file for the next 6 hours with selected movies."""
     if not movies:
-        print("❌ ERROR: No movies available to create EPG!")
+        print("❌ ERROR: No movies available for EPG!")
         return []
 
     start_time = datetime.datetime.utcnow()
     epg_data = """<?xml version="1.0" encoding="UTF-8"?>\n<tv>\n"""
 
     # Select random movies for the schedule
-    selected_movies = random.sample(movies, min(TOTAL_MOVIES, len(movies)))
-    if not selected_movies:
-        print("❌ ERROR: No movies were selected for EPG!")
+    total_movies = min(TOTAL_MOVIES, len(movies))
+    if total_movies == 0:
+        print("❌ ERROR: No movies available to create EPG!")
         return []
 
+    selected_movies = random.sample(movies, total_movies)
     schedule = []  # Store selected movies
 
     for movie in selected_movies:
-        start_str = start_time.strftime("%Y%m%d%H%M%S") + " +0000"
+        start_str = start_time.strftime("%Y%m%d%H%M%S +0000")
         end_time = start_time + datetime.timedelta(minutes=180)  # Approx. 3-hour runtime
-        end_str = end_time.strftime("%Y%m%d%H%M%S") + " +0000"
+        end_str = end_time.strftime("%Y%m%d%H%M%S +0000")
 
         epg_data += f"""    <programme start="{start_str}" stop="{end_str}" channel="bihm">
         <title>{movie["title"]}</title>
@@ -76,40 +78,51 @@ def generate_epg(movies):
 
 def stream_movie(movie):
     """Stream a single movie using FFmpeg."""
-    title = movie["title"]
-    url = movie["url"]
+    title = movie.get("title", "Unknown Title")
+    url = movie.get("url")
+
+    if not url:
+        print(f"❌ ERROR: Missing URL for movie '{title}'")
+        return
 
     video_url_escaped = shlex.quote(url)
     overlay_path_escaped = shlex.quote(OVERLAY)
     overlay_text = shlex.quote(title)
 
-    command = f"""
-    ffmpeg -re -fflags +genpts -rtbufsize 128M -probesize 10M -analyzeduration 1000000 \
-    -i {video_url_escaped} -i {overlay_path_escaped} \
-    -filter_complex "[1:v]scale2ref=w=main_w:h=main_h[ovr][base];[base][ovr]overlay=0:0,drawtext=text='{overlay_text}':fontcolor=white:fontsize=24:x=20:y=20" \
-    -c:v libx264 -preset ultrafast -tune zerolatency -b:v 2500k -maxrate 3000k -bufsize 6000k -pix_fmt yuv420p -g 50 \
-    -c:a aac -b:a 192k -ar 48000 -f flv {shlex.quote(RTMP_URL)}
-    """
+    command = [
+        "ffmpeg", "-re", "-fflags", "+genpts", "-rtbufsize", "128M", "-probesize", "10M", "-analyzeduration", "1000000",
+        "-i", video_url_escaped, "-i", overlay_path_escaped,
+        "-filter_complex", "[1:v]scale=iw:ih[ovr];[0:v][ovr]overlay=0:0,drawtext=text='{}':fontcolor=white:fontsize=24:x=20:y=20".format(overlay_text),
+        "-c:v", "libx264", "-preset", "ultrafast", "-tune", "zerolatency", "-b:v", "2500k", "-maxrate", "3000k", "-bufsize", "6000k", "-pix_fmt", "yuv420p", "-g", "50",
+        "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-f", "flv", RTMP_URL
+    ]
 
     print(f"🎬 Now Streaming: {title}")
-    subprocess.run(command, shell=True)
+    subprocess.run(command)
 
 def main():
     """Main function to generate EPG and stream movies."""
-    while True:
+    retry_attempts = 0
+
+    while retry_attempts < MAX_RETRIES:
         movies = load_movies()
         scheduled_movies = generate_epg(movies)  # Generate EPG before streaming
 
         if not scheduled_movies:
-            print("❌ ERROR: No movies scheduled to stream!")
-            time.sleep(60)  # Wait before retrying
+            retry_attempts += 1
+            print(f"❌ ERROR: No movies scheduled to stream! Retrying ({retry_attempts}/{MAX_RETRIES})...")
+            time.sleep(60)
             continue
+
+        retry_attempts = 0  # Reset retry counter on success
 
         for movie in scheduled_movies:
             stream_movie(movie)
 
         print("🔄 Regenerating EPG after 6 hours...")
         time.sleep(EPG_DURATION_HOURS * 3600)  # Wait 6 hours before regenerating EPG
+
+    print("❌ ERROR: Maximum retry attempts reached. Exiting.")
 
 if __name__ == "__main__":
     main()
