@@ -1,45 +1,46 @@
 import json
-import datetime
-import time
-import shlex
 import subprocess
+import shlex
+import time
+from datetime import datetime
 
-# 🔹 RTMP Streaming URL
+# RTMP Destination
 RTMP_URL = "rtmp://ssh101.bozztv.com:1935/ssh101/bihm"
-# 🔹 Overlay Image (PNG with transparency)
-OVERLAY = "overlay.png"
 
-# 🔹 Load schedule
-def load_schedule():
-    with open("now_showing.json", "r") as file:
-        return json.load(file)
+# Overlay Image Path
+OVERLAY = "overlay.png"  # Ensure this file exists
 
-# 🔹 Find the movie that should be playing right now
-def get_current_movie():
-    schedule = load_schedule()
-    now = datetime.datetime.utcnow()
+# Load Now Showing Movies
+def load_now_showing():
+    try:
+        with open("now_showing.json", "r") as file:
+            return json.load(file)
+    except FileNotFoundError:
+        print("❌ ERROR: now_showing.json not found!")
+        return []
+    except json.JSONDecodeError:
+        print("❌ ERROR: now_showing.json is invalid!")
+        return []
 
-    for movie in schedule:
-        start_time = datetime.datetime.strptime(movie["start_time"], "%Y-%m-%d %H:%M:%S")
-        end_time = datetime.datetime.strptime(movie["end_time"], "%Y-%m-%d %H:%M:%S")
+# Get the current playing movie based on the schedule
+def get_current_movie(movies):
+    now = datetime.now()
 
-        if start_time <= now < end_time:
-            elapsed_time = (now - start_time).seconds  # 🔹 How many seconds into the movie we are
-            return movie, elapsed_time
+    for movie in movies:
+        start_dt = datetime.strptime(movie["start_time"], "%Y-%m-%d %H:%M:%S")
+        end_dt = datetime.strptime(movie["end_time"], "%Y-%m-%d %H:%M:%S")
 
-    return None, 0  # No movie is currently scheduled
+        if start_dt <= now < end_dt:
+            return movie
+    
+    return None  # No movie is scheduled at this time
 
-# 🔹 Stream movie at the correct timestamp
-def stream_movie(movie, elapsed_time):
-    url = movie["url"]
-    title = movie["title"]
-
-    # 🔹 Escape special characters
+# Stream Movie
+def stream_video(url, title):
     video_url_escaped = shlex.quote(url)
     overlay_path_escaped = shlex.quote(OVERLAY)
-    overlay_text = shlex.quote(title)
-    
-    # 🔹 Fix colon issue
+
+    # Fix special characters in title
     overlay_text = title.replace(":", r"\:").replace("'", r"\'").replace('"', r'\"')
 
     command = [
@@ -49,7 +50,6 @@ def stream_movie(movie, elapsed_time):
         "-rtbufsize", "128M",
         "-probesize", "10M",
         "-analyzeduration", "1000000",
-        "-ss", str(elapsed_time),  # 🔹 Start at the correct timestamp
         "-i", video_url_escaped,
         "-i", overlay_path_escaped,
         "-filter_complex",
@@ -70,15 +70,40 @@ def stream_movie(movie, elapsed_time):
         RTMP_URL
     ]
 
-    print(f"🎬 Now Streaming: {title} (Starting from {elapsed_time} seconds)")
-    subprocess.run(command)
+    print(f"🎬 Now Streaming: {title}")
+    return subprocess.Popen(command)
 
-# 🔹 Continuous streaming loop
-while True:
-    current_movie, elapsed_time = get_current_movie()
+# Continuous Streaming Loop
+def main():
+    movies = load_now_showing()
+    if not movies:
+        print("❌ No movies found in now_showing.json!")
+        return
 
-    if current_movie:
-        stream_movie(current_movie, elapsed_time)
-    else:
-        print("⚠️ No movie is currently scheduled! Waiting...")
-        time.sleep(60)  # 🔹 Check again in 1 minute
+    current_process = None
+    current_movie = None
+
+    while True:
+        now_movie = get_current_movie(movies)
+
+        if now_movie:
+            if current_movie != now_movie:
+                if current_process:
+                    current_process.terminate()
+                    current_process.wait()
+
+                title = now_movie["title"]
+                url = now_movie["url"]
+                print(f"▶️ Switching to: {title}")
+
+                current_process = stream_video(url, title)
+                current_movie = now_movie
+        else:
+            print("⏳ No movie scheduled, waiting...")
+            time.sleep(30)  # Check again in 30 seconds
+
+        time.sleep(10)  # Check for schedule changes every 10 seconds
+
+# Run the script
+if __name__ == "__main__":
+    main()
