@@ -1,63 +1,76 @@
 import os
+import json
 import time
+import requests
 import shlex
 import subprocess
-import requests
-import xml.etree.ElementTree as ET
+from datetime import datetime, timedelta
 
-# Constants
-EPG_URL = "https://raw.githubusercontent.com/ragetraxx/friendly-giggle/refs/heads/main/epg.xml"
+# === CONFIGURATION ===
+MOVIES_JSON_URL = "https://raw.githubusercontent.com/ragetraxx/friendly-giggle/main/movies.json"
 EPG_FILE = "epg.xml"
 RTMP_URL = "rtmp://ssh101.bozztv.com:1935/ssh101/bihm"
-OVERLAY = "overlay.png"  # Change if your overlay image has a different path
-FETCH_INTERVAL = 21600  # 6 hours in seconds
+OMDB_API_KEY = "a3b171bc"
+OVERLAY = "overlay.png"  # Update with actual overlay image path
 
-def fetch_epg():
-    """Fetches the latest EPG XML file and saves it locally."""
+# === FUNCTION TO FETCH MOVIES ===
+def fetch_movies():
     try:
-        response = requests.get(EPG_URL, timeout=10)
+        response = requests.get(MOVIES_JSON_URL)
         if response.status_code == 200:
-            with open(EPG_FILE, "wb") as f:
-                f.write(response.content)
-            print("✅ EPG file updated successfully!")
+            return response.json()
         else:
-            print(f"❌ Failed to fetch EPG. Status Code: {response.status_code}")
+            print(f"⚠️ Failed to fetch movies. Status Code: {response.status_code}")
+            return []
     except Exception as e:
-        print(f"⚠️ Error fetching EPG: {e}")
+        print(f"❌ Error fetching movies: {e}")
+        return []
 
-def parse_epg():
-    """Parses the EPG XML and extracts the next movie's title and streaming link."""
-    if not os.path.exists(EPG_FILE):
-        print("⚠️ No EPG file found. Fetching new one...")
-        fetch_epg()
-
+# === FUNCTION TO GET MOVIE DURATION ===
+def get_movie_duration(title):
     try:
-        tree = ET.parse(EPG_FILE)
-        root = tree.getroot()
-        programme = root.find("programme")
-
-        if programme is not None:
-            title = programme.find("title").text
-            url = programme.find("link").text
-            return title, url
-        else:
-            print("⚠️ No valid programme found in EPG.")
-            return None, None
+        url = f"http://www.omdbapi.com/?t={title}&apikey={OMDB_API_KEY}"
+        response = requests.get(url).json()
+        duration = response.get("Runtime", "90 min")  # Default to 90 minutes
+        return int(duration.split(" ")[0])  # Extract number
     except Exception as e:
-        print(f"❌ Error parsing EPG: {e}")
-        return None, None
+        print(f"⚠️ Failed to get duration for {title}: {e}")
+        return 90  # Default to 90 minutes
 
-def start_stream(title, url):
-    """Starts the FFmpeg stream with overlay and title."""
-    if not title or not url:
-        print("⚠️ No valid movie found. Retrying in 10 minutes...")
-        time.sleep(600)
-        return
+# === FUNCTION TO GENERATE EPG ===
+def generate_epg(movies):
+    start_time = datetime.utcnow()
+    epg_content = '<?xml version="1.0" encoding="UTF-8"?>\n<tv>\n'
+    
+    for movie in movies:
+        title = movie["title"]
+        image = movie["image"]
+        url = movie["url"]
+        duration = get_movie_duration(title)  # Get duration in minutes
+        stop_time = start_time + timedelta(minutes=duration)
 
+        epg_content += f"""    <programme start="{start_time.strftime('%Y%m%d%H%M%S')} +0000" stop="{stop_time.strftime('%Y%m%d%H%M%S')} +0000" channel="bihm">
+        <title>{title}</title>
+        <desc>Film Library</desc>
+        <icon src="{image}"/>
+        <link>{url}</link>
+    </programme>\n"""
+        
+        start_time = stop_time  # Set new start time
+
+    epg_content += "</tv>"
+    
+    with open(EPG_FILE, "w") as file:
+        file.write(epg_content)
+
+    print("✅ EPG.xml updated!")
+
+# === FUNCTION TO STREAM MOVIE ===
+def stream_movie(url, title):
     video_url_escaped = shlex.quote(url)
     overlay_path_escaped = shlex.quote(OVERLAY)
-
-    # Fix the colon issue in the title
+    
+    # Fix title formatting
     overlay_text = title.replace(":", r"\:").replace("'", r"\'").replace('"', r'\"')
 
     command = [
@@ -90,15 +103,17 @@ def start_stream(title, url):
     print(f"🎬 Now Streaming: {title}")
     subprocess.run(command)
 
-def main():
-    """Main loop to update EPG and stream movies continuously."""
-    while True:
-        fetch_epg()
-        title, url = parse_epg()
-        if title and url:
-            start_stream(title, url)
-        print("⏳ Waiting 6 hours before fetching a new EPG...")
-        time.sleep(FETCH_INTERVAL)
+# === MAIN LOOP ===
+while True:
+    movies = fetch_movies()
+    
+    if not movies:
+        print("⚠️ No movies found. Retrying in 10 minutes...")
+        time.sleep(600)
+        continue
 
-if __name__ == "__main__":
-    main()
+    generate_epg(movies)  # Update EPG.xml
+
+    for movie in movies:
+        stream_movie(movie["url"], movie["title"])
+        time.sleep(5)  # Short delay before next movie
