@@ -10,22 +10,22 @@ from datetime import datetime, timedelta
 MOVIES_JSON_URL = "https://raw.githubusercontent.com/ragetraxx/friendly-giggle/main/movies.json"
 EPG_FILE = "epg.xml"
 RTMP_URL = "rtmp://ssh101.bozztv.com:1935/ssh101/bihm"
-OMDB_API_KEY = "a3b171bc"  # API key for OMDB
-OVERLAY = "overlay.png"  # Path to overlay image
+OMDB_API_KEY = "a3b171bc"
+OVERLAY = "overlay.png"
 
 # Function to fetch movie duration from OMDB
 def get_movie_duration(title):
-    query = f"http://www.omdbapi.com/?t={shlex.quote(title)}&apikey={OMDB_API_KEY}"
-    response = requests.get(query)
-    data = response.json()
+    try:
+        query = f"http://www.omdbapi.com/?t={shlex.quote(title)}&apikey={OMDB_API_KEY}"
+        response = requests.get(query)
+        data = response.json()
 
-    if "Runtime" in data:
-        try:
+        if "Runtime" in data:
             return int(data["Runtime"].split()[0])  # Extract minutes
-        except ValueError:
-            pass
-    
-    return 120  # Default duration if not found
+    except Exception as e:
+        print(f"❌ OMDB API Error: {e}")
+
+    return 120  # Default duration
 
 # Function to generate epg.xml
 def generate_epg(movies):
@@ -57,8 +57,6 @@ def generate_epg(movies):
 
     epg_content += "</tv>"
 
-    print("📂 Generated EPG Content:\n", epg_content)
-
     with open(EPG_FILE, "w", encoding="utf-8") as file:
         file.write(epg_content)
 
@@ -66,10 +64,11 @@ def generate_epg(movies):
 
 # Function to start streaming
 def start_stream(url, title):
+    print(f"🎬 Starting Stream: {title}")
+    print(f"🔗 Video URL: {url}")
+    print(f"📡 Streaming to: {RTMP_URL}")
+
     video_url_escaped = shlex.quote(url)
-    overlay_path_escaped = shlex.quote(OVERLAY)
-    
-    # Fix colon issue in title
     overlay_text = title.replace(":", r"\:").replace("'", r"\'").replace('"', r'\"')
 
     command = [
@@ -80,7 +79,7 @@ def start_stream(url, title):
         "-probesize", "10M",
         "-analyzeduration", "1000000",
         "-i", video_url_escaped,
-        "-i", overlay_path_escaped,
+        "-i", OVERLAY,
         "-filter_complex",
         f"[0:v][1:v]scale2ref[v0][v1];[v0][v1]overlay=0:0,"
         f"drawtext=text='{overlay_text}':fontcolor=white:fontsize=24:x=20:y=20",
@@ -99,23 +98,25 @@ def start_stream(url, title):
         RTMP_URL
     ]
 
-    print(f"🎬 Now Streaming: {title}")
+    print("🚀 Running FFMPEG command...")
     subprocess.run(command)
 
-# Function to fetch movies from JSON
+# Function to fetch movies
 def fetch_movies():
     try:
         response = requests.get(MOVIES_JSON_URL)
         movies = response.json()
-        return movies if movies else []
+        if not movies:
+            print("⚠️ No movies found in JSON!")
+        return movies
     except Exception as e:
         print(f"❌ Error fetching movies: {e}")
         return []
 
-# Main loop to update EPG and stream movies
+# Main loop
 def main():
     while True:
-        print("🔄 Fetching new movie list...")
+        print("🔄 Fetching movies...")
         movies = fetch_movies()
 
         if not movies:
@@ -137,7 +138,7 @@ def main():
             print("⏳ Waiting for next movie...")
             time.sleep(duration)
 
-        print("🔄 Restarting the cycle in 6 hours...")
+        print("🔄 Restarting cycle in 6 hours...")
         time.sleep(21600)  # 6 hours
 
 if __name__ == "__main__":
