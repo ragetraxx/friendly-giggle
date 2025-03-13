@@ -4,7 +4,7 @@ import json
 import shlex
 import requests
 import subprocess
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # Constants
 MOVIES_JSON_URL = "https://raw.githubusercontent.com/ragetraxx/friendly-giggle/main/movies.json"
@@ -27,27 +27,68 @@ def get_movie_duration(title):
 
     return 120  # Default duration if API fails
 
-# Function to generate now_showing.json
-def generate_now_showing(movies):
+# Function to schedule movies
+def generate_schedule(movies):
     if not movies:
         print("⚠️ No movies found!")
         return
-    
-    selected_movie = movies[0]  # Pick the first movie
-    title = selected_movie["title"]
-    url = selected_movie["url"]
-    duration = get_movie_duration(title)
 
-    now_showing_data = {
-        "title": title,
-        "url": url,
-        "duration": duration
-    }
+    current_time = datetime.utcnow()
+
+    # Try to read the last schedule
+    if os.path.exists(NOW_SHOWING_FILE):
+        with open(NOW_SHOWING_FILE, "r", encoding="utf-8") as file:
+            try:
+                schedule_data = json.load(file)
+                last_movie_end = datetime.strptime(schedule_data[-1]["end_time"], "%Y-%m-%d %H:%M:%S")
+
+                # If the last movie is still playing, keep the schedule
+                if current_time < last_movie_end:
+                    print("⏳ Keeping current schedule...")
+                    return schedule_data
+            except:
+                pass
+
+    print("📅 Generating new schedule...")
+
+    schedule = []
+    next_start_time = current_time.replace(second=0, microsecond=0)  # Align to the nearest minute
+
+    for movie in movies:
+        title = movie["title"]
+        url = movie["url"]
+        duration = get_movie_duration(title)
+
+        end_time = next_start_time + timedelta(minutes=duration)
+
+        schedule.append({
+            "title": title,
+            "url": url,
+            "duration": duration,
+            "start_time": next_start_time.strftime("%Y-%m-%d %H:%M:%S"),
+            "end_time": end_time.strftime("%Y-%m-%d %H:%M:%S")
+        })
+
+        next_start_time = end_time  # Set next movie start time
 
     with open(NOW_SHOWING_FILE, "w", encoding="utf-8") as file:
-        json.dump(now_showing_data, file, indent=4)
+        json.dump(schedule, file, indent=4)
 
-    print(f"✅ Updated {NOW_SHOWING_FILE}: {now_showing_data}")
+    print(f"✅ Updated {NOW_SHOWING_FILE} with scheduled movies")
+    return schedule
+
+# Function to find the currently playing movie
+def get_current_movie(schedule):
+    current_time = datetime.utcnow()
+
+    for movie in schedule:
+        start_time = datetime.strptime(movie["start_time"], "%Y-%m-%d %H:%M:%S")
+        end_time = datetime.strptime(movie["end_time"], "%Y-%m-%d %H:%M:%S")
+
+        if start_time <= current_time < end_time:
+            return movie
+
+    return None  # No movie found
 
 # Function to start streaming
 def start_stream(url, title):
@@ -109,18 +150,23 @@ def main():
         print("⚠️ No movies found! Exiting...")
         return
 
-    print("📺 Generating now_showing.json...")
-    generate_now_showing(movies)
+    print("📅 Generating schedule...")
+    schedule = generate_schedule(movies)
 
-    # Read now_showing.json
-    with open(NOW_SHOWING_FILE, "r", encoding="utf-8") as file:
-        now_showing = json.load(file)
+    if not schedule:
+        print("⚠️ Error generating schedule!")
+        return
 
-    title = now_showing["title"]
-    url = now_showing["url"]
-    duration = now_showing["duration"] * 60  # Convert to seconds
+    current_movie = get_current_movie(schedule)
 
-    print(f"🎥 Streaming: {title} for {duration // 60} minutes")
+    if not current_movie:
+        print("⚠️ No movie currently scheduled to play!")
+        return
+
+    title = current_movie["title"]
+    url = current_movie["url"]
+
+    print(f"🎥 Now Playing: {title}")
     start_stream(url, title)
 
 if __name__ == "__main__":
