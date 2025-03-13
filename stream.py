@@ -16,49 +16,91 @@ OVERLAY = "overlay.png"
 EPG_REFRESH_INTERVAL = 21600  # 6 hours
 
 def download_epg():
-    """Download the latest EPG file or generate a default one if missing."""
+    """Download the latest EPG file."""
     try:
         response = requests.get(EPG_URL, timeout=10)
         if response.status_code == 200:
             with open(EPG_FILE, "wb") as f:
                 f.write(response.content)
-            print("✅ EPG file updated successfully!")
-            return
+            print("✅ EPG file updated!")
+        else:
+            print("⚠️ Failed to download EPG.")
     except requests.RequestException as e:
-        print(f"❌ ERROR: Failed to download EPG - {e}")
+        print(f"❌ ERROR: {e}")
 
-    # If download fails or file is missing, generate a default EPG
+def get_current_movie():
+    """Parse EPG and get the current movie."""
     if not os.path.exists(EPG_FILE):
-        print("⚠️ WARNING: EPG file missing! Generating a default one...")
-        generate_default_epg()
+        print("⚠️ EPG file missing. Downloading...")
+        download_epg()
 
-def generate_default_epg():
-    """Generate a default EPG with placeholder movies."""
-    now = datetime.datetime.utcnow()
-    epg = ET.Element("tv")
+    try:
+        tree = ET.parse(EPG_FILE)
+        root = tree.getroot()
+        now = datetime.datetime.utcnow()
+        
+        for programme in root.findall("programme"):
+            start_time = datetime.datetime.strptime(programme.get("start")[:14], "%Y%m%d%H%M%S")
+            stop_time = datetime.datetime.strptime(programme.get("stop")[:14], "%Y%m%d%H%M%S")
 
-    for i in range(5):  # Generate 5 placeholder movies
-        start_time = now + datetime.timedelta(hours=i * 2)
-        stop_time = start_time + datetime.timedelta(hours=2)
+            if start_time <= now <= stop_time:
+                return {
+                    "title": programme.find("title").text,
+                    "url": programme.find("link").text,
+                    "icon": programme.find("icon").get("src")
+                }
+        
+        print("⚠️ No movie found in EPG!")
+    except Exception as e:
+        print(f"❌ ERROR parsing EPG: {e}")
 
-        programme = ET.SubElement(epg, "programme", {
-            "start": start_time.strftime("%Y%m%d%H%M%S +0000"),
-            "stop": stop_time.strftime("%Y%m%d%H%M%S +0000"),
-            "channel": "bihm"
-        })
+    return None
 
-        ET.SubElement(programme, "title").text = f"Movie {i+1} (Placeholder)"
-        ET.SubElement(programme, "desc").text = "Placeholder Movie Description"
-        ET.SubElement(programme, "icon", {"src": "https://via.placeholder.com/150"})
-        ET.SubElement(programme, "link").text = "https://example.com/stream"
+def stream_movie(title, url, icon):
+    """Start streaming the movie."""
+    print(f"🎬 Now Streaming: {title}")
 
-    tree = ET.ElementTree(epg)
-    tree.write(EPG_FILE, encoding="UTF-8", xml_declaration=True)
-    print("✅ Default EPG generated!")
+    video_url_escaped = shlex.quote(url)
+    overlay_path_escaped = shlex.quote(OVERLAY)
+    overlay_text = title.replace(":", r"\:").replace("'", r"\'").replace('"', r'\"')
+
+    command = [
+        "ffmpeg",
+        "-re",
+        "-fflags", "+genpts",
+        "-rtbufsize", "128M",
+        "-probesize", "10M",
+        "-analyzeduration", "1000000",
+        "-i", video_url_escaped,
+        "-i", overlay_path_escaped,
+        "-filter_complex",
+        f"[0:v][1:v]scale2ref[v0][v1];[v0][v1]overlay=0:0,"
+        f"drawtext=text='{overlay_text}':fontcolor=white:fontsize=24:x=20:y=20",
+        "-c:v", "libx264",
+        "-preset", "ultrafast",
+        "-tune", "zerolatency",
+        "-b:v", "2500k",
+        "-maxrate", "3000k",
+        "-bufsize", "6000k",
+        "-pix_fmt", "yuv420p",
+        "-g", "50",
+        "-c:a", "aac",
+        "-b:a", "192k",
+        "-ar", "48000",
+        "-f", "flv",
+        RTMP_URL
+    ]
+
+    while True:
+        process = subprocess.Popen(command)
+        process.wait()
+        print("⚠️ Stream crashed! Restarting in 10 seconds...")
+        time.sleep(10)
 
 def main():
-    """Main loop to ensure EPG exists and update it every 6 hours."""
+    """Main loop: update EPG, check movie, and stream."""
     last_epg_update = 0
+    current_movie = None
 
     while True:
         now = time.time()
@@ -67,7 +109,13 @@ def main():
             download_epg()
             last_epg_update = now
 
-        time.sleep(600)  # Check every 10 minutes
+        new_movie = get_current_movie()
+
+        if new_movie and new_movie != current_movie:
+            current_movie = new_movie
+            stream_movie(current_movie["title"], current_movie["url"], current_movie["icon"])
+
+        time.sleep(60)  # Check every minute
 
 if __name__ == "__main__":
     main()
