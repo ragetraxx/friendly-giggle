@@ -3,11 +3,11 @@ import shlex
 
 # Configuration
 RTMP_URL = "rtmp://ssh101.bozztv.com:1935/ssh101/bihm"  # RTMP Server URL
-VIDEO_URL = "https://rtmp-live-ingest-eu-west-3-universe-dacast-com.akamaized.net/transmuxv1/streams/a1d5f9c9-d178-c00c-84ff-1cc337f7cf91.m3u8"  # Your video/audio source
+VIDEO_URL = "http://fl5.moveonjoy.com/NBA_2/index.m3u8"  # Your video/audio source
 OVERLAY_IMAGE = "overlay.png"  # Your overlay image (leave blank if not needed)
-OVERLAY_TEXT = "LIVE: The Hague, Netherlands"  # Text overlay on the video
+OVERLAY_TEXT = "NBA Live"  # Text overlay on the video
 
-def restream(video_url, rtmp_url, overlay_image=None, overlay_text="LIVE: The Hague, Netherlands"):
+def restream(video_url, rtmp_url, overlay_image=None, overlay_text="NBA Live"):
     """Re-streams a video or audio stream to an RTMP server with an optional overlay."""
     
     video_url_escaped = shlex.quote(video_url)
