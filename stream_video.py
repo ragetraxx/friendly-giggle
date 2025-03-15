@@ -32,7 +32,7 @@ def restream(video_url, rtmp_url, overlay_image=None, overlay_text="NBA Live"):
     else:
         command += [
             "-vf",
-            f"drawbox=x=10:y=10:w=200:h=40:color=blue@0.7:t=fill,"
+            f"drawbox=x=10:y=10:w=text_w+20:h=40:color=blue@0.7:t=fill,"
             f"drawtext=text='{overlay_text_escaped}':fontcolor=white:fontsize=24:x=20:y=20"
         ]
     
