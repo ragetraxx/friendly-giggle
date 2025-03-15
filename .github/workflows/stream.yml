@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.12.0
+        with:
+          only_running: true  # Ensures only older runs are canceled, NOT the current job
 
   stream:
     needs: cancel-previous
@@ -23,15 +25,6 @@ jobs:
 
       - name: Install FFmpeg
         run: sudo apt update && sudo apt install -y ffmpeg
-
-      - name: Terminate Previous Job (If Running)
-        run: |
-          previous_run_id=$(gh run list --workflow "Stream Movies" --limit 1 --json databaseId --jq '.[0].databaseId')
-          if [[ -n "$previous_run_id" ]]; then
-            gh run cancel "$previous_run_id"
-          fi
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run Movie Streaming Script
         run: python3 stream.py
