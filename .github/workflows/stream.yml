@@ -29,6 +29,6 @@ jobs:
       - name: Run Movie Streaming Script
         run: |
           while true; do
-            python3 stream_video.py
+            python3 stream.py
             sleep 5
           done
