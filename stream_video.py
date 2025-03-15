@@ -26,7 +26,7 @@ def restream(video_url, rtmp_url, overlay_image=None, overlay_text="NBA Live"):
             "-i", overlay_path_escaped,
             "-filter_complex",
             f"[0:v][1:v]scale2ref[v0][v1];[v0][v1]overlay=0:0,"
-            f"drawbox=x=10:y=10:w=400:h=40:color=blue@0.7:t=fill,"
+            f"drawbox=x=10:y=10:w=text_w+20:h=40:color=blue@0.7:t=fill,"
             f"drawtext=text='{overlay_text_escaped}':fontcolor=white:fontsize=24:x=20:y=20"
         ]
     else:
