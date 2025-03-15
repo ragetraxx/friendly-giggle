@@ -2,7 +2,7 @@ name: Stream Movies
 
 on:
   schedule:
-    - cron: "0 */5 * * *"  # Runs every 5 hours
+    - cron: "0 */6 * * *"  # Runs every 6 hours
   workflow_dispatch:  # Allows manual start
 
 jobs:
@@ -11,13 +11,11 @@ jobs:
     steps:
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.12.0
-        with:
-          access_token: ${{ secrets.GITHUB_TOKEN }}
 
   stream:
     needs: cancel-previous
     runs-on: ubuntu-latest
-    timeout-minutes: 0  # Disables timeout
+    timeout-minutes: 360  # Max runtime: 6 hours
 
     steps:
       - name: Checkout Repository
@@ -27,8 +25,4 @@ jobs:
         run: sudo apt update && sudo apt install -y ffmpeg
 
       - name: Run Movie Streaming Script
-        run: |
-          while true; do
-            python3 stream.py
-            sleep 5
-          done
+        run: python3 stream.py
