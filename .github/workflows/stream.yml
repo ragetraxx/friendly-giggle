@@ -27,4 +27,4 @@ jobs:
         run: sudo apt update && sudo apt install -y ffmpeg
 
       - name: Run Movie Streaming Script
-        run: python3 stream_video.py
+        run: python3 stream.py
