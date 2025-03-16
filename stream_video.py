@@ -3,7 +3,7 @@ import shlex
 
 # Configuration
 RTMP_URL = "rtmp://ssh101.bozztv.com:1935/ssh101/bihm"  # RTMP Server URL
-VIDEO_URL = "http://fl5.moveonjoy.com/NBA_2/index.m3u8"  # Your video/audio source
+VIDEO_URL = "http://fl5.moveonjoy.com/NBA_1/index.m3u8"  # Your video/audio source
 OVERLAY_IMAGE = "overlay.png"  # Your overlay image (leave blank if not needed)
 OVERLAY_TEXT = "NBA Live"  # Text overlay on the video
 
