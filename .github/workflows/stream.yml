@@ -1,9 +1,16 @@
 name: Live Stream Deployment
 
 on:
+  push:
+    branches:
+      - main
   schedule:
     - cron: "0 */6 * * *"  # Runs every 6 hours
-      
+  workflow_dispatch:  # Allows manual triggering
+
+concurrency:
+  group: live-stream
+  cancel-in-progress: true  # Ensures only one instance runs at a time
 
 jobs:
   deploy:
@@ -26,7 +33,9 @@ jobs:
       - name: Run live stream script
         run: |
           nohup python3 stream.py > stream.log 2>&1 &
-          sleep infinity  # Keeps GitHub Actions running
+          echo "Stream started at $(date)" >> stream.log
+          sleep 21500  # ~6 hours to match the schedule
 
       - name: Show FFmpeg logs (for debugging)
-        run: cat ffmpeg_output.log
+        if: always()
+        run: cat stream.log
