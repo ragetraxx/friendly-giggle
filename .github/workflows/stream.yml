@@ -1,9 +1,9 @@
 name: Live Stream Deployment
 
 on:
-  push:
-    branches:
-      - main
+  schedule:
+    - cron: "0 */6 * * *"  # Runs every 6 hours
+      
 
 jobs:
   deploy:
