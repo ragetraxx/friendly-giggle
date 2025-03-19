@@ -32,32 +32,27 @@ def load_played_movies():
     if os.path.exists(LAST_PLAYED_FILE):
         with open(LAST_PLAYED_FILE, "r") as f:
             try:
-                data = json.load(f)
-                return data.get("played", []) if isinstance(data.get("played"), list) else []
+                return json.load(f).get("played", [])
             except json.JSONDecodeError:
-                print("❌ ERROR: Failed to parse last_played.json!")
                 return []
     return []
 
 def save_played_movies(played_movies):
-    """Save played movies to JSON file safely."""
-    try:
-        with open(LAST_PLAYED_FILE, "w") as f:
-            json.dump({"played": played_movies}, f, indent=4)
-            f.flush()  # Ensure data is written to disk
-            os.fsync(f.fileno())  # Force write to disk
-        print("✅ Saved played movies:", played_movies)
-    except Exception as e:
-        print(f"❌ ERROR: Failed to save last_played.json! {e}")
+    """Save played movies to JSON file."""
+    with open(LAST_PLAYED_FILE, "w") as f:
+        json.dump({"played": played_movies}, f, indent=4)
 
 def stream_movie(movie):
-    """Stream a single movie using FFmpeg."""
+    """Stream a single movie using FFmpeg and save the current playing movie."""
     title = movie.get("title", "Unknown Title")
     url = movie.get("url")
 
     if not url:
         print(f"❌ ERROR: Missing URL for movie '{title}'")
         return
+
+    # Save the current movie before streaming
+    save_played_movies([title])
 
     video_url_escaped = shlex.quote(url)
     overlay_path_escaped = shlex.quote(OVERLAY)
