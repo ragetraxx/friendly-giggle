@@ -28,19 +28,24 @@ def load_movies():
             return []
 
 def load_played_movies():
-    """Load played movies from JSON file."""
+    """Load played movies from JSON file or initialize if empty."""
     if os.path.exists(LAST_PLAYED_FILE):
         with open(LAST_PLAYED_FILE, "r") as f:
             try:
-                return json.load(f).get("played", [])
-            except json.JSONDecodeError:
+                data = json.load(f)
+                return data.get("played", [])
+            except (json.JSONDecodeError, TypeError):
                 return []
     return []
 
-def save_played_movies(played_movies):
-    """Save played movies to JSON file."""
+def save_played_movies(played_movies, current_movie=None):
+    """Save played movies to JSON file, including the current playing movie."""
+    data = {"played": played_movies}
+    if current_movie:
+        data["current"] = current_movie  # Save the currently playing movie
+
     with open(LAST_PLAYED_FILE, "w") as f:
-        json.dump({"played": played_movies}, f)
+        json.dump(data, f, indent=4)
 
 def stream_movie(movie):
     """Stream a single movie using FFmpeg."""
@@ -51,10 +56,9 @@ def stream_movie(movie):
         print(f"❌ ERROR: Missing URL for movie '{title}'")
         return
 
-    # ✅ Save the current movie before playing
+    # Save the currently playing movie BEFORE starting FFmpeg
     played_movies = load_played_movies()
-    played_movies.append(title)
-    save_played_movies(played_movies)
+    save_played_movies(played_movies, title)
 
     video_url_escaped = shlex.quote(url)
     overlay_path_escaped = shlex.quote(OVERLAY)
@@ -129,7 +133,8 @@ def main():
             random.shuffle(unplayed_movies)
             for movie in unplayed_movies:
                 stream_movie(movie)
-                time.sleep(10)  # Wait 10 seconds before switching to next movie
+                played_movies.append(movie["title"])
+                save_played_movies(played_movies)  # Save progress after each movie
 
             print("🔄 Restarting after finishing all available movies...")
 
