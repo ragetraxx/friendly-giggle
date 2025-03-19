@@ -30,12 +30,17 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y ffmpeg
 
+      - name: Kill previous stream processes (if any)
+        run: |
+          pkill -f "python3 stream.py" || true  # Ensure old processes are terminated
+
       - name: Run live stream script
         run: |
-          nohup python3 stream.py > stream.log 2>&1 &
-          echo "Stream started at $(date)" >> stream.log
+          nohup python3 stream.py > /tmp/stream.log 2>&1 &
+          disown  # Fully detach the process
+          echo "Stream started at $(date)" >> /tmp/stream.log
           sleep 21500  # ~6 hours to match the schedule
 
       - name: Show FFmpeg logs (for debugging)
         if: always()
-        run: cat stream.log
+        run: cat /tmp/stream.log || echo "No logs found"
