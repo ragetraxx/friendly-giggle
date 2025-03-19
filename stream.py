@@ -32,15 +32,23 @@ def load_played_movies():
     if os.path.exists(LAST_PLAYED_FILE):
         with open(LAST_PLAYED_FILE, "r") as f:
             try:
-                return json.load(f).get("played", [])
+                data = json.load(f)
+                return data.get("played", []) if isinstance(data.get("played"), list) else []
             except json.JSONDecodeError:
+                print("❌ ERROR: Failed to parse last_played.json!")
                 return []
     return []
 
 def save_played_movies(played_movies):
-    """Save played movies to JSON file."""
-    with open(LAST_PLAYED_FILE, "w") as f:
-        json.dump({"played": played_movies}, f)
+    """Save played movies to JSON file safely."""
+    try:
+        with open(LAST_PLAYED_FILE, "w") as f:
+            json.dump({"played": played_movies}, f, indent=4)
+            f.flush()  # Ensure data is written to disk
+            os.fsync(f.fileno())  # Force write to disk
+        print("✅ Saved played movies:", played_movies)
+    except Exception as e:
+        print(f"❌ ERROR: Failed to save last_played.json! {e}")
 
 def stream_movie(movie):
     """Stream a single movie using FFmpeg."""
