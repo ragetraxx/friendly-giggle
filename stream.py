@@ -40,10 +40,10 @@ def load_played_movies():
 def save_played_movies(played_movies):
     """Save played movies to JSON file."""
     with open(LAST_PLAYED_FILE, "w") as f:
-        json.dump({"played": played_movies}, f, indent=4)
+        json.dump({"played": played_movies}, f)
 
 def stream_movie(movie):
-    """Stream a single movie using FFmpeg and save the current playing movie."""
+    """Stream a single movie using FFmpeg."""
     title = movie.get("title", "Unknown Title")
     url = movie.get("url")
 
@@ -51,8 +51,10 @@ def stream_movie(movie):
         print(f"❌ ERROR: Missing URL for movie '{title}'")
         return
 
-    # Save the current movie before streaming
-    save_played_movies([title])
+    # ✅ Save the current movie before playing
+    played_movies = load_played_movies()
+    played_movies.append(title)
+    save_played_movies(played_movies)
 
     video_url_escaped = shlex.quote(url)
     overlay_path_escaped = shlex.quote(OVERLAY)
@@ -127,8 +129,7 @@ def main():
             random.shuffle(unplayed_movies)
             for movie in unplayed_movies:
                 stream_movie(movie)
-                played_movies.append(movie["title"])
-                save_played_movies(played_movies)  # Save progress after each movie
+                time.sleep(10)  # Wait 10 seconds before switching to next movie
 
             print("🔄 Restarting after finishing all available movies...")
 
