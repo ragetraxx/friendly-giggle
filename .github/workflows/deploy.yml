@@ -8,10 +8,6 @@ on:
     - cron: "0 */6 * * *"  # Runs every 6 hours
   workflow_dispatch:  # Allows manual triggering
 
-concurrency:
-  group: live-stream
-  cancel-in-progress: true  # Ensures only one instance runs at a time
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -19,13 +15,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: Restore last played movie state
-        uses: actions/cache@v3
         with:
-          path: last_played.json
-          key: last-played-${{ github.run_id }}
-          restore-keys: last-played-
+          persist-credentials: true  # Ensures we can push changes
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -43,13 +34,11 @@ jobs:
           echo "Stream started at $(date)" >> stream.log
           sleep 21500  # ~6 hours to match the schedule
 
-      - name: Save last played movie state
-        uses: actions/cache@v3
-        with:
-          path: last_played.json
-          key: last-played-${{ github.run_id }}
-          restore-keys: last-played-
-
-      - name: Show FFmpeg logs (for debugging)
-        if: always()
-        run: cat stream.log
+      - name: Commit last_played.json
+        run: |
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git add last_played.json || echo "No changes to commit"
+          git commit -m "Update last_played.json" || echo "No changes"
+          git push || echo "Nothing to push"
+        continue-on-error: true  # Prevents workflow failure if no changes
