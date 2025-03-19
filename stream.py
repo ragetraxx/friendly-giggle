@@ -7,9 +7,13 @@ import random
 
 MOVIE_FILE = "movies.json"
 LAST_PLAYED_FILE = "last_played.json"
-RTMP_URL = "rtmp://ssh101.bozztv.com:1935/ssh101/bihm"
+RTMP_URL = os.getenv("RTMP_URL")  # Load RTMP URL from environment variable
 OVERLAY = "overlay.png"
 MAX_RETRIES = 3  # Maximum retry attempts if no movies are found
+
+if not RTMP_URL:
+    print("❌ ERROR: RTMP_URL environment variable is not set!")
+    exit(1)
 
 def load_movies():
     """Load movies from JSON file."""
