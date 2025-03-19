@@ -28,8 +28,13 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y ffmpeg
 
+      - name: Create environment file
+        run: |
+          echo "RTMP_URL=${{ secrets.RTMP_URL }}" > .env
+
       - name: Run live stream script
         run: |
+          export $(grep -v '^#' .env | xargs)  # Load environment variables
           nohup python3 stream.py > stream.log 2>&1 &
           echo "Stream started at $(date)" >> stream.log
           sleep 21500  # ~6 hours to match the schedule
