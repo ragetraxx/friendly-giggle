@@ -1,14 +1,19 @@
 import subprocess
 import shlex
+import os
 
-# Configuration
-RTMP_URL = "rtmp://ssh101.bozztv.com:1935/ssh101/bihm"  # RTMP Server URL
-VIDEO_URL = "http://fl5.moveonjoy.com/NBA_1/index.m3u8"  # Your video/audio source
-OVERLAY_IMAGE = "overlay.png"  # Your overlay image (leave blank if not needed)
+# Load RTMP URL from environment variable (GitHub Secret)
+RTMP_URL = os.getenv("RTMP_URL")  # RTMP Server URL (stored as a GitHub Secret)
+VIDEO_URL = "http://fl5.moveonjoy.com/NBA_1/index.m3u8"  # Video/audio source
+OVERLAY_IMAGE = "overlay.png"  # Overlay image (leave blank if not needed)
 OVERLAY_TEXT = "NBA Live"  # Text overlay on the video
 
 def restream(video_url, rtmp_url, overlay_image=None, overlay_text="NBA Live"):
     """Re-streams a video or audio stream to an RTMP server with an optional overlay."""
+    
+    if not rtmp_url:
+        print("❌ ERROR: RTMP_URL is not set. Please check your environment variables.")
+        return
     
     video_url_escaped = shlex.quote(video_url)
     overlay_text_escaped = overlay_text.replace(":", r"\:")  # Escape colon properly
