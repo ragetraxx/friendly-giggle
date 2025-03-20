@@ -1,4 +1,4 @@
-name: Live Stream Deployment
+name: Play JSON Update & Live Stream Deployment
 
 on:
   push:
@@ -6,22 +6,36 @@ on:
       - main
   schedule:
     - cron: "0 */6 * * *"  # Runs every 6 hours
-  workflow_dispatch:  # Allows manual triggering
+  workflow_dispatch:  # Allows manual trigger
 
 jobs:
-  deploy:
+  update-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout Repository
         uses: actions/checkout@v3
         with:
-          persist-credentials: true  # Ensures we can push changes if needed
+          persist-credentials: true
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
+          python-version: "3.x"
+
+      - name: Install Dependencies
+        run: pip install pyyaml
+
+      - name: Run Script (play.py)
+        run: python play.py
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add play.json
+          git diff --staged --quiet || git commit -m "Updated play.json with new movies"
+          git push
 
       - name: Install FFmpeg
         run: |
@@ -32,7 +46,7 @@ jobs:
         run: |
           echo "RTMP_URL=${{ secrets.RTMP_URL }}" > .env
 
-      - name: Run live stream script
+      - name: Run live stream script (stream.py)
         run: |
           export $(grep -v '^#' .env | xargs)  # Load environment variables
           nohup python3 stream.py > stream.log 2>&1 &
