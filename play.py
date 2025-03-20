@@ -1,13 +1,11 @@
 import json
 import random
-import time
 
-MOVIE_FILE = "movie.json"  # Source file
-PLAY_FILE = "play.json"  # Destination file
-INTERVAL = 5 * 60 * 60  # 5 hours in seconds
+MOVIE_FILE = "movies.json"  # Source JSON file
+PLAY_FILE = "play.json"  # Output JSON file
 
 def load_movies():
-    """Load movies from movie.json"""
+    """Load movies from movies.json"""
     try:
         with open(MOVIE_FILE, "r", encoding="utf-8") as file:
             return json.load(file)
@@ -32,4 +30,4 @@ def update_play_json():
     print("Updated play.json with 5 movies.")
 
 if __name__ == "__main__":
-    update_play_json()  # Run once 
+    update_play_json()  # Run once
