@@ -10,25 +10,33 @@ RTMP_URL = os.getenv("RTMP_URL")  # Load RTMP URL from environment variable
 OVERLAY = "overlay.png"
 MAX_RETRIES = 3  # Maximum retry attempts if no movies are found
 
+# Check if RTMP_URL is set
 if not RTMP_URL:
     print("❌ ERROR: RTMP_URL environment variable is not set!")
     exit(1)
 
+# Ensure play.json exists
+if not os.path.exists(PLAY_FILE):
+    print(f"❌ ERROR: {PLAY_FILE} not found!")
+    exit(1)
+
+# Ensure overlay image exists
+if not os.path.exists(OVERLAY):
+    print(f"❌ ERROR: Overlay image '{OVERLAY}' not found!")
+    exit(1)
+
 def load_movies():
     """Load movies from play.json."""
-    if not os.path.exists(PLAY_FILE):
-        print(f"❌ ERROR: {PLAY_FILE} not found!")
-        return []
-
-    with open(PLAY_FILE, "r") as f:
-        try:
+    try:
+        with open(PLAY_FILE, "r") as f:
             movies = json.load(f)
             if not movies:
                 print("❌ ERROR: play.json is empty!")
+                return []
             return movies
-        except json.JSONDecodeError:
-            print("❌ ERROR: Failed to parse play.json!")
-            return []
+    except json.JSONDecodeError:
+        print("❌ ERROR: Failed to parse play.json! Check for syntax errors.")
+        return []
 
 def stream_movie(movie):
     """Stream a single movie using FFmpeg."""
@@ -39,6 +47,7 @@ def stream_movie(movie):
         print(f"❌ ERROR: Missing URL for movie '{title}'")
         return
 
+    # Escape values for safe execution
     video_url_escaped = shlex.quote(url)
     overlay_path_escaped = shlex.quote(OVERLAY)
     overlay_text = title.replace(":", r"\:").replace("'", r"\'").replace('"', r'\"')
@@ -50,8 +59,8 @@ def stream_movie(movie):
         "-rtbufsize", "32M",
         "-probesize", "1M",
         "-analyzeduration", "500000",
-        "-i", video_url_escaped,
-        "-i", overlay_path_escaped,
+        "-i", url,  # Direct URL instead of escaped version
+        "-i", OVERLAY,
         "-filter_complex",
         f"[0:v][1:v]scale2ref[v0][v1];[v0][v1]overlay=0:0,"
         f"drawtext=text='{overlay_text}':fontcolor=white:fontsize=24:x=20:y=20",
@@ -72,7 +81,12 @@ def stream_movie(movie):
     ]
 
     print(f"🎬 Now Streaming: {title}")
-    subprocess.run(command)
+
+    try:
+        result = subprocess.run(command, capture_output=True, text=True, check=True)
+        print(result.stdout)
+    except subprocess.CalledProcessError as e:
+        print(f"❌ ERROR: FFmpeg failed for '{title}'\n{e.stderr}")
 
 def main():
     """Main function to randomly pick and stream movies."""
