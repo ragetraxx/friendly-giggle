@@ -103,11 +103,20 @@ def main():
 
         retry_attempts = 0  # Reset retry counter on success
 
-        while True:
+        while movies:  # Loop while movies are available
             movie = random.choice(movies)  # Pick a random movie from play.json
             stream_movie(movie)
 
+            # Remove the played movie to avoid repetition until all are played
+            movies.remove(movie)
+
             print("🔄 Picking a new random movie...")
+
+            # If all movies have been played, reload the list
+            if not movies:
+                print("♻️ All movies played! Reloading the list...")
+                time.sleep(5)  # Short delay before reloading
+                break  # Break to reload movies from play.json
 
     print("❌ ERROR: Maximum retry attempts reached. Exiting.")
 
