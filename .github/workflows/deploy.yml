@@ -16,7 +16,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          persist-credentials: true  # Ensures we can push changes
+          persist-credentials: true  # Ensures we can push changes if needed
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -38,12 +38,3 @@ jobs:
           nohup python3 stream.py > stream.log 2>&1 &
           echo "Stream started at $(date)" >> stream.log
           sleep 21500  # ~6 hours to match the schedule
-
-      - name: Commit last_played.json
-        run: |
-          git config --global user.email "github-actions@github.com"
-          git config --global user.name "GitHub Actions"
-          git add last_played.json || echo "No changes to commit"
-          git commit -m "Update last_played.json" || echo "No changes"
-          git push || echo "Nothing to push"
-        continue-on-error: true  # Prevents workflow failure if no changes
