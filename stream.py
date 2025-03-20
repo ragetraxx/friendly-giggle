@@ -1,26 +1,24 @@
-import json
 import os
+import json
 import subprocess
-import shlex
-import time
 import random
+import time
 
 PLAY_FILE = "play.json"
-RTMP_URL = os.getenv("RTMP_URL")  # Load RTMP URL from environment variable
+RTMP_URL = os.getenv("RTMP_URL")  # ✅ Get RTMP_URL from environment
 OVERLAY = "overlay.png"
 MAX_RETRIES = 3  # Maximum retry attempts if no movies are found
 
-# Check if RTMP_URL is set
+# ✅ Check if RTMP_URL is set
 if not RTMP_URL:
-    print("❌ ERROR: RTMP_URL environment variable is not set!")
+    print("❌ ERROR: RTMP_URL environment variable is NOT set! Check GitHub Secrets.")
     exit(1)
 
-# Ensure play.json exists
+# ✅ Ensure required files exist
 if not os.path.exists(PLAY_FILE):
     print(f"❌ ERROR: {PLAY_FILE} not found!")
     exit(1)
 
-# Ensure overlay image exists
 if not os.path.exists(OVERLAY):
     print(f"❌ ERROR: Overlay image '{OVERLAY}' not found!")
     exit(1)
@@ -47,9 +45,6 @@ def stream_movie(movie):
         print(f"❌ ERROR: Missing URL for movie '{title}'")
         return
 
-    # Escape values for safe execution
-    video_url_escaped = shlex.quote(url)
-    overlay_path_escaped = shlex.quote(OVERLAY)
     overlay_text = title.replace(":", r"\:").replace("'", r"\'").replace('"', r'\"')
 
     command = [
@@ -59,7 +54,7 @@ def stream_movie(movie):
         "-rtbufsize", "32M",
         "-probesize", "1M",
         "-analyzeduration", "500000",
-        "-i", url,  # Direct URL instead of escaped version
+        "-i", url,
         "-i", OVERLAY,
         "-filter_complex",
         f"[0:v][1:v]scale2ref[v0][v1];[v0][v1]overlay=0:0,"
@@ -81,15 +76,21 @@ def stream_movie(movie):
     ]
 
     print(f"🎬 Now Streaming: {title}")
+    print("Executing FFmpeg command:", " ".join(command))
 
     try:
-        result = subprocess.run(command, capture_output=True, text=True, check=True)
-        print(result.stdout)
-    except subprocess.CalledProcessError as e:
-        print(f"❌ ERROR: FFmpeg failed for '{title}'\n{e.stderr}")
+        process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        
+        # ✅ Print FFmpeg logs in real-time
+        for line in process.stderr:
+            print(line, end="")
+
+        process.wait()
+    except Exception as e:
+        print(f"❌ ERROR: FFmpeg failed for '{title}' - {str(e)}")
 
 def main():
-    """Main function to randomly pick and stream movies."""
+    """Main function to randomly pick and stream movies one after another."""
     retry_attempts = 0
 
     while retry_attempts < MAX_RETRIES:
@@ -103,20 +104,24 @@ def main():
 
         retry_attempts = 0  # Reset retry counter on success
 
-        while movies:  # Loop while movies are available
-            movie = random.choice(movies)  # Pick a random movie from play.json
+        # ✅ Keep track of played movies to avoid repeats
+        played_movies = set()
+
+        while True:
+            available_movies = [m for m in movies if m["title"] not in played_movies]
+
+            if not available_movies:
+                print("🔄 All movies played, restarting the list...")
+                played_movies.clear()
+                available_movies = movies
+
+            movie = random.choice(available_movies)  # ✅ Pick a new random movie
+            played_movies.add(movie["title"])
+
             stream_movie(movie)
 
-            # Remove the played movie to avoid repetition until all are played
-            movies.remove(movie)
-
-            print("🔄 Picking a new random movie...")
-
-            # If all movies have been played, reload the list
-            if not movies:
-                print("♻️ All movies played! Reloading the list...")
-                time.sleep(5)  # Short delay before reloading
-                break  # Break to reload movies from play.json
+            print("🔄 Movie ended. Picking a new random movie...")
+            time.sleep(10)  # Short pause before starting the next movie
 
     print("❌ ERROR: Maximum retry attempts reached. Exiting.")
 
