@@ -6,7 +6,7 @@ on:
       - main
   schedule:
     - cron: "0 */6 * * *"  # Runs every 6 hours
-  workflow_dispatch:  # Allows manual trigger
+  workflow_dispatch:
 
 jobs:
   update-and-deploy:
@@ -37,18 +37,16 @@ jobs:
           git diff --staged --quiet || git commit -m "Updated play.json with new movies"
           git push
 
+      - name: Pull Latest Changes
+        run: git pull origin main
+
       - name: Install FFmpeg
         run: |
           sudo apt-get update
           sudo apt-get install -y ffmpeg
 
-      - name: Create environment file
-        run: |
-          echo "RTMP_URL=${{ secrets.RTMP_URL }}" > .env
+      - name: Wait Before Streaming
+        run: sleep 10  # Ensures GitHub Actions registers file changes
 
       - name: Run live stream script (stream.py)
-        run: |
-          export $(grep -v '^#' .env | xargs)  # Load environment variables
-          nohup python3 stream.py > stream.log 2>&1 &
-          echo "Stream started at $(date)" >> stream.log
-          sleep 21500  # ~6 hours to match the schedule
+        run: python3 stream.py
