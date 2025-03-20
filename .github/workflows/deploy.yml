@@ -27,7 +27,7 @@ jobs:
         run: pip install pyyaml
 
       - name: Run Script (play.py)
-        run: python play.py
+        run: python3 play.py
 
       - name: Commit and Push Changes
         run: |
@@ -45,8 +45,19 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y ffmpeg
 
-      - name: Wait Before Streaming
-        run: sleep 10  # Ensures GitHub Actions registers file changes
+      - name: Debug Secrets
+        run: |
+          echo "Checking if RTMP_URL is set..."
+          if [ -z "$RTMP_URL" ]; then
+            echo "RTMP_URL is NOT set!"
+            exit 1
+          else
+            echo "RTMP_URL is set."
+          fi
+        env:
+          RTMP_URL: ${{ secrets.RTMP_URL }}
 
       - name: Run live stream script (stream.py)
+        env:
+          RTMP_URL: ${{ secrets.RTMP_URL }}
         run: python3 stream.py
