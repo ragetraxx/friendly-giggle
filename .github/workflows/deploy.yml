@@ -48,16 +48,14 @@ jobs:
       - name: Debug Secrets
         run: |
           echo "Checking if RTMP_URL is set..."
-          if [ -z "$RTMP_URL" ]; then
-            echo "RTMP_URL is NOT set!"
+          if [ -z "${{ secrets.RTMP_URL }}" ]; then
+            echo "❌ ERROR: RTMP_URL is NOT set!"
             exit 1
           else
-            echo "RTMP_URL is set."
+            echo "✅ RTMP_URL is set."
           fi
-        env:
-          RTMP_URL: ${{ secrets.RTMP_URL }}
 
       - name: Run live stream script (stream.py)
         env:
-          RTMP_URL: ${{ secrets.RTMP_URL }}
+          RTMP_URL: ${{ secrets.RTMP_URL }}  # ✅ Pass RTMP_URL to stream.py
         run: python3 stream.py
