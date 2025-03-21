@@ -1,7 +1,6 @@
 import os
 import json
 import subprocess
-import random
 import time
 
 PLAY_FILE = "play.json"
@@ -37,7 +36,7 @@ def load_movies():
         return []
 
 def stream_movie(movie):
-    """Stream a single movie using FFmpeg."""
+    """Stream a single movie using FFmpeg and wait for it to finish."""
     title = movie.get("title", "Unknown Title")
     url = movie.get("url")
 
@@ -80,17 +79,18 @@ def stream_movie(movie):
 
     try:
         process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-        
-        # ✅ Print FFmpeg logs in real-time
+
+        # ✅ Wait for FFmpeg to finish before playing the next movie
         for line in process.stderr:
             print(line, end="")
 
-        process.wait()
+        process.wait()  # ✅ Ensures that the next movie starts only after the current one ends
+
     except Exception as e:
         print(f"❌ ERROR: FFmpeg failed for '{title}' - {str(e)}")
 
 def main():
-    """Main function to randomly pick and stream movies one after another."""
+    """Main function to stream all movies in sequence."""
     retry_attempts = 0
 
     while retry_attempts < MAX_RETRIES:
@@ -104,24 +104,12 @@ def main():
 
         retry_attempts = 0  # Reset retry counter on success
 
-        # ✅ Keep track of played movies to avoid repeats
-        played_movies = set()
-
         while True:
-            available_movies = [m for m in movies if m["title"] not in played_movies]
+            for movie in movies:
+                stream_movie(movie)  # ✅ This will now wait for each movie to finish before starting the next one
+                print("🔄 Movie ended. Playing next movie...")
 
-            if not available_movies:
-                print("🔄 All movies played, restarting the list...")
-                played_movies.clear()
-                available_movies = movies
-
-            movie = random.choice(available_movies)  # ✅ Pick a new random movie
-            played_movies.add(movie["title"])
-
-            stream_movie(movie)
-
-            print("🔄 Movie ended. Picking a new random movie...")
-            time.sleep(10)  # Short pause before starting the next movie
+            print("🔄 All movies played, restarting from the beginning...")
 
     print("❌ ERROR: Maximum retry attempts reached. Exiting.")
 
