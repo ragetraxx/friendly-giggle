@@ -50,26 +50,29 @@ def stream_movie(movie):
         "ffmpeg",
         "-re",
         "-fflags", "+genpts",
-        "-rtbufsize", "32M",
-        "-probesize", "1M",
-        "-analyzeduration", "500000",
+        "-rtbufsize", "8M",  # Reduce buffer size for less delay
+        "-probesize", "1M",  # Ensures faster stream start
+        "-analyzeduration", "500000",  # Improves stream detection
         "-i", url,
         "-i", OVERLAY,
         "-filter_complex",
         f"[0:v][1:v]scale2ref[v0][v1];[v0][v1]overlay=0:0,"
         f"drawtext=text='{overlay_text}':fontcolor=white:fontsize=24:x=20:y=20",
         "-c:v", "libx264",
-        "-preset", "fast",
+        "-profile:v", "high",
+        "-level", "4.2",
+        "-preset", "slow",  # Better compression & quality
         "-tune", "film",
-        "-b:v", "4000k",
-        "-crf", "23",
-        "-maxrate", "4500k",
-        "-bufsize", "6000k",
+        "-b:v", "6000k",  # Higher bitrate for sharper image
+        "-crf", "18",  # Lower CRF for less blur
+        "-maxrate", "7000k",  # Allows higher peaks
+        "-bufsize", "5000k",  # Adjusted buffer size for stability
         "-pix_fmt", "yuv420p",
-        "-g", "50",
+        "-g", "100",  # Larger GOP for better motion handling
         "-c:a", "aac",
-        "-b:a", "192k",
+        "-b:a", "256k",  # Higher audio bitrate for better clarity
         "-ar", "48000",
+        "-movflags", "+faststart",
         "-f", "flv",
         RTMP_URL
     ]
