@@ -71,7 +71,7 @@ def stream_movie(movie):
         "-g", "50",  # Lower GOP for better real-time performance
         "-c:a", "aac",
         "-b:a", "320k",  # Higher audio bitrate for better clarity
-        "-ar", "48000",
+        "-ar", "48000",  # ✅ Keep high-quality audio but remove forced stereo
         "-movflags", "+faststart",
         "-f", "flv",
         RTMP_URL
