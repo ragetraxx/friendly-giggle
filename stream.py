@@ -50,9 +50,9 @@ def stream_movie(movie):
         "ffmpeg",
         "-re",
         "-fflags", "+genpts",
-        "-rtbufsize", "8M",  # Reduce buffer size for less delay
-        "-probesize", "1M",  # Ensures faster stream start
-        "-analyzeduration", "500000",  # Improves stream detection
+        "-rtbufsize", "4M",  # Reduce buffer size for less delay
+        "-probesize", "500K",  # Faster stream detection
+        "-analyzeduration", "250000",  # Reduced analysis time
         "-i", url,
         "-i", OVERLAY,
         "-filter_complex",
@@ -60,17 +60,17 @@ def stream_movie(movie):
         f"drawtext=text='{overlay_text}':fontcolor=white:fontsize=24:x=20:y=20",
         "-c:v", "libx264",
         "-profile:v", "high",
-        "-level", "4.2",
-        "-preset", "slow",  # Better compression & quality
-        "-tune", "film",
-        "-b:v", "6000k",  # Higher bitrate for sharper image
-        "-crf", "18",  # Lower CRF for less blur
-        "-maxrate", "7000k",  # Allows higher peaks
-        "-bufsize", "5000k",  # Adjusted buffer size for stability
+        "-level", "5.2",  # Supports SD to 4K
+        "-preset", "faster",  # Lower latency than "slow"
+        "-tune", "film",  # Better sharpness & motion handling
+        "-b:v", "10000k",  # Higher bitrate for better quality
+        "-crf", "16",  # Lower CRF for less blur
+        "-maxrate", "12000k",  # Allows higher peaks
+        "-bufsize", "6000k",  # Reduces buffering lag
         "-pix_fmt", "yuv420p",
-        "-g", "100",  # Larger GOP for better motion handling
+        "-g", "50",  # Lower GOP for better real-time performance
         "-c:a", "aac",
-        "-b:a", "256k",  # Higher audio bitrate for better clarity
+        "-b:a", "320k",  # Higher audio bitrate for better clarity
         "-ar", "48000",
         "-movflags", "+faststart",
         "-f", "flv",
