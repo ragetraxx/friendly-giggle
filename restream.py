@@ -4,7 +4,7 @@ import os
 
 # Load RTMP URL from environment variable (GitHub Secret)
 RTMP_URL = os.getenv("RTMP_URL")  # RTMP Server URL (stored as a GitHub Secret)
-VIDEO_URL = "http://fl5.moveonjoy.com/NBA_5/index.m3u8"  # Video/audio source
+VIDEO_URL = "http://fl6.moveonjoy.com/NBA_11/index.m3u8"  # Video/audio source
 OVERLAY_IMAGE = "overlay.png"  # Overlay image (leave blank if not needed)
 OVERLAY_TEXT = "NBA Live"  # Text overlay on the video
 
@@ -32,7 +32,7 @@ def restream(video_url, rtmp_url, overlay_image=None, overlay_text="NBA Live"):
             "-filter_complex",
             f"[0:v][1:v]scale2ref[v0][v1];[v0][v1]overlay=0:0,"
             f"drawbox=x=10:y=10:w=200:h=40:color=blue@0.7:t=fill,"
-            f"drawtext=text='{overlay_text_escaped}':fontcolor=white:fontsize=24:x=20:y=20"
+            f"drawtext=text='{overlay_text_escaped}':fontcolor=white:fontsize=20:x=20:y=20"
         ]
     else:
         command += [
