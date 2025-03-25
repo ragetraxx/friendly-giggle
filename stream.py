@@ -59,7 +59,7 @@ def stream_movie(movie):
         "-i", OVERLAY,
         "-filter_complex",
         "[0:v][1:v]scale2ref[v0][v1];[v0][v1]overlay=0:0,"  # ✅ Correct overlay positioning
-        f"drawtext=text='{overlay_text}':fontcolor=white:fontsize=28:x=30:y=30",
+        f"drawtext=text='{overlay_text}':fontcolor=white:fontsize=25:x=30:y=30",
         "-c:v", "libx264",
         "-preset", "ultrafast",
         "-tune", "zerolatency",
