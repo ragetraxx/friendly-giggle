@@ -4,7 +4,7 @@ import os
 import time
 
 RTMP_URL = os.getenv("RTMP_URL")  # RTMP Server URL
-VIDEO_URL = "http://fl6.moveonjoy.com/NBA_3/index.m3u8"  # Video source
+VIDEO_URL = "http://fl6.moveonjoy.com/NBA_1/index.m3u8"  # Video source
 OVERLAY_IMAGE = "overlay.png"  # Overlay image (optional)
 OVERLAY_TEXT = "NBA Live"  # Overlay text
 
