@@ -4,7 +4,7 @@ import os
 
 # Load RTMP URL from environment variable (GitHub Secret)
 RTMP_URL = os.getenv("RTMP_URL")  # RTMP Server URL (stored as a GitHub Secret)
-VIDEO_URL = "http://fl6.moveonjoy.com/NBA_11/index.m3u8"  # Video/audio source
+VIDEO_URL = "http://fl6.moveonjoy.com/NBA_3/index.m3u8"  # Video/audio source
 OVERLAY_IMAGE = "overlay.png"  # Overlay image (leave blank if not needed)
 OVERLAY_TEXT = "NBA Live"  # Text overlay on the video
 
