@@ -55,7 +55,7 @@ jobs:
             echo "✅ RTMP_URL is set."
           fi
 
-      - name: Run live stream script (stream.py)
+      - name: Run live stream script (restream.py)
         env:
           RTMP_URL: ${{ secrets.RTMP_URL }}  # ✅ Pass RTMP_URL to stream.py
-        run: python3 stream.py
+        run: python3 restream.py
