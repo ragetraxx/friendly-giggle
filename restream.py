@@ -1,66 +1,49 @@
 import subprocess
 import shlex
 import os
+import time
 
-# Load RTMP URL from environment variable (GitHub Secret)
-RTMP_URL = os.getenv("RTMP_URL")  # RTMP Server URL (stored as a GitHub Secret)
-VIDEO_URL = "http://fl6.moveonjoy.com/NBA_3/index.m3u8"  # Video/audio source
-OVERLAY_IMAGE = "overlay.png"  # Overlay image (leave blank if not needed)
-OVERLAY_TEXT = "NBA Live"  # Text overlay on the video
+RTMP_URL = os.getenv("RTMP_URL")  # RTMP Server URL
+VIDEO_URL = "http://fl6.moveonjoy.com/NBA_3/index.m3u8"  # Video source
+OVERLAY_IMAGE = "overlay.png"  # Overlay image (optional)
+OVERLAY_TEXT = "NBA Live"  # Overlay text
 
-def restream(video_url, rtmp_url, overlay_image=None, overlay_text="NBA Live"):
-    """Re-streams a video or audio stream to an RTMP server with an optional overlay."""
-    
+def restream(video_url, rtmp_url, overlay_text="NBA Live"):
+    """Continuously re-streams a video to an RTMP server with optimized settings."""
+
     if not rtmp_url:
-        print("❌ ERROR: RTMP_URL is not set. Please check your environment variables.")
+        print("❌ ERROR: RTMP_URL is not set.")
         return
-    
-    video_url_escaped = shlex.quote(video_url)
-    overlay_text_escaped = overlay_text.replace(":", r"\:")  # Escape colon properly
 
-    command = [
-        "ffmpeg",
-        "-re",
-        "-i", video_url_escaped,  # Input video or audio stream
-    ]
-    
-    # Check if an overlay image is provided
-    if overlay_image:
-        overlay_path_escaped = shlex.quote(overlay_image)
-        command += [
-            "-i", overlay_path_escaped,
-            "-filter_complex",
-            f"[0:v][1:v]scale2ref[v0][v1];[v0][v1]overlay=0:0," \
-            f"drawbox=x=10:y=10:w=text_w+20:h=30:color=blue@0.7:t=fill," \
-            f"drawtext=text='{overlay_text_escaped}':fontcolor=white:fontsize=20:x=15:y=15"
-        ]
-    else:
-        command += [
+    while True:  # Infinite loop to restart FFmpeg if it stops
+        print(f"🎥 Streaming: {video_url} → {rtmp_url}")
+
+        command = [
+            "ffmpeg",
+            "-re",
+            "-i", video_url,
             "-vf",
-            f"drawbox=x=10:y=10:w=text_w+20:h=30:color=blue@0.7:t=fill," \
-            f"drawtext=text='{overlay_text_escaped}':fontcolor=white:fontsize=20:x=15:y=15"
+            f"drawtext=text='{overlay_text}':fontcolor=white:fontsize=24:x=15:y=15",
+            "-c:v", "libx264",
+            "-preset", "slow",  # Change to "ultrafast" for low-latency streaming
+            "-tune", "zerolatency",
+            "-b:v", "6000k",  # Increase bitrate for higher quality
+            "-maxrate", "7000k",
+            "-bufsize", "2000k",  # Lower buffer size to reduce latency
+            "-crf", "18",  # Higher quality (lower values = better quality)
+            "-pix_fmt", "yuv420p",
+            "-g", "25",  # Lower GOP for faster frame updates
+            "-c:a", "aac",
+            "-b:a", "192k",
+            "-ar", "48000",
+            "-f", "flv",
+            rtmp_url
         ]
-    
-    # Video encoding settings
-    command += [
-        "-c:v", "libx264",
-        "-preset", "fast",
-        "-tune", "film",
-        "-b:v", "4000k",
-        "-crf", "23",
-        "-maxrate", "4500k",
-        "-bufsize", "6000k",
-        "-pix_fmt", "yuv420p",
-        "-g", "50",
-        "-c:a", "aac",
-        "-b:a", "192k",
-        "-ar", "48000",
-        "-f", "flv",
-        rtmp_url
-    ]
 
-    print(f"🎥 Now Restreaming: {video_url}")
-    subprocess.run(command)
+        process = subprocess.run(command)
+
+        print("⚠️ Stream stopped. Restarting in 3 seconds...")
+        time.sleep(3)  # Shorter restart delay
 
 if __name__ == "__main__":
-    restream(VIDEO_URL, RTMP_URL, OVERLAY_IMAGE, OVERLAY_TEXT)
+    restream(VIDEO_URL, RTMP_URL)
