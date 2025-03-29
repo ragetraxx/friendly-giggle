@@ -4,9 +4,9 @@ import os
 import time
 
 RTMP_URL = os.getenv("RTMP_URL")  # RTMP Server URL
-VIDEO_URL = "http://fl6.moveonjoy.com/NBA_10/index.m3u8"  # Video source
+VIDEO_URL = "http://fl6.moveonjoy.com/PPV_1/index.m3u8"  # Video source
 OVERLAY_IMAGE = "overlay.png"  # Overlay image (optional)
-OVERLAY_TEXT = "NBA Live"  # Overlay text
+OVERLAY_TEXT = "UFC Fight Night: Moreno vs. Erceg"  # Overlay text
 
 def restream(video_url, rtmp_url, overlay_image=None, overlay_text="NBA Live"):
     """Continuously re-streams a video to an RTMP server with overlay support."""
