@@ -24,7 +24,7 @@ jobs:
           python-version: "3.x"
 
       - name: Install Dependencies
-        run: pip install pyyaml
+        run: pip install -r requirements.txt  # Ensure all dependencies are installed
 
       - name: Run Script (play.py)
         run: python3 play.py
@@ -34,11 +34,11 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           git add play.json
-          git diff --staged --quiet || git commit -m "Updated play.json with new movies"
+          git commit -m "Updated play.json with new movies - $(date '+%Y-%m-%d %H:%M:%S')" --allow-empty
           git push
 
       - name: Pull Latest Changes
-        run: git pull origin main
+        run: git pull --rebase origin main
 
       - name: Install FFmpeg
         run: |
@@ -57,5 +57,5 @@ jobs:
 
       - name: Run live stream script (stream.py)
         env:
-          RTMP_URL: ${{ secrets.RTMP_URL }}  # ✅ Pass RTMP_URL to stream.py
+          RTMP_URL: ${{ secrets.RTMP_URL }}
         run: python3 stream.py
