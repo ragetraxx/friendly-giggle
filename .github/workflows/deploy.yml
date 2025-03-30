@@ -8,6 +8,10 @@ on:
     - cron: "0 */6 * * *"  # Runs every 6 hours
   workflow_dispatch:
 
+concurrency:
+  group: play-json-deploy
+  cancel-in-progress: false  # Ensures only one workflow runs at a time without canceling in-progress runs
+
 jobs:
   update-and-deploy:
     runs-on: ubuntu-latest
