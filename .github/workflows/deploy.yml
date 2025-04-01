@@ -30,6 +30,9 @@ jobs:
       - name: Install Dependencies
         run: pip install -r requirements.txt  # Ensure all dependencies are installed
 
+      - name: Pull Latest Changes
+        run: git pull --rebase origin main  # Ensures no conflicts before committing
+
       - name: Run Script (play.py)
         run: python3 play.py
 
@@ -41,13 +44,10 @@ jobs:
           git commit -m "Updated play.json with new movies - $(date '+%Y-%m-%d %H:%M:%S')" --allow-empty
           git push
 
-      - name: Pull Latest Changes
-        run: git pull --rebase origin main
-
-      - name: Install FFmpeg
+      - name: Install FFmpeg (Full Version)
         run: |
           sudo apt-get update
-          sudo apt-get install -y ffmpeg
+          sudo apt-get install -y ffmpeg libavcodec-extra
 
       - name: Debug Secrets
         run: |
@@ -59,7 +59,12 @@ jobs:
             echo "✅ RTMP_URL is set."
           fi
 
+      - name: Delay Before Streaming
+        run: sleep 5  # Prevents RTMP throttling
+
       - name: Run live stream script (stream.py)
         env:
           RTMP_URL: ${{ secrets.RTMP_URL }}
-        run: python3 stream.py
+        run: |
+          export RTMP_URL=${{ secrets.RTMP_URL }}
+          python3 stream.py
