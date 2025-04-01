@@ -49,32 +49,30 @@ def stream_movie(movie):
     overlay_text = title.replace(":", r"\:").replace("'", r"\'").replace('"', r'\"')
 
     command = [
-        "ffmpeg",
-        "-re",
-        "-fflags", "+genpts",
-        "-rtbufsize", "8M",  # ✅ Lower buffer to prevent excess latency
-        "-probesize", "32M",
-        "-analyzeduration", "32M",
-        "-i", url,
-        "-i", OVERLAY,
-        "-filter_complex",
-        "[0:v][1:v]scale2ref[v0][v1];[v0][v1]overlay=0:0,"  # ✅ Correct overlay positioning
-        f"drawtext=text='{overlay_text}':fontcolor=white:fontsize=20:x=30:y=30",
-        "-c:v", "libx264",
-        "-preset", "fast",
-        "-tune", "film",
-        "-b:v", "4000k",
-        "-crf", "23",
-        "-maxrate", "4500k",
-        "-bufsize", "6000k",
-        "-pix_fmt", "yuv420p",
-        "-g", "50",
-        "-c:a", "aac",
-        "-b:a", "192k",
-        "-ar", "48000",
-        "-f", "flv",
-        RTMP_URL,
-        "-loglevel", "error",  # ✅ Show only errors, not all logs
+    "ffmpeg",
+    "-fflags", "+genpts",
+    "-rtbufsize", "64M",  # Increased buffer size
+    "-probesize", "64M",
+    "-analyzeduration", "64M",
+    "-i", url,
+    "-i", OVERLAY,
+    "-filter_complex",
+    "[0:v][1:v]scale2ref[v0][v1];[v0][v1]overlay=0:0,"  # Correct overlay positioning
+    f"drawtext=text='{overlay_text}':fontcolor=white:fontsize=20:x=30:y=30",
+    "-c:v", "libx264",
+    "-preset", "fast",
+    "-tune", "film",
+    "-b:v", "2500k",  # Adjusted video bitrate
+    "-maxrate", "3000k",
+    "-bufsize", "5000k",  # Adjusted buffer size
+    "-pix_fmt", "yuv420p",
+    "-g", "50",
+    "-c:a", "aac",
+    "-b:a", "192k",
+    "-ar", "48000",
+    "-f", "flv",
+    RTMP_URL,
+    "-loglevel", "info",  # More detailed logs
     ]
 
     print(f"🎬 Now Streaming: {title}")
