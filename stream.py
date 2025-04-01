@@ -61,18 +61,17 @@ def stream_movie(movie):
         "[0:v][1:v]scale2ref[v0][v1];[v0][v1]overlay=0:0,"  # ✅ Correct overlay positioning
         f"drawtext=text='{overlay_text}':fontcolor=white:fontsize=20:x=30:y=30",
         "-c:v", "libx264",
-        "-preset", "ultrafast",
-        "-tune", "zerolatency",
-        "-crf", "18",  # ✅ Balanced quality & performance
-        "-maxrate", "5000k",  # ✅ Adjusted for stability
-        "-bufsize", "6000k",  # ✅ Reduced to avoid long buffering
+        "-preset", "fast",
+        "-tune", "film",
+        "-b:v", "4000k",
+        "-crf", "23",
+        "-maxrate", "4500k",
+        "-bufsize", "6000k",
         "-pix_fmt", "yuv420p",
-        "-g", "60",
-        "-r", "30",
+        "-g", "50",
         "-c:a", "aac",
-        "-b:a", "128k",
-        "-ar", "44100",
-        "-movflags", "+faststart",
+        "-b:a", "192k",
+        "-ar", "48000",
         "-f", "flv",
         RTMP_URL,
         "-loglevel", "error",  # ✅ Show only errors, not all logs
