@@ -61,11 +61,12 @@ def stream_movie(movie):
         "[0:v][1:v]scale2ref[v0][v1];[v0][v1]overlay=0:0,"  # ✅ Correct overlay positioning
         f"drawtext=text='{overlay_text}':fontcolor=white:fontsize=20:x=30:y=30",
         "-c:v", "libx264",
-        "-preset", "ultrafast",
+        "-preset", "fast",
         "-tune", "zerolatency",
         "-crf", "18",  # ✅ Balanced quality & performance
-        "-maxrate", "5000k",  # ✅ Adjusted for stability
-        "-bufsize", "6000k",  # ✅ Reduced to avoid long buffering
+        "-b:v", "4000k",
+        "-maxrate", "4500k",  # ✅ Adjusted for stability
+        "-bufsize", "4000k",  # ✅ Reduced to avoid long buffering
         "-pix_fmt", "yuv420p",
         "-g", "60",
         "-r", "30",
