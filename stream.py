@@ -47,33 +47,36 @@ def stream_movie(movie):
         return
 
     overlay_text = title.replace(":", r"\:").replace("'", r"\'").replace('"', r'\"')\
-                    .replace("&", r"\&").replace("%", r"\%").replace("(", r"").replace(")", r"")
+                    .replace("&", r"\&").replace("%", r"\%").replace("(", r"\(").replace(")", r"\)")
     
     command = [
     "ffmpeg",
     "-fflags", "+genpts",
-    "-rtbufsize", "128M",  # Increased buffer size to handle high bitrates and prevent interruptions
-    "-probesize", "128M",  # Increased probing size to ensure better handling of the stream
-    "-analyzeduration", "128M",  # Increased analysis duration to avoid initial buffering
-    "-i", url,  # The video URL
-    "-i", OVERLAY,  # Overlay image
+    "-rtbufsize", "256M",
+    "-probesize", "128M",
+    "-analyzeduration", "128M",
+    "-i", url,
+    "-i", OVERLAY,
     "-filter_complex",
-    "[0:v][1:v]scale2ref[v0][v1];[v0][v1]overlay=0:0,"  # Correct overlay positioning
-    f"drawtext=text='{overlay_text}':fontcolor=white:fontsize=20:x=30:y=30",  # Overlay text
-    "-c:v", "libx264",  # Use x264 codec for video
-    "-preset", "fast",  # Speed optimization for streaming
-    "-tune", "film",  # Tuned for film content, if you're streaming movies
-    "-b:v", "2000k",  # Video bitrate, adjust depending on available bandwidth
-    "-maxrate", "2500k",  # Max video bitrate, ensure this doesn't exceed your network capacity
-    "-bufsize", "5000k",  # Buffer size for smooth streaming, should be higher than maxrate
-    "-pix_fmt", "yuv420p",  # Pixel format for compatibility
-    "-g", "30",  # Lower GOP size (keyframe interval) for better streaming continuity
-    "-c:a", "aac",  # Audio codec
-    "-b:a", "192k",  # Audio bitrate
-    "-ar", "48000",  # Audio sample rate
-    "-f", "flv",  # Format for RTMP
-    RTMP_URL,  # RTMP URL for streaming
-    "-loglevel", "info",  # Set log level for debugging and detailed logs
+    "[0:v][1:v]scale2ref[v0][v1];[v0][v1]overlay=0:0,"
+    f"drawtext=text='{overlay_text}':fontcolor=white:fontsize=20:x=30:y=30",
+    "-c:v", "libx264",
+    "-profile:v", "main",  # Ensures compatibility with all players
+    "-preset", "fast",
+    "-tune", "film",
+    "-b:v", "2800k",
+    "-maxrate", "2800k",  # Lower maxrate to stabilize bitrate
+    "-bufsize", "8000k",  # Increase buffer to prevent buffering
+    "-pix_fmt", "yuv420p",
+    "-g", "25",  # Reduced GOP size for smoother playback
+    "-vsync", "cfr",  # Force constant framerate
+    "-c:a", "aac",
+    "-b:a", "192k",
+    "-ar", "48000",
+    "-f", "flv",
+    "-rtmp_live", "live",  # Optimize RTMP settings
+    RTMP_URL,
+    "-loglevel", "info",
     ]
 
     print(f"🎬 Now Streaming: {title}")
