@@ -5,7 +5,7 @@ import time
 import yt_dlp  # You need to install yt-dlp for this
 
 RTMP_URL = os.getenv("RTMP_URL")  # RTMP Server URL
-YOUTUBE_URL = "https://www.youtube.com/@senateofthephilippines/live"  # YouTube live URL
+YOUTUBE_URL = "https://www.youtube.com/@rapmafia/live"  # YouTube live URL
 OVERLAY_IMAGE = "overlay.png"  # Overlay image (optional)
 
 def get_youtube_stream_url_and_title(youtube_url):
@@ -17,16 +17,23 @@ def get_youtube_stream_url_and_title(youtube_url):
     }
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        result = ydl.extract_info(youtube_url, download=False)
-        video_url = result['url']
-        video_title = result['title']
-        return video_url, video_title
+        try:
+            result = ydl.extract_info(youtube_url, download=False)
+            video_url = result['url']
+            video_title = result['title']
+            return video_url, video_title
+        except yt_dlp.utils.UserNotLive as e:
+            print(f"❌ ERROR: The channel is not currently live. Please try again later.")
+            return None, None
+        except Exception as e:
+            print(f"❌ ERROR: {str(e)}")
+            return None, None
 
 def restream(video_url, rtmp_url, overlay_image=None, overlay_text="Live: YouTube Video Title"):
     """Continuously re-streams a video to an RTMP server with overlay support."""
 
-    if not rtmp_url:
-        print("❌ ERROR: RTMP_URL is not set.")
+    if not rtmp_url or not video_url:
+        print("❌ ERROR: RTMP_URL or video URL is not set.")
         return
 
     while True:  # Infinite loop to restart FFmpeg if it stops
@@ -82,8 +89,10 @@ def restream(video_url, rtmp_url, overlay_image=None, overlay_text="Live: YouTub
 if __name__ == "__main__":
     # Extract the live stream URL and video title from YouTube
     youtube_stream_url, video_title = get_youtube_stream_url_and_title(YOUTUBE_URL)
-    
-    # Use the title as the overlay text
-    overlay_text = f"Live: {video_title}"
-    
-    restream(youtube_stream_url, RTMP_URL, OVERLAY_IMAGE, overlay_text)
+
+    if youtube_stream_url and video_title:
+        # Use the title as the overlay text
+        overlay_text = f"Live: {video_title}"
+        restream(youtube_stream_url, RTMP_URL, OVERLAY_IMAGE, overlay_text)
+    else:
+        print("❌ ERROR: Could not retrieve video stream details.")
