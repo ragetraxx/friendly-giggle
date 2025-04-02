@@ -21,6 +21,8 @@ def get_youtube_stream_url_and_title(youtube_url):
             result = ydl.extract_info(youtube_url, download=False)
             video_url = result['url']
             video_title = result['title']
+            print(f"✅ Video URL: {video_url}")
+            print(f"✅ Video Title: {video_title}")
             return video_url, video_title
         except yt_dlp.utils.UserNotLive as e:
             print(f"❌ ERROR: The channel is not currently live. Please try again later.")
@@ -81,7 +83,12 @@ def restream(video_url, rtmp_url, overlay_image=None, overlay_text="Live: YouTub
             rtmp_url
         ]
 
-        process = subprocess.run(command)
+        print(f"FFmpeg command: {' '.join(command)}")  # Log the FFmpeg command
+        process = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+        # Capture FFmpeg output
+        print("FFmpeg stdout:", process.stdout.decode())
+        print("FFmpeg stderr:", process.stderr.decode())
 
         print("⚠️ Stream stopped. Restarting in 3 seconds...")
         time.sleep(3)  # Shorter restart delay
