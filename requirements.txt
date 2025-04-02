@@ -1,2 +1,4 @@
 requests
 ffmpeg
+yt-dlp
+ffmpeg-python
