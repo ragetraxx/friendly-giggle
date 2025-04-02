@@ -1,25 +1,31 @@
 name: Deploy YouTube Restream
 
-on: push: branches: - main workflow_dispatch: {}
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 
-env: RTMP_URL: ${{ secrets.RTMP_URL }}
+env:
+  RTMP_URL: ${{ secrets.RTMP_URL }}
 
-jobs: restream: runs-on: ubuntu-latest
+jobs:
+  restream:
+    runs-on: ubuntu-latest
 
-steps:
-  - name: Checkout repository
-    uses: actions/checkout@v4
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-  - name: Set up Python
-    uses: actions/setup-python@v4
-    with:
-      python-version: '3.x'
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
 
-  - name: Install dependencies
-    run: |
-      pip install yt-dlp
-      sudo apt-get update && sudo apt-get install -y ffmpeg
+      - name: Install dependencies
+        run: |
+          pip install yt-dlp
+          sudo apt-get update && sudo apt-get install -y ffmpeg
 
-  - name: Run YouTube restream script
-    run: python yt.py
-
+      - name: Run YouTube restream script
+        run: python yt.py
