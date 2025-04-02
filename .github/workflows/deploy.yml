@@ -1,6 +1,6 @@
 name: Deploy YouTube Restream
 
-on: push: branches: - main workflow_dispatch:
+on: push: branches: - main workflow_dispatch: {}
 
 env: RTMP_URL: ${{ secrets.RTMP_URL }}
 
