@@ -7,10 +7,9 @@ import yt_dlp  # You need to install yt-dlp for this
 RTMP_URL = os.getenv("RTMP_URL")  # RTMP Server URL
 YOUTUBE_URL = "https://www.youtube.com/@senateofthephilippines/live"  # YouTube live URL
 OVERLAY_IMAGE = "overlay.png"  # Overlay image (optional)
-OVERLAY_TEXT = "Senate of the Philippines Live"  # Overlay text
 
-def get_youtube_stream_url(youtube_url):
-    """Extracts the stream URL from YouTube using yt-dlp."""
+def get_youtube_stream_url_and_title(youtube_url):
+    """Extracts the stream URL and video title from YouTube using yt-dlp."""
     ydl_opts = {
         'format': 'bestvideo+bestaudio/best',
         'quiet': True,
@@ -19,9 +18,11 @@ def get_youtube_stream_url(youtube_url):
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         result = ydl.extract_info(youtube_url, download=False)
-        return result['url']
+        video_url = result['url']
+        video_title = result['title']
+        return video_url, video_title
 
-def restream(video_url, rtmp_url, overlay_image=None, overlay_text="NBA Live"):
+def restream(video_url, rtmp_url, overlay_image=None, overlay_text="Live: YouTube Video Title"):
     """Continuously re-streams a video to an RTMP server with overlay support."""
 
     if not rtmp_url:
@@ -79,7 +80,10 @@ def restream(video_url, rtmp_url, overlay_image=None, overlay_text="NBA Live"):
         time.sleep(3)  # Shorter restart delay
 
 if __name__ == "__main__":
-    # Extract the live stream URL from YouTube
-    youtube_stream_url = get_youtube_stream_url(YOUTUBE_URL)
+    # Extract the live stream URL and video title from YouTube
+    youtube_stream_url, video_title = get_youtube_stream_url_and_title(YOUTUBE_URL)
     
-    restream(youtube_stream_url, RTMP_URL, OVERLAY_IMAGE, OVERLAY_TEXT)
+    # Use the title as the overlay text
+    overlay_text = f"Live: {video_title}"
+    
+    restream(youtube_stream_url, RTMP_URL, OVERLAY_IMAGE, overlay_text)
