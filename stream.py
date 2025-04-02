@@ -52,7 +52,7 @@ def stream_movie(movie):
         f"[0:v][1:v]scale2ref[v0][v1];[v0][v1]overlay=0:0,drawtext=text='{overlay_text}':fontcolor=white:fontsize=20:x=30:y=30",
         "-c:v", "libx264", "-profile:v", "main", "-preset", "veryfast", "-tune", "zerolatency", "-b:v", "2800k",
         "-maxrate", "2800k", "-bufsize", "4000k", "-pix_fmt", "yuv420p", "-g", "50", "-vsync", "cfr",
-        "-c:a", "aac", "-b:a", "320k", "-ar", "41000", "-f", "flv", "-rtmp_live", "live", RTMP_URL
+        "-c:a", "aac", "-b:a", "320k", "-ar", "48000", "-f", "flv", "-rtmp_live", "live", RTMP_URL
     ]
 
     print(f"🎬 Now Streaming: {title}")
