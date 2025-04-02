@@ -1,36 +1,25 @@
-name: Restream YouTube Live to RTMP
+name: Deploy YouTube Restream
 
-on:
-  push:
-    branches:
-      - main  # Triggers on pushes to the 'main' branch
-  workflow_dispatch:  # Allows manual trigger from GitHub Actions UI
+on: push: branches: - main workflow_dispatch:
 
-jobs:
-  restream:
-    runs-on: ubuntu-latest
+env: RTMP_URL: ${{ secrets.RTMP_URL }}
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+jobs: restream: runs-on: ubuntu-latest
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'  # Use the latest version of Python 3
+steps:
+  - name: Checkout repository
+    uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+  - name: Set up Python
+    uses: actions/setup-python@v4
+    with:
+      python-version: '3.x'
 
-      - name: Install FFmpeg
-        run: |
-          sudo apt update
-          sudo apt install -y ffmpeg
+  - name: Install dependencies
+    run: |
+      pip install yt-dlp
+      sudo apt-get update && sudo apt-get install -y ffmpeg
 
-      - name: Run the restream script
-        env:
-          RTMP_URL: ${{ secrets.RTMP_URL }}  # Using GitHub secret for RTMP URL
-        run: |
-          python yt.py
+  - name: Run YouTube restream script
+    run: python yt.py
+
