@@ -1,70 +1,36 @@
-name: Play JSON Update & Live Stream Deployment
+name: Restream YouTube Live to RTMP
 
 on:
   push:
     branches:
-      - main
-  schedule:
-    - cron: "0 */6 * * *"  # Runs every 6 hours
-  workflow_dispatch:
-
-concurrency:
-  group: play-json-deploy
-  cancel-in-progress: false  # Ensures only one workflow runs at a time without canceling in-progress runs
+      - main  # Triggers on pushes to the 'main' branch
+  workflow_dispatch:  # Allows manual trigger from GitHub Actions UI
 
 jobs:
-  update-and-deploy:
+  restream:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-        with:
-          persist-credentials: true
+      - name: Checkout code
+        uses: actions/checkout@v2
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v2
         with:
-          python-version: "3.x"
+          python-version: '3.x'  # Use the latest version of Python 3
 
-      - name: Install Dependencies
-        run: pip install -r requirements.txt  # Ensure all dependencies are installed
-
-      - name: Pull Latest Changes
-        run: git pull --rebase origin main  # Ensures no conflicts before committing
-
-      - name: Run Script (play.py)
-        run: python3 play.py
-
-      - name: Commit and Push Changes
+      - name: Install dependencies
         run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
-          git add play.json
-          git commit -m "Updated play.json with new movies - $(date '+%Y-%m-%d %H:%M:%S')" --allow-empty
-          git push
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-      - name: Install FFmpeg (Full Version)
+      - name: Install FFmpeg
         run: |
-          sudo apt-get update
-          sudo apt-get install -y ffmpeg libavcodec-extra
+          sudo apt update
+          sudo apt install -y ffmpeg
 
-      - name: Debug Secrets
-        run: |
-          echo "Checking if RTMP_URL is set..."
-          if [ -z "${{ secrets.RTMP_URL }}" ]; then
-            echo "❌ ERROR: RTMP_URL is NOT set!"
-            exit 1
-          else
-            echo "✅ RTMP_URL is set."
-          fi
-
-      - name: Delay Before Streaming
-        run: sleep 5  # Prevents RTMP throttling
-
-      - name: Run live stream script (stream.py)
+      - name: Run the restream script
         env:
-          RTMP_URL: ${{ secrets.RTMP_URL }}
+          RTMP_URL: ${{ secrets.RTMP_URL }}  # Using GitHub secret for RTMP URL
         run: |
-          export RTMP_URL=${{ secrets.RTMP_URL }}
-          python3 stream.py
+          python yt.py
