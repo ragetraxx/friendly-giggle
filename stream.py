@@ -62,7 +62,7 @@ def stream_movie(movie):
     )
     ticker_text = (
         f"drawtext=text='{news_ticker}':"
-        f"fontcolor=white:fontsize=18:x=w-mod(t*1000\,w+tw):y=h-th-10"
+        f"fontcolor=white:fontsize=18:x=w-mod(t*100\,w+tw):y=h-th-10"
     )
 
     command = [
