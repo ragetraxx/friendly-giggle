@@ -28,9 +28,8 @@ if not os.path.exists(OVERLAY):
 def get_news_ticker():
     """Fetch latest news headlines and return a single ticker string."""
     feed = feedparser.parse(NEWS_FEED_URL)
-    headlines = [entry.title for entry in feed.entries[:10]]  # Top 10 headlines
-    ticker_text = '   ***   '.join(headlines)
-    ticker_text = ticker_text.replace("'", r"\'").replace(":", r"\:").replace('"', r'\"')
+    headlines = [entry.title for entry in feed.entries[:10]]  # top 10 headlines
+    ticker_text = '   ***   '.join(headlines).replace("'", r"\'").replace(":", r"\:").replace('"', r'\"')
     return ticker_text
 
 def load_movies():
@@ -61,11 +60,9 @@ def stream_movie(movie):
         f"drawtext=text='{title}':"
         f"fontcolor=white:fontsize=20:x=30:y=30"
     )
-
-    # Slower scrolling ticker with proper escaping
     ticker_text = (
         f"drawtext=text='{news_ticker}':"
-        f"fontcolor=white:fontsize=20:x=w-mod(t*50\\,w+tw):y=h-40"
+        f"fontcolor=white:fontsize=18:x=w-mod(t*500\,w+tw):y=h-th-10"
     )
 
     command = [
