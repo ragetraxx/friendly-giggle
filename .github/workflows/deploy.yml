@@ -30,9 +30,6 @@ jobs:
       - name: Install Dependencies
         run: pip install -r requirements.txt  # Ensure all dependencies are installed
 
-      - name: Install Additional Dependencies
-        run: pip install feedparser  # Required for news ticker
-
       - name: Pull Latest Changes
         run: git pull --rebase origin main  # Ensures no conflicts before committing
 
