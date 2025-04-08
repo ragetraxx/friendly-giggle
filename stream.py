@@ -36,6 +36,13 @@ def load_movies():
         print(f"❌ ERROR: Failed to load {PLAY_FILE} - {str(e)}")
         return []
 
+def escape_special_chars(text):
+    """Escape all common special characters."""
+    special_chars = r'''!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~'''
+    for char in special_chars:
+        text = text.replace(char, f"\\{char}")
+    return text
+
 def stream_movie(movie):
     """Stream a single movie using FFmpeg."""
     title = movie.get("title", "Unknown Title")
@@ -45,7 +52,7 @@ def stream_movie(movie):
         print(f"❌ ERROR: Missing URL for movie '{title}'")
         return
 
-    overlay_text = title.replace(":", r"\:").replace("'", r"\'").replace('"', r'\"')
+    overlay_text = escape_special_chars(title)
 
     command = [
         "ffmpeg", "-re", "-fflags", "nobuffer", "-i", url, "-i", OVERLAY, "-filter_complex",
