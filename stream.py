@@ -7,6 +7,7 @@ import time
 PLAY_FILE = "play.json"
 RTMP_URL = os.getenv("RTMP_URL")
 OVERLAY = os.path.abspath("overlay.png")
+FONT_PATH = os.path.abspath("DejaVuSans-Bold.ttf")  # Full path to your font file
 RETRY_DELAY = 60
 
 # ✅ Check if RTMP_URL is set
@@ -21,6 +22,10 @@ if not os.path.exists(PLAY_FILE):
 
 if not os.path.exists(OVERLAY):
     print(f"❌ ERROR: Overlay image '{OVERLAY}' not found!")
+    exit(1)
+
+if not os.path.exists(FONT_PATH):
+    print(f"❌ ERROR: Font file '{FONT_PATH}' not found!")
     exit(1)
 
 def load_movies():
@@ -53,10 +58,10 @@ def stream_movie(movie):
 
     command = [
         "ffmpeg", "-re", "-fflags", "nobuffer", "-i", url, "-i", OVERLAY, "-filter_complex",
-        f"[0:v][1:v]scale2ref[v0][v1];[v0][v1]overlay=0:0,drawtext=text='{overlay_text}':fontcolor=white:fontsize=20:x=30:y=30",
+        f"[0:v][1:v]scale2ref[v0][v1];[v0][v1]overlay=0:0,drawtext=fontfile='{FONT_PATH}':text='{overlay_text}':fontcolor=white:fontsize=20:x=30:y=30",
         "-c:v", "libx264", "-profile:v", "main", "-preset", "veryfast", "-tune", "zerolatency", "-b:v", "2800k",
         "-maxrate", "2800k", "-bufsize", "4000k", "-pix_fmt", "yuv420p", "-g", "50", "-vsync", "cfr",
-        "-c:a", "aac", "-b:a", "128k", "-ar", "44100", "-f", "flv", "-rtmp_live", "live", RTMP_URL
+        "-c:a", "aac", "-b:a", "320k", "-ar", "48000", "-f", "flv", "-rtmp_live", "live", RTMP_URL
     ]
 
     print(f"🎬 Now Streaming: {title}")
@@ -72,7 +77,7 @@ def stream_movie(movie):
 def main():
     """Continuously play movies from play.json in a loop."""
     movies = load_movies()
-    
+
     if not movies:
         print(f"🔄 No movies found! Retrying in {RETRY_DELAY} seconds...")
         time.sleep(RETRY_DELAY)
