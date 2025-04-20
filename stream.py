@@ -7,7 +7,7 @@ import time
 PLAY_FILE = "play.json"
 RTMP_URL = os.getenv("RTMP_URL")
 OVERLAY = os.path.abspath("overlay.png")
-FONT_PATH = os.path.abspath("DejaVuSans-Bold.ttf")  # Full path to your font file
+FONT_PATH = os.path.abspath("Roboto-Black.ttf")  # Full path to your font file
 RETRY_DELAY = 60
 
 # ✅ Check if RTMP_URL is set
