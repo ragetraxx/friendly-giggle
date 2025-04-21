@@ -34,12 +34,12 @@ def restream(video_url, rtmp_url, overlay_image=None, overlay_text="NBA Live"):
                 "-i", overlay_path_escaped,  # Input overlay image
                 "-filter_complex",
                 "[0:v][1:v]scale2ref[v0][v1];[v0][v1]overlay=10:10,"
-                f"drawtext=text='{overlay_text_escaped}':fontcolor=white:fontsize=20:x=20:y=20"
+                f"drawtext=text='{overlay_text_escaped}':fontcolor=white:fontsize=20:x=30:y=30"
             ]
         else:
             command += [
                 "-vf",
-                f"drawtext=text='{overlay_text_escaped}':fontcolor=white:fontsize=24:x=15:y=15"
+                f"drawtext=text='{overlay_text_escaped}':fontcolor=white:fontsize=20:x=30:y=30"
             ]
 
         # Video encoding settings
