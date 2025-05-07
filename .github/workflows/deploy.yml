@@ -67,4 +67,4 @@ jobs:
           RTMP_URL: ${{ secrets.RTMP_URL }}
         run: |
           export RTMP_URL=${{ secrets.RTMP_URL }}
-          python3 stream.py
+          python3 restream.py
