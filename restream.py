@@ -4,9 +4,9 @@ import os
 import time
 
 RTMP_URL = os.getenv("RTMP_URL")  # RTMP Server URL
-VIDEO_URL = "https://d1qvkrpvk32u24.cloudfront.net/RL/smil:US-4948e1d4-2ba6-4bb3-a61b-454b35a98533.smil/28367603792219181305917485157617983126jc6tmxk4yixojp2uvctdy0jk1t/playlist.m3u8"  # Video source
+VIDEO_URL = "https://cdn3.wowza.com/1/QmVNUVhTNTZSS3Uz/YWQ0aHpi/hls/live/playlist.m3u8"  # Video source
 OVERLAY_IMAGE = "overlay.png"  # Overlay image (optional)
-OVERLAY_TEXT = "Live: The Basilica of the National Shrine of the Immaculate Conception"  # Overlay text
+OVERLAY_TEXT = "Live: St. Peter's Square"  # Overlay text
 
 def restream(video_url, rtmp_url, overlay_image=None, overlay_text="NBA Live"):
     """Continuously re-streams a video to an RTMP server with overlay support."""
