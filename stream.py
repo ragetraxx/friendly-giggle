@@ -7,12 +7,19 @@ import time
 PLAY_FILE = "play.json"
 RTMP_URL = os.getenv("RTMP_URL")
 OVERLAY = os.path.abspath("overlay.png")
-FONT_PATH = os.path.abspath("Roboto-Black.ttf")  # Full path to your font file
+FONT_PATH = os.path.abspath("Roboto-Black.ttf")
 RETRY_DELAY = 60
 
 # ✅ Check if RTMP_URL is set
 if not RTMP_URL:
-    print("❌ ERROR: RTMP_URL environment variable is NOT set! Check configuration.")
+    print("❌ ERROR: RTMP_URL environment variable is NOT set! Check GitHub secret or environment.")
+    exit(1)
+
+# ✅ Print partial RTMP_URL for debugging (do not print password)
+try:
+    print(f"✅ RTMP_URL loaded (host path): {RTMP_URL.split('@')[-1]}")
+except Exception:
+    print("❌ ERROR: RTMP_URL format is invalid. It should be: rtmp://user:pass@host/app/stream")
     exit(1)
 
 # ✅ Ensure required files exist
@@ -42,7 +49,7 @@ def load_movies():
         return []
 
 def escape_drawtext(text):
-    """Escape only necessary characters for FFmpeg drawtext without showing visible backslashes."""
+    """Escape only necessary characters for FFmpeg drawtext."""
     return text.replace('\\', '\\\\\\\\').replace(':', '\\:').replace("'", "\\'")
 
 def stream_movie(movie):
@@ -65,11 +72,13 @@ def stream_movie(movie):
     ]
 
     print(f"🎬 Now Streaming: {title}")
+    print("▶️ FFmpeg command:")
+    print(" ".join(command))  # Debug log
 
     try:
         process = subprocess.Popen(command, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, text=True)
         for line in process.stderr:
-            print(line, end="")  # Optional: Log errors in real-time
+            print(line, end="")  # Live FFmpeg error/debug output
         process.wait()
     except Exception as e:
         print(f"❌ ERROR: FFmpeg failed for '{title}' - {str(e)}")
@@ -83,13 +92,10 @@ def main():
         time.sleep(RETRY_DELAY)
         return main()
 
-    index = 0  # Track current movie index
-
+    index = 0
     while True:
         movie = movies[index]
         stream_movie(movie)
-
-        # Move to the next movie, looping back if at the end
         index = (index + 1) % len(movies)
         print("🔄 Movie ended. Playing next movie...")
 
