@@ -7,33 +7,20 @@ import time
 PLAY_FILE = "play.json"
 RTMP_URL = os.getenv("RTMP_URL")
 OVERLAY = os.path.abspath("overlay.png")
-FONT_PATH = os.path.abspath("Roboto-Black.ttf")
+FONT_PATH = os.path.abspath("Roboto-Black.ttf")  # Full path to your font file
 RETRY_DELAY = 60
 
 # ✅ Check if RTMP_URL is set
 if not RTMP_URL:
-    print("❌ ERROR: RTMP_URL environment variable is NOT set! Check GitHub secret or environment.")
-    exit(1)
-
-# ✅ Print partial RTMP_URL for debugging (do not print password)
-try:
-    print(f"✅ RTMP_URL loaded (host path): {RTMP_URL.split('@')[-1]}")
-except Exception:
-    print("❌ ERROR: RTMP_URL format is invalid. It should be: rtmp://user:pass@host/app/stream")
+    print("❌ ERROR: RTMP_URL environment variable is NOT set!")
+    print("🛠️  Tip: Make sure your GitHub Actions workflow includes:\n  env:\n    RTMP_URL: ${{ secrets.RTMP_URL }}")
     exit(1)
 
 # ✅ Ensure required files exist
-if not os.path.exists(PLAY_FILE):
-    print(f"❌ ERROR: {PLAY_FILE} not found!")
-    exit(1)
-
-if not os.path.exists(OVERLAY):
-    print(f"❌ ERROR: Overlay image '{OVERLAY}' not found!")
-    exit(1)
-
-if not os.path.exists(FONT_PATH):
-    print(f"❌ ERROR: Font file '{FONT_PATH}' not found!")
-    exit(1)
+for path, label in [(PLAY_FILE, "Play file"), (OVERLAY, "Overlay image"), (FONT_PATH, "Font file")]:
+    if not os.path.exists(path):
+        print(f"❌ ERROR: {label} '{path}' not found!")
+        exit(1)
 
 def load_movies():
     """Load all movies from play.json."""
@@ -49,7 +36,7 @@ def load_movies():
         return []
 
 def escape_drawtext(text):
-    """Escape only necessary characters for FFmpeg drawtext."""
+    """Escape only necessary characters for FFmpeg drawtext without showing visible backslashes."""
     return text.replace('\\', '\\\\\\\\').replace(':', '\\:').replace("'", "\\'")
 
 def stream_movie(movie):
@@ -72,13 +59,13 @@ def stream_movie(movie):
     ]
 
     print(f"🎬 Now Streaming: {title}")
-    print("▶️ FFmpeg command:")
-    print(" ".join(command))  # Debug log
+    # Uncomment for debugging FFmpeg command:
+    # print("FFmpeg Command:", " ".join(command))
 
     try:
         process = subprocess.Popen(command, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, text=True)
         for line in process.stderr:
-            print(line, end="")  # Live FFmpeg error/debug output
+            print(line, end="")  # Optional: Log errors in real-time
         process.wait()
     except Exception as e:
         print(f"❌ ERROR: FFmpeg failed for '{title}' - {str(e)}")
@@ -92,12 +79,15 @@ def main():
         time.sleep(RETRY_DELAY)
         return main()
 
-    index = 0
+    index = 0  # Track current movie index
+
     while True:
         movie = movies[index]
         stream_movie(movie)
+
         index = (index + 1) % len(movies)
         print("🔄 Movie ended. Playing next movie...")
 
 if __name__ == "__main__":
+    print(f"✅ RTMP_URL is: {RTMP_URL}")  # Temporary debug
     main()
