@@ -10,7 +10,7 @@ on:
 
 concurrency:
   group: play-json-deploy
-  cancel-in-progress: false  # Ensures only one workflow runs at a time without canceling in-progress runs
+  cancel-in-progress: false
 
 jobs:
   update-and-deploy:
@@ -28,10 +28,10 @@ jobs:
           python-version: "3.x"
 
       - name: Install Dependencies
-        run: pip install -r requirements.txt  # Ensure all dependencies are installed
+        run: pip install -r requirements.txt
 
       - name: Pull Latest Changes
-        run: git pull --rebase origin main  # Ensures no conflicts before committing
+        run: git pull --rebase origin main
 
       - name: Run Script (play.py)
         run: python3 play.py
@@ -60,11 +60,9 @@ jobs:
           fi
 
       - name: Delay Before Streaming
-        run: sleep 5  # Prevents RTMP throttling
+        run: sleep 5
 
       - name: Run live stream script (stream.py)
         env:
           RTMP_URL: ${{ secrets.RTMP_URL }}
-        run: |
-          export RTMP_URL=${{ secrets.RTMP_URL }}
-          python3 stream.py
+        run: python3 stream.py
