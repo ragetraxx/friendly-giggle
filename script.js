@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     { name: "TRUETV", url: "https://qp-pldt-live-grp-08-prod.akamaized.net/out/u/truefm_tv.mpd", keyId: "0559c95496d44fadb94105b9176c3579", key: "40d8bb2a46ffd03540e0c6210ece57ce" },
     { name: "TV5", url: "https://qp-pldt-live-grp-02-prod.akamaized.net/out/u/tv5_hd.mpd", keyId: "2615129ef2c846a9bbd43a641c7303ef", key: "07c7f996b1734ea288641a68e1cfdc4d" },
     { name: "UAAP Varsity", url: "https://qp-pldt-live-grp-04-prod.akamaized.net/out/u/cg_uaap_cplay_sd.mpd", keyId: "95588338ee37423e99358a6d431324b9", key: "6e0f50a12f36599a55073868f814e81e" },
-    { name: "Animax", url: "https://qp-pldt-live-grp-07-prod.akamaized.net/out/u/cg_animax_sd.mpd", keyId: "92032b0e41a543fb9830751273b8debd", key: "03f8b65e2af785b10d6634735dbe6c11" },
+    { name: "Animax", url: "https://qp-pldt-live-grp-07-prod.akamaized.net/out/u/cg_animax_sd_new.mpd", keyId: "92032b0e41a543fb9830751273b8debd", key: "03f8b65e2af785b10d6634735dbe6c11" },
     { name: "Dreamworks", url: "https://qp-pldt-live-grp-02-prod.akamaized.net/out/u/cg_dreamworks_hd1.mpd", keyId: "4ab9645a2a0a47edbd65e8479c2b9669", key: "8cb209f1828431ce9b50b593d1f44079" },
     { name: "Dreamworks Tagalog", url: "https://qp-pldt-live-grp-07-prod.akamaized.net/out/u/cg_dreamworktag.mpd", keyId: "564b3b1c781043c19242c66e348699c5", key: "d3ad27d7fe1f14fb1a2cd5688549fbab" },
     { name: "Moonbug Kids", url: "https://qp-pldt-live-grp-06-prod.akamaized.net/out/u/cg_moonbug_kids_sd.mpd", keyId: "0bf00921bec94a65a124fba1ef52b1cd", key: "0f1488487cbe05e2badc3db53ae0f29f" }, 
