@@ -10,6 +10,7 @@ OVERLAY = os.path.abspath("overlay.png")
 FONT_PATH = os.path.abspath("Roboto-Black.ttf")
 RETRY_DELAY = 60
 PREBUFFER_SECONDS = 10
+MAXRATE_KBPS = 2500  # Fixed maxrate for SD Wi-Fi streaming
 
 # ✅ Sanity Checks
 if not RTMP_URL:
@@ -53,26 +54,24 @@ def stream_movie(movie):
 
     command = [
         "ffmpeg",
-        "-re",
         "-ss", f"{PREBUFFER_SECONDS}",
-        "-threads", "2",
         "-fflags", "+nobuffer+genpts+discardcorrupt",
         "-flags", "low_delay",
         "-avioflags", "direct",
-        "-probesize", "50M",
-        "-analyzeduration", "10M",
-        "-rw_timeout", "5000000",
-        "-timeout", "5000000",
-        "-thread_queue_size", "512",
+        "-probesize", "100M",
+        "-analyzeduration", "20M",
+        "-rw_timeout", "10000000",
+        "-timeout", "10000000",
+        "-thread_queue_size", "1024",
         "-i", url,
         "-i", OVERLAY,
         "-filter_complex",
         (
-            "[0:v]scale=w=854:h=480:force_original_aspect_ratio=decrease:flags=lanczos,"
-            "pad=w=854:h=480:x=(ow-iw)/2:y=(oh-ih)/2:color=black[v];"
-            "[1:v]scale=854:480[ol];"
+            "[0:v]scale=w=720:h=480:force_original_aspect_ratio=decrease:flags=bicubic,"
+            "pad=w=720:h=480:x=(ow-iw)/2:y=(oh-ih)/2:color=black[v];"
+            "[1:v]scale=720:480[ol];"
             "[v][ol]overlay=0:0[vo];"
-            "[vo]drawtext=fontfile='{font}':text='{text}':fontcolor=white:fontsize=15:x=30:y=30"
+            "[vo]drawtext=fontfile='{font}':text='{text}':fontcolor=white:fontsize=16:x=30:y=30"
         ).format(font=FONT_PATH, text=text),
         "-c:v", "libx264",
         "-preset", "fast",
@@ -80,9 +79,7 @@ def stream_movie(movie):
         "-g", "60",
         "-keyint_min", "60",
         "-sc_threshold", "0",
-        "-b:v", "3000k",
-        "-maxrate", "5000k",
-        "-bufsize", "5000k",
+        "-maxrate", f"{MAXRATE_KBPS}k",
         "-pix_fmt", "yuv420p",
         "-c:a", "aac",
         "-b:a", "128k",
@@ -92,7 +89,7 @@ def stream_movie(movie):
         RTMP_URL
     ]
 
-    print(f"🎬 Streaming: {title} (with {PREBUFFER_SECONDS}s pre-buffer)")
+    print(f"🎬 Streaming: {title} (720x480, maxrate: {MAXRATE_KBPS}k)")
     try:
         process = subprocess.Popen(command, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, text=True)
         for line in process.stderr:
