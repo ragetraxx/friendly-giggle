@@ -55,38 +55,39 @@ def stream_movie(movie):
         "ffmpeg",
         "-re",
         "-ss", f"{PREBUFFER_SECONDS}",
-        "-threads", "2",
+        "-threads", "1",
         "-fflags", "+nobuffer+genpts+discardcorrupt",
         "-flags", "low_delay",
         "-avioflags", "direct",
-        "-probesize", "50M",
-        "-analyzeduration", "10M",
+        "-probesize", "10M",
+        "-analyzeduration", "5M",
         "-rw_timeout", "5000000",
         "-timeout", "5000000",
-        "-thread_queue_size", "512",
+        "-thread_queue_size", "256",
         "-i", url,
         "-i", OVERLAY,
         "-filter_complex",
         (
-            "[0:v]scale=w=854:h=480:force_original_aspect_ratio=decrease:flags=lanczos,"
-            "pad=w=854:h=480:x=(ow-iw)/2:y=(oh-ih)/2:color=black[v];"
-            "[1:v]scale=854:480[ol];"
+            "[0:v]scale=w=640:h=360:force_original_aspect_ratio=decrease:flags=bicubic,"
+            "pad=w=640:h=360:x=(ow-iw)/2:y=(oh-ih)/2:color=black[v];"
+            "[1:v]scale=640:360[ol];"
             "[v][ol]overlay=0:0[vo];"
-            "[vo]drawtext=fontfile='{font}':text='{text}':fontcolor=white:fontsize=15:x=30:y=30"
+            "[vo]drawtext=fontfile='{font}':text='{text}':fontcolor=white:fontsize=10:x=25:y=25"
         ).format(font=FONT_PATH, text=text),
         "-c:v", "libx264",
-        "-preset", "fast",
+        "-preset", "veryfast",
         "-tune", "zerolatency",
         "-g", "60",
         "-keyint_min", "60",
         "-sc_threshold", "0",
-        "-b:v", "1000k",
-        "-maxrate", "1500k",
-        "-bufsize", "1500k",
+        "-b:v", "600k",
+        "-maxrate", "800k",
+        "-bufsize", "800k",
         "-pix_fmt", "yuv420p",
         "-c:a", "aac",
-        "-b:a", "128k",
+        "-b:a", "96k",
         "-ar", "44100",
+        "-ac", "2",
         "-flush_packets", "1",
         "-f", "flv",
         RTMP_URL
