@@ -16,17 +16,10 @@ if not RTMP_URL:
     print("❌ ERROR: RTMP_URL is not set!")
     exit(1)
 
-if not os.path.exists(PLAY_FILE):
-    print(f"❌ ERROR: {PLAY_FILE} not found!")
-    exit(1)
-
-if not os.path.exists(OVERLAY):
-    print(f"❌ ERROR: Overlay image '{OVERLAY}' not found!")
-    exit(1)
-
-if not os.path.exists(FONT_PATH):
-    print(f"❌ ERROR: Font file '{FONT_PATH}' not found!")
-    exit(1)
+for path, name in [(PLAY_FILE, "Playlist JSON"), (OVERLAY, "Overlay Image"), (FONT_PATH, "Font File")]:
+    if not os.path.exists(path):
+        print(f"❌ ERROR: {name} '{path}' not found!")
+        exit(1)
 
 def load_movies():
     try:
@@ -39,31 +32,23 @@ def load_movies():
 def escape_drawtext(text):
     return text.replace('\\', '\\\\\\\\').replace(':', '\\:').replace("'", "\\'")
 
-def stream_movie(movie):
-    title = movie.get("title", "Unknown Title")
-    url = movie.get("url")
-    if not url:
-        print(f"❌ Missing URL for '{title}'")
-        return
-
-    if url.startswith("http"):
-        print(f"⚠️ Streaming from remote URL: {url} — may cause buffering.")
-
+def build_ffmpeg_command(url, title):
     text = escape_drawtext(title)
 
-    command = [
+    # Add headers if HLS URL
+    input_options = []
+    if ".m3u8" in url or "streamsvr" in url:
+        print(f"🔐 Spoofing headers for {url}")
+        input_options = [
+            "-user_agent", "Mozilla/5.0",
+            "-headers", "Referer: https://hollymoviehd.cc\r\n"
+        ]
+
+    return [
         "ffmpeg",
         "-re",
-        "-ss", f"{PREBUFFER_SECONDS}",
-        "-threads", "1",
-        "-fflags", "+nobuffer+genpts+discardcorrupt",
-        "-flags", "low_delay",
-        "-avioflags", "direct",
-        "-probesize", "10M",
-        "-analyzeduration", "5M",
-        "-rw_timeout", "5000000",
-        "-timeout", "5000000",
-        "-thread_queue_size", "256",
+        "-ss", str(PREBUFFER_SECONDS),
+        *input_options,
         "-i", url,
         "-i", OVERLAY,
         "-filter_complex",
@@ -72,7 +57,7 @@ def stream_movie(movie):
             "pad=w=640:h=360:x=(ow-iw)/2:y=(oh-ih)/2:color=black[v];"
             "[1:v]scale=640:360[ol];"
             "[v][ol]overlay=0:0[vo];"
-            "[vo]drawtext=fontfile='{font}':text='{text}':fontcolor=white:fontsize=10:x=25:y=25"
+            "[vo]drawtext=fontfile='{font}':text='{text}':fontcolor=white:fontsize=12:x=25:y=25"
         ).format(font=FONT_PATH, text=text),
         "-c:v", "libx264",
         "-preset", "veryfast",
@@ -88,24 +73,37 @@ def stream_movie(movie):
         "-b:a", "96k",
         "-ar", "44100",
         "-ac", "2",
-        "-flush_packets", "1",
         "-f", "flv",
         RTMP_URL
     ]
 
-    print(f"🎬 Streaming: {title} (with {PREBUFFER_SECONDS}s pre-buffer)")
+def stream_movie(movie):
+    title = movie.get("title", "Untitled")
+    url = movie.get("url")
+
+    if not url:
+        print(f"❌ Skipping '{title}': no URL")
+        return
+
+    print(f"🎬 Streaming: {title}")
+    command = build_ffmpeg_command(url, title)
+
     try:
         process = subprocess.Popen(command, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, text=True)
         for line in process.stderr:
-            print(line, end="")
+            if "403 Forbidden" in line:
+                print(f"🚫 403 Forbidden! Skipping: {title}")
+                process.kill()
+                return
+            print(line.strip())
         process.wait()
     except Exception as e:
-        print(f"❌ FFmpeg error: {e}")
+        print(f"❌ FFmpeg crashed: {e}")
 
 def main():
     movies = load_movies()
     if not movies:
-        print(f"🔁 No movies. Retrying in {RETRY_DELAY}s...")
+        print(f"📂 No entries in {PLAY_FILE}. Retrying in {RETRY_DELAY}s...")
         time.sleep(RETRY_DELAY)
         return main()
 
@@ -113,7 +111,7 @@ def main():
     while True:
         stream_movie(movies[index])
         index = (index + 1) % len(movies)
-        print("⏳ Waiting 5s before next movie...")
+        print("⏭️  Next movie in 5s...")
         time.sleep(5)
 
 if __name__ == "__main__":
