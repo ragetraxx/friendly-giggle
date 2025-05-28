@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
     { name: "Premier Sports 1", url: "https://qp-pldt-live-grp-03-prod.akamaized.net/out/u/cg_premiersports_hd1.mpd", keyId: "fc19c98cb9504a0fb78b22fea0a4b814", key: "ea683112a96d4ae6c32d4ea13923e8c7" },
     { name: "Premier Sports 2", url: "https://qp-pldt-live-grp-13-prod.akamaized.net/out/u/dr_premiertennishd.mpd", keyId: "59454adb530b4e0784eae62735f9d850", key: "61100d0b8c4dd13e4eb8b4851ba192cc" },
     { name: "Spotv", url: "https://qp-pldt-live-grp-11-prod.akamaized.net/out/u/dr_spotvhd.mpd", keyId: "ec7ee27d83764e4b845c48cca31c8eef", key: "9c0e4191203fccb0fde34ee29999129e" },
-    { name: "Spotv 2", url: "https://qp-pldt-live-grp-13-prod.akamaized.net/out/u/dr_spotv2hd.mpd", keyId: "7eea72d6075245a99ee3255603d58853", key: "6848ef60575579bf4d415db1032153ed" }
+    { name: "Spotv 2", url: "https://qp-pldt-live-grp-13-prod.akamaized.net/out/u/dr_spotv2hd.mpd", keyId: "7eea72d6075245a99ee3255603d58853", key: "6848ef60575579bf4d415db1032153ed" },
     { name: "NBA Live", url: "https://qp-pldt-live-grp-04-prod.akamaized.net/out/u/pl_sdi7.mpd", keyId: "40bed7f7948e4e5792982cf5b7ee4d78", key: "1fbfd2e3be51aae857f2f24306e5fc41" },
     ];
 
