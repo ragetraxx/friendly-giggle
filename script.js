@@ -73,7 +73,16 @@ document.addEventListener("DOMContentLoaded", () => {
     { name: "Premier Sports 2", url: "https://qp-pldt-live-grp-13-prod.akamaized.net/out/u/dr_premiertennishd.mpd", keyId: "59454adb530b4e0784eae62735f9d850", key: "61100d0b8c4dd13e4eb8b4851ba192cc" },
     { name: "Spotv", url: "https://qp-pldt-live-grp-11-prod.akamaized.net/out/u/dr_spotvhd.mpd", keyId: "ec7ee27d83764e4b845c48cca31c8eef", key: "9c0e4191203fccb0fde34ee29999129e" },
     { name: "Spotv 2", url: "https://qp-pldt-live-grp-13-prod.akamaized.net/out/u/dr_spotv2hd.mpd", keyId: "7eea72d6075245a99ee3255603d58853", key: "6848ef60575579bf4d415db1032153ed" },
-    { name: "Live Events", url: "https://qp-pldt-live-grp-04-prod.akamaized.net/out/u/pl_sdi7.mpd", keyId: "40bed7f7948e4e5792982cf5b7ee4d78", key: "1fbfd2e3be51aae857f2f24306e5fc41" },
+    { name: "Pilipinas Live 1", url: "https://qp-pldt-live-grp-08-prod.akamaized.net/out/u/pl_sdi1.mpd", keyId: "a913faeecaac4813a55240bea0c68858", key: "05b7d7eaba8d6410dbe234336d9b235a" },
+    { name: "Pilipinas Live 2", url: "https://qp-pldt-live-grp-02-prod.akamaized.net/out/u/pl_sdi2.mpd", keyId: "2f3056cac18d4e31a59de39767042b03", key: "83728946b898141ae411572f9f5fce0d" },
+    { name: "Pilipinas Live 3", url: "https://qp-pldt-live-grp-07-prod.akamaized.net/out/u/pl_sdi3.mpd", keyId: "0c16d5962a22494db502b3453f891208", key: "acaed175b981b34ae9b5cb0130506854" },
+    { name: "Pilipinas Live 4", url: "https://qp-pldt-live-grp-06-prod.akamaized.net/out/u/pl_sdi4.mpd", keyId: "c3050cba95c945418efa3aedbc69cff7", key: "988e7fade0828273472e24545d0cfa4c" },
+    { name: "Pilipinas Live 5", url: "https://qp-pldt-live-grp-08-prod.akamaized.net/out/u/pl_sdi5.mpd", keyId: "eecc6d7ac3df439fb2b73fb38007cb82", key: "826c341a6fef4518cefd27ec85e8b274" },
+    { name: "Pilipinas Live 6", url: "https://qp-pldt-live-grp-08-prod.akamaized.net/out/u/pl_sdi6.mpd", keyId: "02d5f086706e407e9343c040ac7fb5b8", key: "9d7e088bf7fffc9297ab3a02f0ce9a72" },
+    { name: "Pilipinas Live 7", url: "https://qp-pldt-live-grp-04-prod.akamaized.net/out/u/pl_sdi7.mpd", keyId: "40bed7f7948e4e5792982cf5b7ee4d78", key: "1fbfd2e3be51aae857f2f24306e5fc41" },
+    { name: "Pilipinas Live 8", url: "https://qp-pldt-live-grp-03-prod.akamaized.net/out/u/pl_sdi8.mpd", keyId: "5a8dbf3b9c2c43079a40fb5d0068f9ef", key: "1778ac6e22527ee2efd6886d8d509c2d" },
+    { name: "Pilipinas Live 9", url: "https://qp-pldt-live-grp-01-prod.akamaized.net/out/u/pl_sdi9.mpd", keyId: "1c7b9a2af9ad4076b155f06269b6adc2", key: "ed6a8b11738cd27c0bee2d9e3fee178a" },
+    { name: "Pilipinas Live 10", url: "https://qp-pldt-live-grp-07-prod.akamaized.net/out/u/pl_sdi10.mpd", keyId: "63055a8904644407a64a57874703f71e", key: "0fd611777d37a7ff8afce19d9cee2e91" },
     ];
 
     function populateDropdown() {
