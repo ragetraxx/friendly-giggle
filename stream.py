@@ -56,7 +56,7 @@ def build_ffmpeg_command(url, title):
             "[0:v]scale=1280:720:flags=bicubic[v];"
             "[1:v]scale=1280:720[ol];"
             "[v][ol]overlay=0:0[vo];"
-            "[vo]drawtext=fontfile='{font}':text='{text}':fontcolor=white:fontsize=18:x=25:y=25"
+            "[vo]drawtext=fontfile='{font}':text='{text}':fontcolor=white:fontsize=18:x=30:y=30"
         ).format(font=FONT_PATH, text=text),
         "-c:v", "libx264",
         "-preset", "veryfast",
