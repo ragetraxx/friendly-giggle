@@ -35,7 +35,6 @@ def escape_drawtext(text):
 def build_ffmpeg_command(url, title):
     text = escape_drawtext(title)
 
-    # Add headers if HLS URL
     input_options = []
     if ".m3u8" in url or "streamsvr" in url:
         print(f"🔐 Spoofing headers for {url}")
@@ -46,7 +45,7 @@ def build_ffmpeg_command(url, title):
 
     return [
         "ffmpeg",
-        "-re",  # Read input at native frame rate
+        "-re",
         "-fflags", "+nobuffer",
         "-flags", "low_delay",
         "-threads", "1",
@@ -55,12 +54,10 @@ def build_ffmpeg_command(url, title):
         "-i", url,
         "-i", OVERLAY,
         "-filter_complex",
-        (
-            "[0:v]scale=854:480:flags=bicubic[v];"
-            "[1:v]scale=854:480[ol];"
-            "[v][ol]overlay=0:0[vo];"
-            "[vo]drawtext=fontfile='{font}':text='{text}':fontcolor=white:fontsize=18:x=30:y=30"
-        ).format(font=FONT_PATH, text=text),
+        f"[0:v]scale=854:480:flags=lanczos,unsharp=5:5:0.8:5:5:0.0[v];"
+        f"[1:v]scale=854:480[ol];"
+        f"[v][ol]overlay=0:0[vo];"
+        f"[vo]drawtext=fontfile='{FONT_PATH}':text='{text}':fontcolor=white:fontsize=18:x=30:y=30",
         "-c:v", "libx264",
         "-preset", "ultrafast",
         "-tune", "zerolatency",
