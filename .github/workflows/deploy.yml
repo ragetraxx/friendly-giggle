@@ -59,10 +59,20 @@ jobs:
             echo "✅ RTMP_URL is set."
           fi
 
+      - name: Pre-allocate Resources (buffer tuning)
+        run: |
+          ulimit -n 8192
+          sysctl -w net.core.rmem_max=16777216
+          sysctl -w net.core.wmem_max=16777216
+          sysctl -w net.ipv4.tcp_rmem='4096 87380 16777216'
+          sysctl -w net.ipv4.tcp_wmem='4096 65536 16777216'
+
       - name: Delay Before Streaming
-        run: sleep 5
+        run: sleep 10
 
       - name: Run live stream script (stream.py)
         env:
           RTMP_URL: ${{ secrets.RTMP_URL }}
-        run: python3 stream.py
+        run: |
+          echo "🚀 Starting stream with buffering optimizations..."
+          python3 stream.py
