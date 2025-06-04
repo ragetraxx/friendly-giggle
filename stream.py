@@ -46,30 +46,33 @@ def build_ffmpeg_command(url, title):
 
     return [
         "ffmpeg",
-        "-re",
+        "-re",  # Read input at native frame rate
+        "-fflags", "+nobuffer",
+        "-flags", "low_delay",
+        "-threads", "1",
         "-ss", str(PREBUFFER_SECONDS),
         *input_options,
         "-i", url,
         "-i", OVERLAY,
         "-filter_complex",
         (
-            "[0:v]scale=1024:576:flags=bicubic[v];"
-            "[1:v]scale=1024:576[ol];"
+            "[0:v]scale=854:480:flags=bicubic[v];"
+            "[1:v]scale=854:480[ol];"
             "[v][ol]overlay=0:0[vo];"
             "[vo]drawtext=fontfile='{font}':text='{text}':fontcolor=white:fontsize=18:x=30:y=30"
         ).format(font=FONT_PATH, text=text),
         "-c:v", "libx264",
-        "-preset", "veryfast",
+        "-preset", "ultrafast",
         "-tune", "zerolatency",
-        "-g", "60",
-        "-keyint_min", "60",
+        "-g", "30",
+        "-keyint_min", "30",
         "-sc_threshold", "0",
-        "-b:v", "2000k",           # Adjusted bitrate
-        "-maxrate", "2500k",       # Max bitrate
-        "-bufsize", "2500k",       # Buffer size
+        "-b:v", "1000k",
+        "-maxrate", "1200k",
+        "-bufsize", "1200k",
         "-pix_fmt", "yuv420p",
         "-c:a", "aac",
-        "-b:a", "128k",
+        "-b:a", "96k",
         "-ar", "44100",
         "-ac", "2",
         "-f", "flv",
