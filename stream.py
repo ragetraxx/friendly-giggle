@@ -53,8 +53,8 @@ def build_ffmpeg_command(url, title):
         "-i", OVERLAY,
         "-filter_complex",
         (
-            "[0:v]scale=1280:720:flags=bicubic[v];"
-            "[1:v]scale=1280:720[ol];"
+            "[0:v]scale=1024:576:flags=bicubic[v];"
+            "[1:v]scale=1024:576[ol];"
             "[v][ol]overlay=0:0[vo];"
             "[vo]drawtext=fontfile='{font}':text='{text}':fontcolor=white:fontsize=18:x=30:y=30"
         ).format(font=FONT_PATH, text=text),
@@ -64,9 +64,9 @@ def build_ffmpeg_command(url, title):
         "-g", "60",
         "-keyint_min", "60",
         "-sc_threshold", "0",
-        "-b:v", "3000k",
-        "-maxrate", "5000k",
-        "-bufsize", "5000k",
+        "-b:v", "2000k",           # Adjusted bitrate
+        "-maxrate", "2500k",       # Max bitrate
+        "-bufsize", "2500k",       # Buffer size
         "-pix_fmt", "yuv420p",
         "-c:a", "aac",
         "-b:a", "128k",
