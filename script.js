@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
     { name: "ABC Australia", url: "https://qp-pldt-live-grp-10-prod.akamaized.net/out/u/dr_abc_aus.mpd", keyId: "389497f9f8584a57b234e27e430e04b7", key: "3b85594c7f88604adf004e45c03511c0" },
     { name: "Al Jazeera", url: "https://qp-pldt-live-grp-12-prod.akamaized.net/out/u/dr_aljazeera.mpd", keyId: "7f3d900a04d84492b31fe9f79ac614e3", key: "d33ff14f50beac42969385583294b8f2" },
     { name: "TVN Premium", url: "https://qp-pldt-live-grp-09-prod.akamaized.net/out/u/cg_tvnpre.mpd", keyId: "e1bde543e8a140b38d3f84ace746553e", key: "b712c4ec307300043333a6899a402c10" },
-    { name: "Premier Sports 1", url: "https://qp-pldt-live-grp-03-prod.akamaized.net/out/u/cg_premiersports_hd1.mpd", keyId: "fc19c98cb9504a0fb78b22fea0a4b814", key: "ea683112a96d4ae6c32d4ea13923e8c7" },
+    { name: "Premier Sports 1", url: "https://qp-pldt-live-grp-03-prod.akamaized.net/out/u/cg_ps_hd1.mpd", keyId: "b8b595299fdf41c1a3481fddeb0b55e4", key: "cd2b4ad0eb286239a4a022e6ca5fd007" },
     { name: "Premier Sports 2", url: "https://qp-pldt-live-grp-13-prod.akamaized.net/out/u/dr_premiertennishd.mpd", keyId: "59454adb530b4e0784eae62735f9d850", key: "61100d0b8c4dd13e4eb8b4851ba192cc" },
     { name: "Spotv", url: "https://qp-pldt-live-grp-11-prod.akamaized.net/out/u/dr_spotvhd.mpd", keyId: "ec7ee27d83764e4b845c48cca31c8eef", key: "9c0e4191203fccb0fde34ee29999129e" },
     { name: "Spotv 2", url: "https://qp-pldt-live-grp-13-prod.akamaized.net/out/u/dr_spotv2hd.mpd", keyId: "7eea72d6075245a99ee3255603d58853", key: "6848ef60575579bf4d415db1032153ed" },
