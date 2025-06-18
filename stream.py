@@ -59,6 +59,8 @@ def build_ffmpeg_command(url, title):
         f"[v][ol]overlay=0:0[vo];"
         f"[vo]drawtext=fontfile='{FONT_PATH}':text='{text}':fontcolor=white:fontsize=18:x=30:y=30",
         "-c:v", "libx264",
+        "-profile:v", "high",
+        "-level:v", "3.2",
         "-preset", "ultrafast",
         "-tune", "zerolatency",
         "-g", "30",
