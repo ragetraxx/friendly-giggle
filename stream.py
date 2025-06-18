@@ -10,7 +10,6 @@ OVERLAY = os.path.abspath("overlay.png")
 FONT_PATH = os.path.abspath("Roboto-Black.ttf")
 RETRY_DELAY = 60
 PREBUFFER_SECONDS = 10
-USE_H265 = False  # Set to True to switch to H.265
 
 # ✅ Sanity Checks
 if not RTMP_URL:
@@ -44,10 +43,6 @@ def build_ffmpeg_command(url, title):
             "-headers", "Referer: https://hollymoviehd.cc\r\n"
         ]
 
-    codec = "libx265" if USE_H265 else "libx264"
-    profile = "main" if USE_H265 else "high"
-    level = "4.1"
-
     return [
         "ffmpeg",
         "-re",
@@ -59,24 +54,24 @@ def build_ffmpeg_command(url, title):
         "-i", url,
         "-i", OVERLAY,
         "-filter_complex",
-        f"[0:v]scale=1280:720:flags=lanczos,unsharp=5:5:0.8:5:5:0.0[v];"
-        f"[1:v]scale=1280:720[ol];"
+        f"[0:v]scale=1024:576:flags=lanczos,unsharp=5:5:0.8:5:5:0.0[v];"
+        f"[1:v]scale=1024:576[ol];"
         f"[v][ol]overlay=0:0[vo];"
-        f"[vo]drawtext=fontfile='{FONT_PATH}':text='{text}':fontcolor=white:fontsize=24:x=30:y=30",
-        "-c:v", codec,
-        "-profile:v", profile,
-        "-level:v", level,
+        f"[vo]drawtext=fontfile='{FONT_PATH}':text='{text}':fontcolor=white:fontsize=18:x=30:y=30",
+        "-c:v", "libx264",
+        "-profile:v", "high",
+        "-level:v", "3.2",
         "-preset", "ultrafast",
         "-tune", "zerolatency",
         "-g", "30",
         "-keyint_min", "30",
         "-sc_threshold", "0",
-        "-b:v", "3000k",
-        "-maxrate", "3200k",
-        "-bufsize", "3200k",
+        "-b:v", "1300k",
+        "-maxrate", "1400k",
+        "-bufsize", "1400k",
         "-pix_fmt", "yuv420p",
         "-c:a", "aac",
-        "-b:a", "160k",
+        "-b:a", "128k",
         "-ar", "48000",
         "-ac", "2",
         "-f", "flv",
