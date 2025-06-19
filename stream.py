@@ -54,17 +54,18 @@ def build_ffmpeg_command(url, title):
         "-i", url,
         "-i", OVERLAY,
         "-filter_complex",
-        f"[0:v]scale=1024:576:flags=lanczos,unsharp=5:5:0.8:5:5:0.0[v];"
-        f"[1:v]scale=1024:576[ol];"
+        f"[0:v]scale=1440:606:flags=lanczos,unsharp=5:5:0.8:5:5:0.0[v];"
+        f"[1:v]scale=1440:606[ol];"
         f"[v][ol]overlay=0:0[vo];"
-        f"[vo]drawtext=fontfile='{FONT_PATH}':text='{text}':fontcolor=white:fontsize=18:x=30:y=30",
+        f"[vo]drawtext=fontfile='{FONT_PATH}':text='{text}':fontcolor=white:fontsize=20:x=30:y=30",
+        "-r", "23.976",
         "-c:v", "libx264",
         "-profile:v", "high",
         "-level:v", "3.2",
         "-preset", "ultrafast",
         "-tune", "zerolatency",
-        "-g", "30",
-        "-keyint_min", "30",
+        "-g", "48",
+        "-keyint_min", "48",
         "-sc_threshold", "0",
         "-b:v", "1300k",
         "-maxrate", "1400k",
@@ -72,7 +73,7 @@ def build_ffmpeg_command(url, title):
         "-pix_fmt", "yuv420p",
         "-c:a", "aac",
         "-b:a", "128k",
-        "-ar", "48000",
+        "-ar", "44100",
         "-ac", "2",
         "-f", "flv",
         RTMP_URL
