@@ -9,7 +9,7 @@ RTMP_URL = os.getenv("RTMP_URL")
 OVERLAY = os.path.abspath("overlay.png")
 FONT_PATH = os.path.abspath("Roboto-Black.ttf")
 RETRY_DELAY = 60
-PREBUFFER_SECONDS = 10
+PREBUFFER_SECONDS = 5
 
 # ✅ Sanity Checks
 if not RTMP_URL:
@@ -36,13 +36,16 @@ def build_ffmpeg_command(url, title):
     text = escape_drawtext(title)
 
     input_options = [
-        "-rw_timeout", "5000000",        # 5 sec timeout
-        "-probesize", "5000000",         # increase probesize
-        "-analyzeduration", "5000000",   # increase analysis duration
+        "-rw_timeout", "5000000",        # retry if no response
+        "-timeout", "5000000",
+        "-reconnect", "1",
+        "-reconnect_streamed", "1",
+        "-reconnect_delay_max", "2",
+        "-probesize", "10000000",
+        "-analyzeduration", "10000000"
     ]
 
-    if ".m3u8" in url or "streamsvr" in url:
-        print(f"🔐 Spoofing headers for {url}")
+    if ".m3u8" in url or ".mpd" in url:
         input_options += [
             "-user_agent", "Mozilla/5.0",
             "-headers", "Referer: https://hollymoviehd.cc\r\n"
@@ -50,10 +53,7 @@ def build_ffmpeg_command(url, title):
 
     return [
         "ffmpeg",
-        "-fflags", "+genpts+discardcorrupt+nobuffer",
-        "-flags", "low_delay",
-        "-strict", "-2",
-        "-threads", "2",
+        "-loglevel", "warning",
         *input_options,
         "-i", url,
         "-i", OVERLAY,
@@ -64,14 +64,14 @@ def build_ffmpeg_command(url, title):
         f"[vo]drawtext=fontfile='{FONT_PATH}':text='{text}':fontcolor=white:fontsize=13:x=30:y=30",
         "-r", "30",
         "-c:v", "libx264",
-        "-preset", "veryfast",  # good balance of quality and speed
+        "-preset", "ultrafast",
         "-tune", "zerolatency",
         "-g", "60",
         "-keyint_min", "60",
         "-sc_threshold", "0",
         "-b:v", "1300k",
-        "-maxrate", "1500k",
-        "-bufsize", "3000k",  # larger buffer to reduce stutter
+        "-maxrate", "1800k",
+        "-bufsize", "4000k",
         "-pix_fmt", "yuv420p",
         "-c:a", "aac",
         "-b:a", "128k",
@@ -100,10 +100,14 @@ def stream_movie(movie):
                 process.kill()
                 time.sleep(2)
                 return
-            print(line.strip())
+            if "error" in line.lower() or "failed" in line.lower():
+                print("⚠️  Error:", line.strip())
+            else:
+                print(line.strip())
         process.wait()
     except Exception as e:
         print(f"❌ FFmpeg crashed: {e}")
+        time.sleep(2)
 
 def main():
     movies = load_movies()
