@@ -35,41 +35,43 @@ def escape_drawtext(text):
 def build_ffmpeg_command(url, title):
     text = escape_drawtext(title)
 
-    input_options = []
+    input_options = [
+        "-rw_timeout", "5000000",        # 5 sec timeout
+        "-probesize", "5000000",         # increase probesize
+        "-analyzeduration", "5000000",   # increase analysis duration
+    ]
+
     if ".m3u8" in url or "streamsvr" in url:
         print(f"🔐 Spoofing headers for {url}")
-        input_options = [
+        input_options += [
             "-user_agent", "Mozilla/5.0",
             "-headers", "Referer: https://hollymoviehd.cc\r\n"
         ]
 
     return [
         "ffmpeg",
-        "-re",
-        "-fflags", "+nobuffer",
+        "-fflags", "+genpts+discardcorrupt+nobuffer",
         "-flags", "low_delay",
-        "-threads", "1",
-        "-ss", str(PREBUFFER_SECONDS),
+        "-strict", "-2",
+        "-threads", "2",
         *input_options,
         "-i", url,
         "-i", OVERLAY,
         "-filter_complex",
-        f"[0:v]scale=960:540:flags=lanczos,unsharp=5:5:0.8:5:5:0.0[v];"
+        f"[0:v]scale=960:540:flags=bicubic,unsharp=5:5:0.8:5:5:0.0[v];"
         f"[1:v]scale=960:540[ol];"
         f"[v][ol]overlay=0:0[vo];"
         f"[vo]drawtext=fontfile='{FONT_PATH}':text='{text}':fontcolor=white:fontsize=13:x=30:y=30",
-        "-r", "23.976",
+        "-r", "30",
         "-c:v", "libx264",
-        "-profile:v", "high",
-        "-level", "3.1",
-        "-preset", "ultrafast",
+        "-preset", "veryfast",  # good balance of quality and speed
         "-tune", "zerolatency",
-        "-g", "48",
-        "-keyint_min", "48",
+        "-g", "60",
+        "-keyint_min", "60",
         "-sc_threshold", "0",
         "-b:v", "1300k",
         "-maxrate", "1500k",
-        "-bufsize", "1500k",
+        "-bufsize", "3000k",  # larger buffer to reduce stutter
         "-pix_fmt", "yuv420p",
         "-c:a", "aac",
         "-b:a", "128k",
@@ -96,6 +98,7 @@ def stream_movie(movie):
             if "403 Forbidden" in line:
                 print(f"🚫 403 Forbidden! Skipping: {title}")
                 process.kill()
+                time.sleep(2)
                 return
             print(line.strip())
         process.wait()
