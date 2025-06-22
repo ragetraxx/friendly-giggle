@@ -54,21 +54,21 @@ def build_ffmpeg_command(url, title):
         "-i", url,
         "-i", OVERLAY,
         "-filter_complex",
-        f"[0:v]scale=1440:606:flags=lanczos,unsharp=5:5:0.8:5:5:0.0[v];"
-        f"[1:v]scale=1440:606[ol];"
+        f"[0:v]scale=960:540:flags=lanczos,unsharp=5:5:0.8:5:5:0.0[v];"
+        f"[1:v]scale=960:540[ol];"
         f"[v][ol]overlay=0:0[vo];"
-        f"[vo]drawtext=fontfile='{FONT_PATH}':text='{text}':fontcolor=white:fontsize=20:x=30:y=30",
+        f"[vo]drawtext=fontfile='{FONT_PATH}':text='{text}':fontcolor=white:fontsize=15:x=30:y=30",
         "-r", "23.976",
         "-c:v", "libx264",
         "-profile:v", "high",
-        "-level:v", "3.2",
+        "-level", "3.1",
         "-preset", "ultrafast",
         "-tune", "zerolatency",
         "-g", "48",
         "-keyint_min", "48",
         "-sc_threshold", "0",
-        "-b:v", "1800k",
-        "-maxrate", "2000k",
+        "-b:v", "1500k",
+        "-maxrate", "1500k",
         "-bufsize", "2000k",
         "-pix_fmt", "yuv420p",
         "-c:a", "aac",
