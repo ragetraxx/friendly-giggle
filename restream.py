@@ -1,40 +1,36 @@
 import subprocess
-import shlex
 import os
 import time
 
-RTMP_URL = os.getenv("RTMP_URL")  # RTMP Server URL
-VIDEO_URL = "https://i3fu7cfu.live.quortex.io/srt_input/1080p_25_fps/hls_target/index.m3u8"  # Video source
-OVERLAY_IMAGE = "live.png"  # Overlay image (optional)
-OVERLAY_TEXT = "LIVE: NATO Summit at The Hague, Netherlands"  # Overlay text
+# ✅ Get RTMP URL from GitHub Actions secret environment variable
+RTMP_URL = os.getenv("RTMP_URL")
+VIDEO_URL = "https://i3fu7cfu.live.quortex.io/srt_input/1080p_25_fps/hls_target/index.m3u8"
+OVERLAY_IMAGE = "live.png"
+OVERLAY_TEXT = "LIVE: NATO Summit at The Hague, Netherlands"
 
 def restream(video_url, rtmp_url, overlay_image=None, overlay_text="LIVE"):
-    """Continuously re-streams a video to an RTMP server with overlay support."""
-
     if not rtmp_url:
         print("❌ ERROR: RTMP_URL is not set.")
         return
 
-    while True:  # Infinite loop to restart FFmpeg if it stops
+    while True:
         print(f"🎥 Streaming: {video_url} → {rtmp_url}")
 
-        video_url_escaped = shlex.quote(video_url)
-        overlay_text_escaped = overlay_text.replace(":", r"\:")  # Escape colon properly
+        overlay_text_escaped = overlay_text.replace(":", r"\\:")
 
         command = [
             "ffmpeg",
             "-re",
-            "-i", video_url_escaped,  # Input video source
+            "-i", video_url,
         ]
 
-        # Check if an overlay image is provided
         if overlay_image:
-            overlay_path_escaped = shlex.quote(overlay_image)
             command += [
-                "-i", overlay_path_escaped,  # Input overlay image
+                "-loop", "1",
+                "-framerate", "1",
+                "-i", overlay_image,
                 "-filter_complex",
-                "[0:v][1:v]scale2ref[v0][v1];[v0][v1]overlay=10:10,"
-                f"drawtext=text='{overlay_text_escaped}':fontcolor=white:fontsize=20:x=30:y=30"
+                f"[0:v][1:v]overlay=10:10,drawtext=text='{overlay_text_escaped}':fontcolor=white:fontsize=20:x=30:y=30"
             ]
         else:
             command += [
@@ -42,7 +38,6 @@ def restream(video_url, rtmp_url, overlay_image=None, overlay_text="LIVE"):
                 f"drawtext=text='{overlay_text_escaped}':fontcolor=white:fontsize=20:x=30:y=30"
             ]
 
-        # Video encoding settings
         command += [
             "-c:v", "libx264",
             "-preset", "slow",
@@ -60,10 +55,16 @@ def restream(video_url, rtmp_url, overlay_image=None, overlay_text="LIVE"):
             rtmp_url
         ]
 
-        process = subprocess.run(command)
+        try:
+            subprocess.run(command)
+        except KeyboardInterrupt:
+            print("⏹️ Interrupted.")
+            break
+        except Exception as e:
+            print(f"❌ FFmpeg error: {e}")
 
         print("⚠️ Stream stopped. Restarting in 3 seconds...")
-        time.sleep(3)  # Shorter restart delay
+        time.sleep(3)
 
 if __name__ == "__main__":
     restream(VIDEO_URL, RTMP_URL, OVERLAY_IMAGE, OVERLAY_TEXT)
