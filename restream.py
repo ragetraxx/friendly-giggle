@@ -2,7 +2,6 @@ import subprocess
 import os
 import time
 
-# ✅ Get RTMP URL from GitHub Actions secret environment variable
 RTMP_URL = os.getenv("RTMP_URL")
 VIDEO_URL = "https://i3fu7cfu.live.quortex.io/srt_input/1080p_25_fps/hls_target/index.m3u8"
 OVERLAY_IMAGE = "live.png"
@@ -20,6 +19,7 @@ def restream(video_url, rtmp_url, overlay_image=None, overlay_text="LIVE"):
 
         command = [
             "ffmpeg",
+            "-fflags", "+genpts+igndts+discardcorrupt",
             "-re",
             "-i", video_url,
         ]
@@ -30,27 +30,30 @@ def restream(video_url, rtmp_url, overlay_image=None, overlay_text="LIVE"):
                 "-framerate", "1",
                 "-i", overlay_image,
                 "-filter_complex",
-                f"[0:v][1:v]overlay=10:10,drawtext=text='{overlay_text_escaped}':fontcolor=white:fontsize=20:x=30:y=30"
+                "[1:v]scale=1920:1080[img];"  # 🔥 Scale image to full HD
+                "[0:v][img]overlay=0:0,"
+                f"drawtext=text='{overlay_text_escaped}':fontcolor=white:fontsize=72:x=50:y=50:box=1:boxcolor=black@0.5"
             ]
         else:
             command += [
                 "-vf",
-                f"drawtext=text='{overlay_text_escaped}':fontcolor=white:fontsize=20:x=30:y=30"
+                f"drawtext=text='{overlay_text_escaped}':fontcolor=white:fontsize=20:x=35:y=35:box=1:boxcolor=black@0.5"
             ]
 
         command += [
             "-c:v", "libx264",
-            "-preset", "slow",
+            "-preset", "ultrafast",         # 🔥 Faster encoding
             "-tune", "zerolatency",
-            "-b:v", "6000k",
-            "-maxrate", "7000k",
-            "-bufsize", "2000k",
-            "-crf", "18",
+            "-b:v", "3000k",                # 🔽 Lower bitrate
+            "-maxrate", "3500k",
+            "-bufsize", "1000k",
+            "-crf", "23",                   # 🔽 Higher CRF = more compression
             "-pix_fmt", "yuv420p",
-            "-g", "25",
+            "-g", "50",
             "-c:a", "aac",
-            "-b:a", "192k",
-            "-ar", "48000",
+            "-b:a", "128k",
+            "-ar", "44100",
+            "-flush_packets", "1",
             "-f", "flv",
             rtmp_url
         ]
