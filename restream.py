@@ -9,13 +9,12 @@ OVERLAY_TEXT = "LIVE: NATO Summit at The Hague, Netherlands"
 
 def restream(video_url, rtmp_url, overlay_image=None, overlay_text="LIVE"):
     if not rtmp_url:
-        print("❌ ERROR: RTMP_URL is not set.")
-        return
+        raise ValueError("❌ RTMP_URL environment variable not set.")
+
+    overlay_text_escaped = overlay_text.replace(":", r"\\:")
 
     while True:
         print(f"🎥 Streaming: {video_url} → {rtmp_url}")
-
-        overlay_text_escaped = overlay_text.replace(":", r"\\:")
 
         command = [
             "ffmpeg",
@@ -30,30 +29,29 @@ def restream(video_url, rtmp_url, overlay_image=None, overlay_text="LIVE"):
                 "-framerate", "1",
                 "-i", overlay_image,
                 "-filter_complex",
-                "[1:v]scale=1920:1080[img];"  # 🔥 Scale image to full HD
-                "[0:v][img]overlay=0:0,"
-                f"drawtext=text='{overlay_text_escaped}':fontcolor=white:fontsize=20:x=35:y=35:box=1:boxcolor=black@0.5"
+                "[1:v][0:v]scale2ref=w=iw:h=ih[img][vid];"
+                "[vid][img]overlay=0:0,"
+                f"drawtext=text='{overlay_text_escaped}':fontcolor=white:fontsize=32:x=35:y=35:box=1:boxcolor=black@0.5"
             ]
         else:
             command += [
                 "-vf",
-                f"drawtext=text='{overlay_text_escaped}':fontcolor=white:fontsize=20:x=35:y=35:box=1:boxcolor=black@0.5"
+                f"drawtext=text='{overlay_text_escaped}':fontcolor=white:fontsize=32:x=35:y=35:box=1:boxcolor=black@0.5"
             ]
 
         command += [
             "-c:v", "libx264",
-            "-preset", "ultrafast",         # 🔥 Faster encoding
+            "-preset", "ultrafast",
             "-tune", "zerolatency",
-            "-b:v", "3000k",                # 🔽 Lower bitrate
+            "-b:v", "3000k",
             "-maxrate", "3500k",
             "-bufsize", "1000k",
-            "-crf", "23",                   # 🔽 Higher CRF = more compression
+            "-crf", "23",
             "-pix_fmt", "yuv420p",
             "-g", "50",
             "-c:a", "aac",
             "-b:a", "128k",
             "-ar", "44100",
-            "-flush_packets", "1",
             "-f", "flv",
             rtmp_url
         ]
@@ -61,7 +59,7 @@ def restream(video_url, rtmp_url, overlay_image=None, overlay_text="LIVE"):
         try:
             subprocess.run(command)
         except KeyboardInterrupt:
-            print("⏹️ Interrupted.")
+            print("⏹️ Interrupted by user.")
             break
         except Exception as e:
             print(f"❌ FFmpeg error: {e}")
