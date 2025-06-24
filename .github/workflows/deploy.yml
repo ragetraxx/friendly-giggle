@@ -75,4 +75,4 @@ jobs:
           RTMP_URL: ${{ secrets.RTMP_URL }}
         run: |
           echo "🚀 Starting stream with buffering optimizations..."
-          python3 restream.py
+          python3 stream.py
