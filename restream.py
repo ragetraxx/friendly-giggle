@@ -32,7 +32,7 @@ def restream(video_url, rtmp_url, overlay_image=None, overlay_text="LIVE"):
                 "-filter_complex",
                 "[1:v]scale=1920:1080[img];"  # 🔥 Scale image to full HD
                 "[0:v][img]overlay=0:0,"
-                f"drawtext=text='{overlay_text_escaped}':fontcolor=white:fontsize=72:x=50:y=50:box=1:boxcolor=black@0.5"
+                f"drawtext=text='{overlay_text_escaped}':fontcolor=white:fontsize=20:x=35:y=35:box=1:boxcolor=black@0.5"
             ]
         else:
             command += [
