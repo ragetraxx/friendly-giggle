@@ -4,11 +4,11 @@ import os
 import time
 
 RTMP_URL = os.getenv("RTMP_URL")  # RTMP Server URL
-VIDEO_URL = "https://cvtv.cvalley.net/hls/KTVOABC/KTVOABC.m3u8"  # Video source
+VIDEO_URL = "https://i3fu7cfu.live.quortex.io/srt_input/1080p_25_fps/hls_target/index.m3u8"  # Video source
 OVERLAY_IMAGE = "live.png"  # Overlay image (optional)
-OVERLAY_TEXT = "NBA Finals Game 7"  # Overlay text
+OVERLAY_TEXT = "LIVE: NATO Summit at The Hague, Netherlands"  # Overlay text
 
-def restream(video_url, rtmp_url, overlay_image=None, overlay_text="NBA Live"):
+def restream(video_url, rtmp_url, overlay_image=None, overlay_text="LIVE"):
     """Continuously re-streams a video to an RTMP server with overlay support."""
 
     if not rtmp_url:
