@@ -9,7 +9,7 @@ RTMP_URL = os.getenv("RTMP_URL")
 OVERLAY = os.path.abspath("overlay.png")
 FONT_PATH = os.path.abspath("Roboto-Black.ttf")
 RETRY_DELAY = 60
-PREBUFFER_SECONDS = 10
+PREBUFFER_SECONDS = 5  # Reduced prebuffer for quicker start
 
 # ✅ Sanity Checks
 if not RTMP_URL:
@@ -54,22 +54,22 @@ def build_ffmpeg_command(url, title):
         "-i", url,
         "-i", OVERLAY,
         "-filter_complex",
-        f"[0:v]scale=854:480:flags=lanczos,unsharp=5:5:0.8:5:5:0.0[v];"
-        f"[1:v]scale=854:480[ol];"
+        f"[0:v]scale=1280:720:flags=lanczos,unsharp=5:5:0.8:5:5:0.0[v];"
+        f"[1:v]scale=1280:720[ol];"
         f"[v][ol]overlay=0:0[vo];"
-        f"[vo]drawtext=fontfile='{FONT_PATH}':text='{text}':fontcolor=white:fontsize=13:x=30:y=30",
+        f"[vo]drawtext=fontfile='{FONT_PATH}':text='{text}':fontcolor=white:fontsize=24:x=30:y=30",
         "-r", "29.97003",
         "-c:v", "libx264",
         "-profile:v", "high",
-        "-level:v", "3.2",
+        "-level:v", "4.0",
         "-preset", "ultrafast",
         "-tune", "zerolatency",
         "-g", "60",
         "-keyint_min", "60",
         "-sc_threshold", "0",
-        "-b:v", "1200k",
-        "-maxrate", "1500k",
-        "-bufsize", "1500k",
+        "-b:v", "3000k",
+        "-maxrate", "3500k",
+        "-bufsize", "3500k",
         "-pix_fmt", "yuv420p",
         "-c:a", "aac",
         "-profile:a", "aac_low",
