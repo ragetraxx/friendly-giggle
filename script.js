@@ -97,38 +97,29 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function loadChannel(index) {
-    if (index < 0 || index >= channels.length) return;
+        if (index < 0 || index >= channels.length) return;
 
-    const { name, url, keyId, key } = channels[index];
+        const { name, url, keyId, key } = channels[index];
 
-    try {
-        console.log(`Loading channel: ${name}`);
-        errorMessage.textContent = "";
+        try {
+            console.log(`Loading channel: ${name}`);
+            errorMessage.textContent = "";
 
-        player.configure({
-            drm: {
-                clearKeys: {
-                    [keyId]: key
+            player.configure({
+                drm: {
+                    clearKeys: {
+                        [keyId]: key
+                    }
                 }
-            }
-        });
-
-        await player.load(url);
-        console.log(`Now playing: ${name}`);
-        channelSelect.value = index;
-
-        // Attempt to autoplay
-        const playPromise = video.play();
-        if (playPromise !== undefined) {
-            playPromise.catch((error) => {
-                console.warn("Autoplay was prevented:", error);
-                errorMessage.textContent = "Autoplay failed. Click the play button to start.";
             });
+
+            await player.load(url);
+            console.log(`Now playing: ${name}`);
+            channelSelect.value = index;
+        } catch (e) {
+            console.error(`Error loading ${name}:`, e);
+            errorMessage.textContent = `Error loading ${name}. Please try another channel.`;
         }
-    } catch (e) {
-        console.error(`Error loading ${name}:`, e);
-        errorMessage.textContent = `Error loading ${name}. Please try another channel.`;
-    }
     }
 
     channelSelect.addEventListener("change", () => {
