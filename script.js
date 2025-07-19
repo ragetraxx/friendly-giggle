@@ -1,7 +1,11 @@
-document.addEventListener("DOMContentLoaded", () => { const video = document.getElementById("video"); const channelSelect = document.getElementById("channelSelect"); const errorMessage = document.getElementById("errorMessage"); const player = new shaka.Player(video);
+document.addEventListener("DOMContentLoaded", () => {
+    const video = document.getElementById("video");
+    const channelSelect = document.getElementById("channelSelect");
+    const errorMessage = document.getElementById("errorMessage");
+    const player = new shaka.Player(video);
 
-const channels = [
-    { name: "PPV HD", url: "https://qp-pldt-live-grp-05-prod.akamaized.net/out/u/cg_ppv_main_hd.mpd", keyId: "549ab7cd35a64bb6bb479ecead04d69d", key: "829799ed534d11fcadeb4b192467e050",}
+    const channels = [
+    { name: "PPV HD", url: "https://qp-pldt-live-grp-05-prod.akamaized.net/out/u/cg_ppv_main_hd.mpd", keyId: "549ab7cd35a64bb6bb479ecead04d69d", key: "829799ed534d11fcadeb4b192467e050" },
     { name: "A2Z", url: "https://qp-pldt-live-grp-02-prod.akamaized.net/out/u/cg_a2z.mpd", keyId: "f703e4c8ec9041eeb5028ab4248fa094", key: "c22f2162e176eee6273a5d0b68d19530" },
     { name: "Bilyonaryo Channel", url: "https://qp-pldt-live-grp-05-prod.akamaized.net/out/u/bilyonaryoch.mpd", keyId: "227ffaf09bec4a889e0e0988704d52a2", key: "b2d0dce5c486891997c1c92ddaca2cd2" },
     { name: "IBC 13", url: "https://qp-pldt-live-grp-07-prod.akamaized.net/out/u/ibc13_sd_new.mpd", keyId: "16ecd238c0394592b8d3559c06b1faf5", key: "05b47ae3be1368912ebe28f87480fc84" },
@@ -82,56 +86,47 @@ const channels = [
     { name: "Pilipinas Live 10", url: "https://qp-pldt-live-grp-07-prod.akamaized.net/out/u/pl_sdi10.mpd", keyId: "63055a8904644407a64a57874703f71e", key: "0fd611777d37a7ff8afce19d9cee2e91" },
     ];
 
-function populateDropdown() {
-    channelSelect.innerHTML = "";
-    channels.forEach((channel, index) => {
-        let option = document.createElement("option");
-        option.value = index;
-        option.textContent = channel.name;
-        channelSelect.appendChild(option);
-    });
-}
-
-async function loadChannel(index) {
-    if (index < 0 || index >= channels.length) return;
-
-    const { name, url, keyId, key } = channels[index];
-
-    try {
-        console.log(`Loading channel: ${name}`);
-        errorMessage.textContent = "";
-
-        player.configure({
-            drm: {
-                clearKeys: {
-                    [keyId]: key
-                }
-            }
+    function populateDropdown() {
+        channelSelect.innerHTML = "";
+        channels.forEach((channel, index) => {
+            let option = document.createElement("option");
+            option.value = index;
+            option.textContent = channel.name;
+            channelSelect.appendChild(option);
         });
-
-        await player.load(url);
-        console.log(`Now playing: ${name}`);
-        channelSelect.value = index;
-
-        const playPromise = video.play();
-        if (playPromise !== undefined) {
-            playPromise.catch((error) => {
-                console.warn("Autoplay was prevented:", error);
-                errorMessage.textContent = "Autoplay failed. Click play to start the stream.";
-            });
-        }
-    } catch (e) {
-        console.error(`Error loading ${name}:`, e);
-        errorMessage.textContent = `Error loading ${name}. Please try another channel.`;
     }
-}
 
-channelSelect.addEventListener("change", () => {
-    loadChannel(parseInt(channelSelect.value));
-});
+    async function loadChannel(index) {
+        if (index < 0 || index >= channels.length) return;
 
-shaka.polyfill.installAll();
-populateDropdown();
-loadChannel(0);
+        const { name, url, keyId, key } = channels[index];
 
+        try {
+            console.log(`Loading channel: ${name}`);
+            errorMessage.textContent = "";
+
+            player.configure({
+                drm: {
+                    clearKeys: {
+                        [keyId]: key
+                    }
+                }
+            });
+
+            await player.load(url);
+            console.log(`Now playing: ${name}`);
+            channelSelect.value = index;
+        } catch (e) {
+            console.error(`Error loading ${name}:`, e);
+            errorMessage.textContent = `Error loading ${name}. Please try another channel.`;
+        }
+    }
+
+    channelSelect.addEventListener("change", () => {
+        loadChannel(parseInt(channelSelect.value));
+    });
+
+    shaka.polyfill.installAll();
+    populateDropdown();
+    loadChannel(0); // Load first channel by default
 });
