@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const player = new shaka.Player(video);
 
     const channels = [
-    { name: "PPV HD", url: "https://qp-pldt-live-grp-05-prod.akamaized.net/out/u/cg_ppv_main_hd.mpd", keyId: "549ab7cd35a64bb6bb479ecead04d69d", key: "829799ed534d11fcadeb4b192467e050" },
+    { name: "MYX", url: "https://d24xfhmhdb6r0q.cloudfront.net/out/v1/e897a7b6414a46019818ee9f2c081c4f/index.mpd", keyId: "5ce1bc7f06b494c276252b4d13c90e51", key: "f40a52a3ac9b4702bdd5b735d910fd2f" },
     { name: "A2Z", url: "https://qp-pldt-live-grp-02-prod.akamaized.net/out/u/cg_a2z.mpd", keyId: "f703e4c8ec9041eeb5028ab4248fa094", key: "c22f2162e176eee6273a5d0b68d19530" },
     { name: "Bilyonaryo Channel", url: "https://qp-pldt-live-grp-05-prod.akamaized.net/out/u/bilyonaryoch.mpd", keyId: "227ffaf09bec4a889e0e0988704d52a2", key: "b2d0dce5c486891997c1c92ddaca2cd2" },
     { name: "IBC 13", url: "https://qp-pldt-live-grp-07-prod.akamaized.net/out/u/ibc13_sd_new.mpd", keyId: "16ecd238c0394592b8d3559c06b1faf5", key: "05b47ae3be1368912ebe28f87480fc84" },
@@ -74,6 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
     { name: "Premier Sports 2", url: "https://qp-pldt-live-grp-13-prod.akamaized.net/out/u/dr_premiertennishd.mpd", keyId: "59454adb530b4e0784eae62735f9d850", key: "61100d0b8c4dd13e4eb8b4851ba192cc" },
     { name: "Spotv", url: "https://qp-pldt-live-grp-11-prod.akamaized.net/out/u/dr_spotvhd.mpd", keyId: "ec7ee27d83764e4b845c48cca31c8eef", key: "9c0e4191203fccb0fde34ee29999129e" },
     { name: "Spotv 2", url: "https://qp-pldt-live-grp-13-prod.akamaized.net/out/u/dr_spotv2hd.mpd", keyId: "7eea72d6075245a99ee3255603d58853", key: "6848ef60575579bf4d415db1032153ed" },
+    { name: "PPV HD", url: "https://qp-pldt-live-grp-05-prod.akamaized.net/out/u/cg_ppv_main_hd.mpd", keyId: "549ab7cd35a64bb6bb479ecead04d69d", key: "829799ed534d11fcadeb4b192467e050" },
     { name: "Pilipinas Live 1", url: "https://qp-pldt-live-grp-08-prod.akamaized.net/out/u/pl_sdi1.mpd", keyId: "a913faeecaac4813a55240bea0c68858", key: "05b7d7eaba8d6410dbe234336d9b235a" },
     { name: "Pilipinas Live 2", url: "https://qp-pldt-live-grp-02-prod.akamaized.net/out/u/pl_sdi2.mpd", keyId: "2f3056cac18d4e31a59de39767042b03", key: "83728946b898141ae411572f9f5fce0d" },
     { name: "Pilipinas Live 3", url: "https://qp-pldt-live-grp-07-prod.akamaized.net/out/u/pl_sdi3.mpd", keyId: "0c16d5962a22494db502b3453f891208", key: "acaed175b981b34ae9b5cb0130506854" },
