@@ -1,8 +1,7 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const video = document.getElementById("video");
-    const channelSelect = document.getElementById("channelSelect");
-    const errorMessage = document.getElementById("errorMessage");
-    const player = new shaka.Player(video);
+document.addEventListener('DOMContentLoaded', async () => {
+    const video = document.getElementById('video');
+    const channelSelect = document.getElementById('channelSelect');
+    const errorMessage = document.getElementById('errorMessage');
 
     const channels = [
     { name: "MYX", url: "https://d24xfhmhdb6r0q.cloudfront.net/out/v1/e897a7b6414a46019818ee9f2c081c4f/index.mpd", keyId: "5ce1bc7f06b494c276252b4d13c90e51", key: "f40a52a3ac9b4702bdd5b735d910fd2f" },
@@ -48,12 +47,9 @@ document.addEventListener("DOMContentLoaded", () => {
     { name: "HBO Hits", url: "https://qp-pldt-live-grp-09-prod.akamaized.net/out/u/cg_hbohits.mpd", keyId: "b04ae8017b5b4601a5a0c9060f6d5b7d", key: "a8795f3bdb8a4778b7e888ee484cc7a1" },
     { name: "HBO Family", url: "https://qp-pldt-live-grp-03-prod.akamaized.net/out/u/cg_hbofam.mpd", keyId: "872910c843294319800d85f9a0940607", key: "f79fd895b79c590708cf5e8b5c6263be" },
     { name: "HBO Signature", url: "https://qp-pldt-live-grp-01-prod.akamaized.net/out/u/cg_hbosign.mpd", keyId: "a06ca6c275744151895762e0346380f5", key: "559da1b63eec77b5a942018f14d3f56f" },
-    { name: "Cinemax", url: "https://qp-pldt-live-grp-01-prod.akamaized.net/out/u/cg_cinemax.mpd", keyId: "b207c44332844523a3a3b0469e5652d7", key: "fe71aea346db08f8c6fbf0592209f955" }, 
+    { name: "Cinemax", url: "https://qp-pldt-live-grp-01-prod.akamaized.net/out/u/cg_cinemax.mpd", keyId: "b207c44332844523a3a3b0469e5652d7", key: "fe71aea346db08f8c6fbf0592209f955" },
     { name: "Tap Movies", url: "https://qp-pldt-live-grp-06-prod.akamaized.net/out/u/cg_tapmovies_hd1.mpd", keyId: "71cbdf02b595468bb77398222e1ade09", key: "c3f2aa420b8908ab8761571c01899460" },  
-    { name: "Thrill", url: "https://qp-pldt-live-grp-06-prod.akamaized.net/out/u/cg_thrill_sd.mpd", keyId: "928114ffb2394d14b5585258f70ed183", key: "a82edc340bc73447bac16cdfed0a4c62" },  
-    { name: "Hits Movies", url: "https://qp-pldt-live-grp-12-prod.akamaized.net/out/u/dr_hitsmovies.mpd", keyId: "f56b57b32d7e4b2cb21748c0b56761a7", key: "3df06a89aa01b32655a77d93e09e266f" },  
-    { name: "Tap ActionFlix", url: "https://qp-pldt-live-grp-06-prod.akamaized.net/out/u/cg_tapactionflix_hd1.mpd", keyId: "bee1066160c0424696d9bf99ca0645e3", key: "f5b72bf3b89b9848de5616f37de040b7" },  
-    { name: "Tap Sports", url: "https://qp-pldt-live-grp-11-prod.akamaized.net/out/u/dr_tapsports.mpd", keyId: "eabd2d95c89e42f2b0b0b40ce4179ea0", key: "0e7e35a07e2c12822316c0dc4873903f" },
+    { name: "Thrill", url: "https://qp-pldt-live-grp-06-prod.akamaized.net/out/u/cg_thrill_sd.mpd", keyId: "928114ffb2394d14b5585258f70ed183", key: "a82edc340bc73447bac16cdfed0a4c62" },     { name: "Hits Movies", url: "https://qp-pldt-live-grp-12-prod.akamaized.net/out/u/dr_hitsmovies.mpd", keyId: "f56b57b32d7e4b2cb21748c0b56761a7", key: "3df06a89aa01b32655a77d93e09e266f" },      { name: "Tap ActionFlix", url: "https://qp-pldt-live-grp-06-prod.akamaized.net/out/u/cg_tapactionflix_hd1.mpd", keyId: "bee1066160c0424696d9bf99ca0645e3", key: "f5b72bf3b89b9848de5616f37de040b7" },      { name: "Tap Sports", url: "https://qp-pldt-live-grp-11-prod.akamaized.net/out/u/dr_tapsports.mpd", keyId: "eabd2d95c89e42f2b0b0b40ce4179ea0", key: "0e7e35a07e2c12822316c0dc4873903f" },
     { name: "Warner TV", url: "https://qp-pldt-live-grp-11-prod.akamaized.net/out/u/dr_warnertvhd.mpd", keyId: "4503cf86bca3494ab95a77ed913619a0", key: "afc9c8f627fb3fb255dee8e3b0fe1d71" },
     { name: "AXN", url: "https://qp-pldt-live-grp-06-prod.akamaized.net/out/u/cg_axn_sd.mpd", keyId: "fd5d928f5d974ca4983f6e9295dfe410", key: "3aaa001ddc142fedbb9d5557be43792f" },
     { name: "Hits", url: "https://qp-pldt-live-grp-04-prod.akamaized.net/out/u/hits_hd1.mpd", keyId: "dac605bc197e442c93f4f08595a95100", key: "975e27ffc1b7949721ee3ccb4b7fd3e5" },
@@ -87,47 +83,54 @@ document.addEventListener("DOMContentLoaded", () => {
     { name: "Pilipinas Live 10", url: "https://qp-pldt-live-grp-07-prod.akamaized.net/out/u/pl_sdi10.mpd", keyId: "63055a8904644407a64a57874703f71e", key: "0fd611777d37a7ff8afce19d9cee2e91" },
     ];
 
-    function populateDropdown() {
-        channelSelect.innerHTML = "";
-        channels.forEach((channel, index) => {
-            let option = document.createElement("option");
-            option.value = index;
+    function populateChannelSelect() {
+        channels.forEach((channel) => {
+            const option = document.createElement('option');
+            option.value = channel.url;
             option.textContent = channel.name;
             channelSelect.appendChild(option);
         });
     }
 
-    async function loadChannel(index) {
-        if (index < 0 || index >= channels.length) return;
-
-        const { name, url, keyId, key } = channels[index];
-
+    async function initPlayer(url) {
         try {
-            console.log(`Loading channel: ${name}`);
             errorMessage.textContent = "";
 
+            const player = new shaka.Player(video);
+            window.player = player;
+
             player.configure({
-                drm: {
-                    clearKeys: {
-                        [keyId]: key
-                    }
+                abr: { enabled: true },
+                streaming: {
+                    bufferingGoal: 20,
+                    rebufferingGoal: 10
                 }
             });
 
+            player.addEventListener('error', onErrorEvent);
             await player.load(url);
-            console.log(`Now playing: ${name}`);
-            channelSelect.value = index;
-        } catch (e) {
-            console.error(`Error loading ${name}:`, e);
-            errorMessage.textContent = `Error loading ${name}. Please try another channel.`;
+            console.log('Stream loaded:', url);
+        } catch (error) {
+            onError(error);
         }
     }
 
-    channelSelect.addEventListener("change", () => {
-        loadChannel(parseInt(channelSelect.value));
+    function onErrorEvent(event) {
+        onError(event.detail);
+    }
+
+    function onError(error) {
+        console.error('Error:', error);
+        errorMessage.textContent = `Playback error: ${error.message || 'Unknown error'}`;
+    }
+
+    channelSelect.addEventListener('change', (e) => {
+        initPlayer(e.target.value);
     });
 
-    shaka.polyfill.installAll();
-    populateDropdown();
-    loadChannel(0); // Load first channel by default
+    populateChannelSelect();
+    if (channels.length > 0) {
+        channelSelect.value = channels[0].url;
+        initPlayer(channels[0].url);
+    }
 });
