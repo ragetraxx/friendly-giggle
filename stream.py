@@ -9,7 +9,7 @@ RTMP_URL = os.getenv("RTMP_URL")
 OVERLAY = os.path.abspath("overlay.png")
 FONT_PATH = os.path.abspath("Roboto-Black.ttf")
 RETRY_DELAY = 60
-PREBUFFER_SECONDS = 10
+PREBUFFER_SECONDS = 5
 
 # ✅ Sanity Checks
 if not RTMP_URL:
@@ -67,9 +67,9 @@ def build_ffmpeg_command(url, title):
         "-g", "60",
         "-keyint_min", "60",
         "-sc_threshold", "0",
-        "-b:v", "1200k",
-        "-maxrate", "1500k",
-        "-bufsize", "1500k",
+        "-b:v", "1000k",
+        "-maxrate", "1300k",
+        "-bufsize", "1300k",
         "-pix_fmt", "yuv420p",
         "-c:a", "aac",
         "-profile:a", "aac_low",
