@@ -11,7 +11,7 @@ FONT_PATH = os.path.abspath("Roboto-Black.ttf")
 RETRY_DELAY = 60
 PREBUFFER_SECONDS = 10  
 USE_H265 = False  # Set to True if you want H.265 encoding
-OUTPUT_RESOLUTION = "1440:720"  # ✅ Force a stable output resolution
+OUTPUT_RESOLUTION = "1024:576"  # ✅ Force a stable output resolution
 
 # ✅ Sanity Checks
 if not RTMP_URL:
@@ -63,14 +63,14 @@ def build_ffmpeg_command(url, title):
         f"[0:v]scale={OUTPUT_RESOLUTION}:flags=lanczos,unsharp=5:5:0.7:5:5:0.0[v];"
         f"[1:v]scale={OUTPUT_RESOLUTION}[ol];"
         f"[v][ol]overlay=0:0[vo];"
-        f"[vo]drawtext=fontfile='{FONT_PATH}':text='{text}':fontcolor=white:fontsize=24:x=35:y=35",
+        f"[vo]drawtext=fontfile='{FONT_PATH}':text='{text}':fontcolor=white:fontsize=18:x=35:y=35",
         "-r", "29.97",
         "-c:v", video_codec,
         "-preset", "veryfast",      # ✅ Faster to prevent buffering
         "-tune", "zerolatency",
         "-crf", "23",               # ✅ Use CRF instead of fixed bitrate
-        "-maxrate", "1800k",        # Cap bitrate for stable stream
-        "-bufsize", "1800k",
+        "-maxrate", "1500k",        # Cap bitrate for stable stream
+        "-bufsize", "1500k",
         "-pix_fmt", "yuv420p",
         "-g", "48",                 # Shorter GOP reduces buffer time
         "-keyint_min", "48",
