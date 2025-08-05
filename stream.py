@@ -9,8 +9,7 @@ RTMP_URL = os.getenv("RTMP_URL")
 OVERLAY = os.path.abspath("overlay.png")
 FONT_PATH = os.path.abspath("Roboto-Black.ttf")
 RETRY_DELAY = 60
-PREBUFFER_SECONDS = 10  
-USE_H265 = False  # Set to True if you want H.265 encoding
+PREBUFFER_SECONDS = 10
 
 # ✅ Sanity Checks
 if not RTMP_URL:
@@ -44,11 +43,6 @@ def build_ffmpeg_command(url, title):
             "-headers", "Referer: https://hollymoviehd.cc\r\n"
         ]
 
-    # === Codec Settings ===
-    video_codec = "libx265" if USE_H265 else "libx264"
-    profile = "main" if USE_H265 else "high"
-    level = "3.2"
-
     return [
         "ffmpeg",
         "-re",
@@ -63,23 +57,24 @@ def build_ffmpeg_command(url, title):
         f"[0:v]scale=1024:576:flags=lanczos,unsharp=5:5:0.8:5:5:0.0[v];"
         f"[1:v]scale=1024:576[ol];"
         f"[v][ol]overlay=0:0[vo];"
-        f"[vo]drawtext=fontfile='{FONT_PATH}':text='{text}':fontcolor=white:fontsize=18:x=35:y=35",
-        "-r", "29.97",
-        "-c:v", video_codec,
-        "-profile:v", profile,
-        "-level:v", level,
+        f"[vo]drawtext=fontfile='{FONT_PATH}':text='{text}':fontcolor=white:fontsize=15:x=35:y=35",
+        "-r", "29.97003",
+        "-c:v", "libx264",
+        "-profile:v", "high",
+        "-level:v", "3.2",
         "-preset", "ultrafast",
         "-tune", "zerolatency",
         "-g", "60",
         "-keyint_min", "60",
         "-sc_threshold", "0",
-        "-b:v", "1300k",
-        "-maxrate", "1400k",
-        "-bufsize", "1400k",
+        "-b:v", "1200k",
+        "-maxrate", "1500k",
+        "-bufsize", "1500k",
         "-pix_fmt", "yuv420p",
         "-c:a", "aac",
+        "-profile:a", "aac_low",
         "-b:a", "128k",
-        "-ar", "44100",
+        "-ar", "48000",
         "-ac", "2",
         "-f", "flv",
         RTMP_URL
@@ -109,19 +104,18 @@ def stream_movie(movie):
         print(f"❌ FFmpeg crashed: {e}")
 
 def main():
-    while True:
-        movies = load_movies()
-        if not movies:
-            print(f"📂 No entries in {PLAY_FILE}. Retrying in {RETRY_DELAY}s...")
-            time.sleep(RETRY_DELAY)
-            continue
+    movies = load_movies()
+    if not movies:
+        print(f"📂 No entries in {PLAY_FILE}. Retrying in {RETRY_DELAY}s...")
+        time.sleep(RETRY_DELAY)
+        return main()
 
-        index = 0
-        while movies:
-            stream_movie(movies[index])
-            index = (index + 1) % len(movies)
-            print("⏭️  Next movie in 5s...")
-            time.sleep(5)
+    index = 0
+    while True:
+        stream_movie(movies[index])
+        index = (index + 1) % len(movies)
+        print("⏭️  Next movie in 5s...")
+        time.sleep(5)
 
 if __name__ == "__main__":
     main()
