@@ -11,6 +11,7 @@ FONT_PATH = os.path.abspath("Roboto-Black.ttf")
 RETRY_DELAY = 60
 PREBUFFER_SECONDS = 10  
 USE_H265 = False  # Set to True if you want H.265 encoding
+OUTPUT_RESOLUTION = "1440:720"  # ✅ Force a stable output resolution
 
 # ✅ Sanity Checks
 if not RTMP_URL:
@@ -47,7 +48,6 @@ def build_ffmpeg_command(url, title):
     # === Codec Settings ===
     video_codec = "libx265" if USE_H265 else "libx264"
     profile = "main" if USE_H265 else "high"
-    level = "3.2"
 
     return [
         "ffmpeg",
@@ -60,23 +60,21 @@ def build_ffmpeg_command(url, title):
         "-i", url,
         "-i", OVERLAY,
         "-filter_complex",
-        f"[0:v]scale=1024:576:flags=lanczos,unsharp=5:5:0.7:5:5:0.0[v];"
-        f"[1:v]scale=1024:576[ol];"
+        f"[0:v]scale={OUTPUT_RESOLUTION}:flags=lanczos,unsharp=5:5:0.7:5:5:0.0[v];"
+        f"[1:v]scale={OUTPUT_RESOLUTION}[ol];"
         f"[v][ol]overlay=0:0[vo];"
-        f"[vo]drawtext=fontfile='{FONT_PATH}':text='{text}':fontcolor=white:fontsize=18:x=35:y=35",
+        f"[vo]drawtext=fontfile='{FONT_PATH}':text='{text}':fontcolor=white:fontsize=24:x=35:y=35",
         "-r", "29.97",
         "-c:v", video_codec,
-        "-profile:v", profile,
-        "-level:v", level,
-        "-preset", "ultrafast",
+        "-preset", "veryfast",      # ✅ Faster to prevent buffering
         "-tune", "zerolatency",
-        "-g", "60",
-        "-keyint_min", "60",
-        "-sc_threshold", "0",
-        "-b:v", "1200k",      # ✅ Optimized bitrate for 1024x576
-        "-maxrate", "1400k",
-        "-bufsize", "1400k",
+        "-crf", "23",               # ✅ Use CRF instead of fixed bitrate
+        "-maxrate", "1800k",        # Cap bitrate for stable stream
+        "-bufsize", "1800k",
         "-pix_fmt", "yuv420p",
+        "-g", "48",                 # Shorter GOP reduces buffer time
+        "-keyint_min", "48",
+        "-sc_threshold", "0",
         "-c:a", "aac",
         "-b:a", "128k",
         "-ar", "44100",
