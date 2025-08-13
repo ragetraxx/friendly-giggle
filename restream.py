@@ -3,8 +3,8 @@ import subprocess
 
 # 🔧 Environment variables and config
 RTMP_URL = os.getenv("RTMP_URL")
-VIDEO_URL = "https://amg00426-lds-amg00426c16-samsung-ph-4620.playouts.now.amagi.tv/playlist.m3u8"
-OVERLAY_TEXT = "Real Crime"
+VIDEO_URL = "http://49.0.64.96:8007/NBA"
+OVERLAY_TEXT = "BBall 24/7"
 
 # 🔐 Fail if secret not passed correctly
 if not RTMP_URL:
