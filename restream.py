@@ -3,8 +3,8 @@ import subprocess
 
 # 🔧 Environment variables and config
 RTMP_URL = os.getenv("RTMP_URL")
-VIDEO_URL = "https://i3fu7cfu.live.quortex.io/srt_input/1080p_25_fps/hls_target/index.m3u8"
-OVERLAY_TEXT = "LIVE: NATO Summit at The Hague"
+VIDEO_URL = "https://amg00426-lds-amg00426c16-samsung-ph-4620.playouts.now.amagi.tv/playlist.m3u8"
+OVERLAY_TEXT = "Real Crime"
 
 # 🔐 Fail if secret not passed correctly
 if not RTMP_URL:
