@@ -1,17 +1,19 @@
-name: Live Stream Deployment (Restream Only)
+name: Play JSON Update & Live Stream Deployment
 
 on:
   push:
     branches:
       - main
+  schedule:
+    - cron: "0 */6 * * *"  # Runs every 6 hours
   workflow_dispatch:
 
 concurrency:
-  group: restream-deploy
+  group: play-json-deploy
   cancel-in-progress: false
 
 jobs:
-  deploy-restream:
+  update-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,6 +29,20 @@ jobs:
 
       - name: Install Dependencies
         run: pip install -r requirements.txt
+
+      - name: Pull Latest Changes
+        run: git pull --rebase origin main
+
+      - name: Run Script (play.py)
+        run: python3 play.py
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add play.json
+          git commit -m "Updated play.json with new movies - $(date '+%Y-%m-%d %H:%M:%S')" --allow-empty
+          git push
 
       - name: Install FFmpeg (Full Version)
         run: |
@@ -54,9 +70,9 @@ jobs:
       - name: Delay Before Streaming
         run: sleep 10
 
-      - name: Run live stream script (restream.py)
+      - name: Run live stream script (stream.py)
         env:
           RTMP_URL: ${{ secrets.RTMP_URL }}
         run: |
-          echo "🚀 Starting restream..."
-          python3 restream.py
+          echo "🚀 Starting stream with buffering optimizations..."
+          python3 stream.py
