@@ -21,7 +21,7 @@ command = [
     "-timeout", "5000000",                       # 5 sec network timeout
     "-i", VIDEO_URL,                             # HLS input
     "-vf", f"drawtext=text='{overlay_text_escaped}':"
-            "fontcolor=white:fontsize=30:x=10:y=10:box=1:boxcolor=black@0.5",
+            "fontcolor=white:fontsize=15:x=35:y=35:box=1:boxcolor=black@0.5",
     "-c:v", "libx264",
     "-preset", "ultrafast",
     "-tune", "zerolatency",
