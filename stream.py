@@ -35,13 +35,11 @@ def escape_drawtext(text):
 def build_ffmpeg_command(url, title):
     text = escape_drawtext(title)
 
-    input_options = []
-    if ".m3u8" in url or "streamsvr" in url:
-        print(f"🔐 Spoofing headers for {url}")
-        input_options = [
-            "-user_agent", "Mozilla/5.0",
-            "-headers", "Referer: https://hollymoviehd.cc\r\n"
-        ]
+    # NASA+ headers
+    input_options = [
+        "-user_agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+        "-headers", "Referer: https://plus.nasa.gov/\r\nOrigin: https://plus.nasa.gov\r\n"
+    ]
 
     return [
         "ffmpeg",
