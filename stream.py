@@ -52,8 +52,8 @@ def build_ffmpeg_command(url, title):
         "-i", url,
         "-i", OVERLAY,
         "-filter_complex",
-        f"[0:v]scale=1920:1080:flags=lanczos,unsharp=5:5:0.8:5:5:0.0[v];"
-        f"[1:v]scale=1920:1080[ol];"
+        f"[0:v]scale=1280:720:flags=lanczos,unsharp=5:5:0.8:5:5:0.0[v];"
+        f"[1:v]scale=1280:720[ol];"
         f"[v][ol]overlay=0:0[vo];"
         f"[vo]drawtext=fontfile='{FONT_PATH}':text='{text}':fontcolor=white:fontsize=25:x=35:y=35",
         "-r", "29.97003",
@@ -65,9 +65,9 @@ def build_ffmpeg_command(url, title):
         "-g", "60",
         "-keyint_min", "60",
         "-sc_threshold", "0",
-        "-b:v", "2500k",
-        "-maxrate", "4000k",
-        "-bufsize", "4000k",
+        "-b:v", "1500k",
+        "-maxrate", "2000k",
+        "-bufsize", "2000k",
         "-pix_fmt", "yuv420p",
         "-c:a", "aac",
         "-profile:a", "aac_low",
