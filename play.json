@@ -1,22 +1,22 @@
 [
     {
-        "title": "Intuitive Machines-1 Lunar Landing",
-        "url": "https://nasaplus.akamaized.net/output/16301-7.m3u8"
-    },
-    {
-        "title": "NASA\u2019s SpaceX Crew-10 Launch",
-        "url": "https://ntv1.akamaized.net/hls/live/2110242/launch031425/master_1080.m3u8"
-    },
-    {
         "title": "Rollout of the X-59 Quesst Supersonic Plane",
-        "url": "https://nasaplus.akamaized.net/output/16006-7.m3u8"
+        "url": "https://nasaplus.akamaized.net/output/16006-6.m3u8"
+    },
+    {
+        "title": "SPHEREx and PUNCH Launch",
+        "url": "https://ntv1.akamaized.net/hls/live/2110242/sperex031125/master_720.m3u8"
     },
     {
         "title": "Axiom Mission-3 Launch Coverage",
-        "url": "https://nasaplus.akamaized.net/output/16010-7.m3u8"
+        "url": "https://nasaplus.akamaized.net/output/16010-6.m3u8"
     },
     {
         "title": "2024 Total Solar Eclipse: Through the Eyes of NASA",
-        "url": "https://nasaplus.akamaized.net/output/16860-7.m3u8"
+        "url": "https://nasaplus.akamaized.net/output/16860-6.m3u8"
+    },
+    {
+        "title": "Intuitive Machines-2 Launch to the Moon",
+        "url": "https://ntv1.akamaized.net/hls/live/2110242/launch022625/master_720.m3u8"
     }
 ]
