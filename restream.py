@@ -3,8 +3,8 @@ import subprocess
 
 # 🔧 Environment variables and config
 RTMP_URL = os.getenv("RTMP_URL")
-VIDEO_URL = "https://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/6792c30abc03978b9b8bb832/master.m3u8?deviceType=samsung-tvplus&deviceMake=samsung&deviceModel=samsung&deviceVersion=unknown&appVersion=unknown&deviceLat=0&deviceLon=0&deviceDNT=%7BTARGETOPT%7D&deviceId=%7BPSID%7D&advertisingId=%7BPSID%7D&us_privacy=1YNY&samsung_app_domain=%7BAPP_DOMAIN%7D&samsung_app_name=%7BAPP_NAME%7D&profileLimit=&profileFloor=&embedPartner=samsung-tvplus"
-OVERLAY_TEXT = "NBA"
+VIDEO_URL = "http://49.0.64.96:8007/NBA"
+OVERLAY_TEXT = "Ballz"
 
 # 🔐 Fail if secret not passed correctly
 if not RTMP_URL:
