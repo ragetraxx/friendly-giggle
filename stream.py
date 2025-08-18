@@ -55,7 +55,7 @@ def build_ffmpeg_command(url, title):
         f"[0:v]scale=1280:720:flags=lanczos,unsharp=5:5:0.8:5:5:0.0[v];"
         f"[1:v]scale=1280:720[ol];"
         f"[v][ol]overlay=0:0[vo];"
-        f"[vo]drawtext=fontfile='{FONT_PATH}':text='{text}':fontcolor=white:fontsize=25:x=35:y=35",
+        f"[vo]drawtext=fontfile='{FONT_PATH}':text='{text}':fontcolor=white:fontsize=20:x=35:y=35",
         "-r", "29.97",
         "-c:v", "libx264",
         "-preset", "ultrafast",
