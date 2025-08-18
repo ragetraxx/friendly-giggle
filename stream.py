@@ -35,10 +35,10 @@ def escape_drawtext(text):
 def build_ffmpeg_command(url, title):
     text = escape_drawtext(title)
 
-    # NASA+ headers
+    # ✅ Always spoof VLC User-Agent for all formats
     input_options = [
-        "-user_agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
-        "-headers", "Referer: https://plus.nasa.gov/\r\nOrigin: https://plus.nasa.gov\r\n"
+        "-user_agent", "VLC/3.0.18 LibVLC/3.0.18",
+        "-headers", "Referer: https://hollymoviehd.cc\r\n"
     ]
 
     return [
@@ -49,17 +49,15 @@ def build_ffmpeg_command(url, title):
         "-threads", "1",
         "-ss", str(PREBUFFER_SECONDS),
         *input_options,
-        "-i", url,
+        "-i", url,             # Works with mkv, mp4, avi, mov, m3u8, etc.
         "-i", OVERLAY,
         "-filter_complex",
         f"[0:v]scale=1280:720:flags=lanczos,unsharp=5:5:0.8:5:5:0.0[v];"
         f"[1:v]scale=1280:720[ol];"
         f"[v][ol]overlay=0:0[vo];"
-        f"[vo]drawtext=fontfile='{FONT_PATH}':text='{text}':fontcolor=white:fontsize=18:x=35:y=35",
-        "-r", "29.97003",
+        f"[vo]drawtext=fontfile='{FONT_PATH}':text='{text}':fontcolor=white:fontsize=25:x=35:y=35",
+        "-r", "29.97",
         "-c:v", "libx264",
-        "-profile:v", "high",
-        "-level:v", "3.2",
         "-preset", "ultrafast",
         "-tune", "zerolatency",
         "-g", "60",
@@ -70,7 +68,6 @@ def build_ffmpeg_command(url, title):
         "-bufsize", "2000k",
         "-pix_fmt", "yuv420p",
         "-c:a", "aac",
-        "-profile:a", "aac_low",
         "-b:a", "128k",
         "-ar", "48000",
         "-ac", "2",
@@ -86,7 +83,7 @@ def stream_movie(movie):
         print(f"❌ Skipping '{title}': no URL")
         return
 
-    print(f"🎬 Streaming: {title}")
+    print(f"🎬 Now streaming: {title}")
     command = build_ffmpeg_command(url, title)
 
     try:
@@ -97,23 +94,22 @@ def stream_movie(movie):
                 process.kill()
                 return
             print(line.strip())
-        process.wait()
+        process.wait()  # ✅ Waits for full movie to finish
     except Exception as e:
         print(f"❌ FFmpeg crashed: {e}")
 
 def main():
-    movies = load_movies()
-    if not movies:
-        print(f"📂 No entries in {PLAY_FILE}. Retrying in {RETRY_DELAY}s...")
-        time.sleep(RETRY_DELAY)
-        return main()
-
-    index = 0
     while True:
-        stream_movie(movies[index])
-        index = (index + 1) % len(movies)
-        print("⏭️  Next movie in 5s...")
-        time.sleep(5)
+        movies = load_movies()
+        if not movies:
+            print(f"📂 No entries in {PLAY_FILE}. Retrying in {RETRY_DELAY}s...")
+            time.sleep(RETRY_DELAY)
+            continue
+
+        for movie in movies:
+            stream_movie(movie)
+            print("⏭️  Next movie in 5s...")
+            time.sleep(5)
 
 if __name__ == "__main__":
     main()
