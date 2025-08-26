@@ -3,25 +3,23 @@ import subprocess
 
 # 🔧 Environment variables and config
 RTMP_URL = os.getenv("RTMP_URL")
-VIDEO_URL = "http://49.0.64.96:8007/NBA"
-OVERLAY_TEXT = "Ballz"
+VIDEO_URL = "https://utube.antang-rage.workers.dev/@HouseofRepresentativesPH/stream.m3u8"
+LOGO_FILE = "live.png"  # Path to your overlay image
 
 # 🔐 Fail if secret not passed correctly
 if not RTMP_URL:
     raise ValueError("❌ RTMP_URL is not set. Make sure it's passed via GitHub Secrets or environment.")
 
-# 🔤 Escape colons in drawtext
-overlay_text_escaped = OVERLAY_TEXT.replace(":", r"\:")
-
 # 🧪 FFmpeg command
 command = [
     "ffmpeg",
-    "-fflags", "+genpts+igndts+discardcorrupt",  # Prevent corrupt frame stalls
-    "-rw_timeout", "5000000",                    # 5 sec read timeout (input)
-    "-timeout", "5000000",                       # 5 sec network timeout
-    "-i", VIDEO_URL,                             # HLS input
-    "-vf", f"drawtext=text='{overlay_text_escaped}':"
-            "fontcolor=white:fontsize=15:x=35:y=35:box=1:boxcolor=black@0.5",
+    "-fflags", "+genpts+igndts+discardcorrupt",
+    "-rw_timeout", "5000000",
+    "-timeout", "5000000",
+    "-i", VIDEO_URL,   # Video input
+    "-i", LOGO_FILE,   # Overlay image input
+    "-filter_complex",
+    "[1:v][0:v]scale2ref=w=iw:h=ih[overlay][base];[base][overlay]overlay=0:0:format=auto",
     "-c:v", "libx264",
     "-preset", "ultrafast",
     "-tune", "zerolatency",
