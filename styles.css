@@ -1,36 +1,73 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  background: #111;
-  color: #fff;
-  text-align: center;
-  margin: 0;
-  padding: 0;
+    background-color: #121212;
+    color: white;
+    text-align: center;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    background: #1a1a1a;
+    border-bottom: 2px solid #333;
+}
+
+.logo {
+    width: 60px;
+    margin-right: 15px;
+}
+
+h1 {
+    font-size: 22px;
+    font-weight: bold;
 }
 
 .container {
-  max-width: 800px;
-  margin: 20px auto;
-  padding: 10px;
-}
-
-video {
-  width: 100%;
-  max-height: 450px;
-  background: #000;
-  border: 2px solid #444;
-  border-radius: 10px;
+    margin: 20px auto;
+    max-width: 800px;
+    padding: 10px;
 }
 
 select {
-  margin-top: 15px;
-  padding: 8px;
-  font-size: 16px;
-  width: 80%;
-  border-radius: 5px;
-  border: none;
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    margin-bottom: 15px;
+    background: #333;
+    color: white;
+    border: none;
+    outline: none;
+    border-radius: 5px;
 }
 
-.error {
-  color: red;
-  margin-top: 10px;
+video {
+    width: 100%;
+    height: auto;
+    background: black;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.7);
+}
+
+#errorMessage {
+    color: #ff4d4d;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+/* Mobile Friendly */
+@media screen and (max-width: 600px) {
+    .logo {
+        width: 45px;
+    }
+    h1 {
+        font-size: 18px;
+    }
 }
