@@ -3,24 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Live TV Streaming</title>
+  <title>Live TV Player</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 </head>
 <body>
   <header>
-    <img src="logo.png" class="main-logo" alt="Logo">
+    <img src="logo.png" alt="Site Logo" class="main-logo">
     <h1>Live TV Streaming</h1>
   </header>
 
   <div class="container">
-    <div class="video-container">
-      <video id="videoPlayer" controls autoplay muted></video>
+    <div class="player-container">
+      <video id="videoPlayer" controls autoplay></video>
       <p id="errorMessage"></p>
     </div>
 
-    <h2>Channels</h2>
-    <div id="channelList" class="channel-grid"></div>
+    <div class="channel-list" id="channelList"></div>
   </div>
 
   <script src="script.js"></script>
