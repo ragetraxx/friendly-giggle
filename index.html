@@ -1,24 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>RageTV Stream</title>
-  <link rel="stylesheet" href="styles.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.5/shaka-player.compiled.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RageTV</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- shaka-player for DASH + clearkey DRM -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.10.6/shaka-player.compiled.min.js" defer></script>
+  <script src="script.js" defer></script>
 </head>
 <body>
   <header>
-    <img src="logo.png" class="logo" alt="RageTV Logo" />
-    <h1>RageTV Live Channels</h1>
+    <img src="logo.png" alt="RageTV Logo" class="logo">
+    <h1>RageTV</h1>
   </header>
 
-  <div class="container">
-    <select id="channelSelect"></select>
-    <video id="video" controls autoplay></video>
-    <div id="errorMessage"></div>
-  </div>
+  <main>
+    <!-- Video Player -->
+    <div class="player-container">
+      <video id="video" controls autoplay playsinline></video>
+    </div>
 
-  <script src="script.js"></script>
+    <!-- Channel List -->
+    <div id="channel-list" class="channel-list"></div>
+  </main>
 </body>
 </html>
