@@ -1,4 +1,4 @@
-// Channels embedded directly here (no channels.json needed)
+// Channels embedded directly here
 const channels = [
     {
         "name": "ALLTV2",
@@ -1035,7 +1035,7 @@ const channels = [
         "logo": "https://static.wixstatic.com/media/86662a_4df8f407913b438fa70735420bc6bd01~mv2.png/v1/fill/w_300,h_166,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/RHC%20LOGO%202023%20-%2002_HORIZONTAL%20-%20WHITE%20FL.png",
         "keyId": "3d8961cbc68b4b45b94ff31fe0c4759b",
         "key": "f0a60d4088697610b899b6d7e1b796f5"
-    }
+            }
 ];
 
 const videoElement = document.getElementById("video");
@@ -1047,6 +1047,14 @@ document.addEventListener("DOMContentLoaded", () => {
   if (channels.length > 0) {
     loadChannel(channels[0]); // auto play first channel
   }
+
+  // Add search functionality
+  const searchInput = document.getElementById("search");
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase();
+    const filtered = channels.filter(ch => ch.name.toLowerCase().includes(query));
+    renderChannels(filtered);
+  });
 });
 
 // Initialize Shaka Player
@@ -1088,11 +1096,11 @@ function onError(error) {
 }
 
 // Render channel list
-function renderChannels(channels) {
-  const list = document.getElementById("channel-list");
-  list.innerHTML = "";
+function renderChannels(list) {
+  const container = document.getElementById("channel-list");
+  container.innerHTML = "";
 
-  channels.forEach(channel => {
+  list.forEach(channel => {
     const div = document.createElement("div");
     div.className = "channel";
     div.innerHTML = `
@@ -1100,6 +1108,6 @@ function renderChannels(channels) {
       <span>${channel.name}</span>
     `;
     div.addEventListener("click", () => loadChannel(channel));
-    list.appendChild(div);
+    container.appendChild(div);
   });
 }
