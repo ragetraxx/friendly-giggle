@@ -7,7 +7,7 @@
 
 body {
     background-color: #121212;
-    color: white;
+    color: #fff;
     text-align: center;
 }
 
@@ -16,78 +16,71 @@ header {
     align-items: center;
     justify-content: center;
     padding: 15px;
-    background: #1a1a1a;
+    background: #1f1f1f;
     border-bottom: 2px solid #333;
 }
 
 .main-logo {
-    width: 50px;
+    width: 45px;
     margin-right: 10px;
 }
 
 h1 {
-    font-size: 22px;
+    font-size: 20px;
 }
 
 .container {
     margin: 20px auto;
     max-width: 900px;
-    padding: 0 10px;
+    padding: 10px;
 }
 
-.video-container {
-    background: black;
+.player-container {
+    background: #000;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.6);
     margin-bottom: 20px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
 }
 
 video {
     width: 100%;
-    height: auto;
+    height: 400px;
+    background: #000;
 }
 
-h2 {
-    margin: 15px 0;
-    font-size: 20px;
-    text-align: left;
-}
-
-.channel-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 15px;
+#errorMessage {
+    color: #ff4d4d;
+    font-size: 14px;
     margin-top: 10px;
 }
 
-.channel-item {
-    background: #1f1f1f;
-    padding: 10px;
-    border-radius: 8px;
-    text-align: center;
-    cursor: pointer;
-    transition: transform 0.2s, background 0.2s;
+.channel-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
 }
 
-.channel-item:hover {
-    transform: scale(1.05);
+.channel {
+    background: #1f1f1f;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.channel:hover {
     background: #292929;
 }
 
-.channel-item img {
-    width: 100px;
+.channel img {
+    width: 80px;
     height: auto;
     margin-bottom: 8px;
 }
 
-.channel-item p {
+.channel-title {
     font-size: 14px;
     color: #fff;
-}
-
-#errorMessage {
-    color: red;
-    font-size: 14px;
-    margin-top: 10px;
 }
