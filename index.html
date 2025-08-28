@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>RageTV Lite Player</title>
   <link rel="stylesheet" href="style.css" />
-  <script defer src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/dashjs@4/dist/dash.all.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dashjs@4/dist/dash.all.min.js"></script>
   <script defer src="script.js"></script>
 </head>
 <body>
@@ -26,17 +26,12 @@
 
   <main class="layout">
     <aside class="sidebar">
-      <div class="toolbar">
-        <button id="sortAZ" title="Sort A–Z">A–Z</button>
-        <button id="sortZA" title="Sort Z–A">Z–A</button>
-        <button id="shuffle" title="Shuffle">🔀</button>
-      </div>
       <ul id="channelList" class="channel-list" role="listbox" aria-label="Channel list"></ul>
     </aside>
 
     <section class="player-wrap">
       <div class="video-container">
-        <video id="video" controls playsinline></video>
+        <video id="video" controls autoplay muted playsinline></video>
       </div>
       <div class="now-playing">
         <img id="nowLogo" alt="" />
