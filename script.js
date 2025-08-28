@@ -1,58 +1,56 @@
-const videoPlayer = document.getElementById('videoPlayer');
-const errorMessage = document.getElementById('errorMessage');
-const channelList = document.getElementById('channelList');
-const searchInput = document.getElementById('searchInput');
+const video = document.getElementById("videoPlayer");
+const errorMessage = document.getElementById("errorMessage");
+const searchInput = document.getElementById("searchInput");
+const channelsContainer = document.getElementById("channelsContainer");
 
 let channels = [];
 
 // Load channels.json
-fetch('channels.json')
-  .then(response => response.json())
+fetch("channels.json")
+  .then(res => res.json())
   .then(data => {
     channels = data;
-    renderChannels();
-    if (channels.length > 0) playChannel(channels[0].src);
+    renderChannels(channels);
+  })
+  .catch(() => {
+    errorMessage.textContent = "Failed to load channels.";
   });
 
-// Render channels
-function renderChannels(filter = "") {
-  channelList.innerHTML = "";
-  channels
-    .filter(ch => ch.title.toLowerCase().includes(filter.toLowerCase()))
-    .forEach(channel => {
-      const div = document.createElement('div');
-      div.className = 'channel-item';
-      div.innerHTML = `
-        <img src="${channel.logo}" class="channel-logo" alt="${channel.title}">
-        <p class="channel-title">${channel.title}</p>
-      `;
-      div.addEventListener('click', () => playChannel(channel.src));
-      channelList.appendChild(div);
-    });
+// Render Channels
+function renderChannels(list) {
+  channelsContainer.innerHTML = "";
+  list.forEach(channel => {
+    const div = document.createElement("div");
+    div.classList.add("channel-card");
+    div.innerHTML = `
+      <img src="${channel.logo}" alt="${channel.title}" class="channel-logo">
+      <div class="channel-title">${channel.title}</div>
+    `;
+    div.addEventListener("click", () => playChannel(channel.src, channel.type));
+    channelsContainer.appendChild(div);
+  });
 }
 
-// Search filter
-searchInput.addEventListener('input', e => {
-  renderChannels(e.target.value);
-});
-
-// Play channel
-function playChannel(url) {
-  if (Hls.isSupported()) {
+// Play selected channel
+function playChannel(src, type) {
+  errorMessage.textContent = "";
+  if (Hls.isSupported() && type === "hls") {
     const hls = new Hls();
-    hls.loadSource(url);
-    hls.attachMedia(videoPlayer);
-    hls.on(Hls.Events.MANIFEST_PARSED, () => {
-      videoPlayer.play();
-      errorMessage.textContent = "";
+    hls.loadSource(src);
+    hls.attachMedia(video);
+    hls.on(Hls.Events.ERROR, (event, data) => {
+      errorMessage.textContent = "Error playing stream.";
     });
-    hls.on(Hls.Events.ERROR, () => {
-      errorMessage.textContent = "Error loading stream.";
-    });
-  } else if (videoPlayer.canPlayType('application/vnd.apple.mpegurl')) {
-    videoPlayer.src = url;
-    videoPlayer.play();
+  } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+    video.src = src;
   } else {
-    errorMessage.textContent = "HLS not supported in this browser.";
+    errorMessage.textContent = "HLS not supported on this browser.";
   }
 }
+
+// Search Functionality
+searchInput.addEventListener("input", (e) => {
+  const query = e.target.value.toLowerCase();
+  const filtered = channels.filter(ch => ch.title.toLowerCase().includes(query));
+  renderChannels(filtered);
+});
