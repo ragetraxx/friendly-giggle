@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>RageTV Stream</title>
   <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 </head>
 <body>
   <header>
@@ -13,10 +14,16 @@
   </header>
 
   <div class="container">
-    <select id="channelSelect"></select>
-    <video id="video" controls autoplay muted playsinline></video>
-    <div id="errorMessage"></div>
+    <div class="channel-list" id="channelList"></div>
+    <div class="player-container">
+      <video id="video" controls autoplay></video>
+      <div id="errorMessage"></div>
+    </div>
   </div>
+
+  <footer>
+    <p>© 2025 RageTV | Powered by SkyTV</p>
+  </footer>
 
   <script src="script.js"></script>
 </body>
