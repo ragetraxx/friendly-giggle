@@ -1,94 +1,89 @@
+/* Reset & Base */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
+  font-family: 'Arial', sans-serif;
 }
 
 body {
   background-color: #121212;
-  color: white;
+  color: #fff;
   text-align: center;
 }
 
+/* Header */
 header {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
   padding: 15px;
   background: #1f1f1f;
-  border-bottom: 2px solid #333;
+  border-bottom: 1px solid #333;
 }
 
-.site-logo {
-  width: 50px;
-  height: auto;
-  margin-right: 10px;
+header .site-logo {
+  width: 40px;
+  height: 40px;
 }
 
-h1 {
-  font-size: 24px;
-}
-
-.container {
+/* Player */
+.player-container {
   margin: 20px auto;
   max-width: 900px;
-  padding: 0 15px;
-}
-
-.player-container {
-  background: black;
-  padding: 10px;
+  background: #000;
   border-radius: 10px;
-  margin-bottom: 15px;
+  overflow: hidden;
 }
 
 video {
   width: 100%;
-  height: 400px;
-  background: black;
-  border-radius: 10px;
+  height: auto;
 }
 
 #errorMessage {
   color: red;
-  font-size: 14px;
   margin-top: 10px;
 }
 
+/* Search */
 #searchInput {
-  width: 100%;
+  width: 90%;
+  max-width: 600px;
   padding: 12px;
-  margin: 15px 0;
-  font-size: 16px;
+  margin: 20px auto;
+  display: block;
+  background: #222;
+  color: #fff;
+  border: 1px solid #444;
   border-radius: 8px;
-  border: none;
-  background: #333;
-  color: white;
-  outline: none;
+  font-size: 16px;
 }
 
-.channel-list {
+/* Channels Grid */
+.channels-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: 15px;
+  padding: 20px;
 }
 
-.channel-item {
-  background: #1f1f1f;
-  padding: 10px;
+.channel-card {
+  background: #1c1c1c;
   border-radius: 10px;
+  padding: 10px;
   text-align: center;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: 0.3s;
 }
 
-.channel-item:hover {
-  transform: scale(1.05);
+.channel-card:hover {
+  background: #292929;
 }
 
 .channel-logo {
-  width: 100px;
+  width: 80px;
   height: auto;
   margin-bottom: 8px;
 }
