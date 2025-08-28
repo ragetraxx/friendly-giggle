@@ -1,32 +1,67 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Live TV Player</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jwplayer.com/libraries/4t00MwmP.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RageTV Lite Player</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Open-source players -->
+  <script defer src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/dashjs@4/dist/dash.all.min.js"></script>
+  <script defer src="script.js"></script>
 </head>
 <body>
-  <header>
-    <img src="logo.png" class="site-logo" alt="Logo">
-    <h1>Live TV Streaming</h1>
+  <header class="app-header">
+    <div class="branding">
+      <div class="logo">🎬</div>
+      <div class="titles">
+        <h1>RageTV Lite Player</h1>
+        <p class="subtitle">Simple HLS/DASH web player</p>
+      </div>
+    </div>
+    <div class="search-wrap">
+      <input id="search" type="search" placeholder="Search channels…" aria-label="Search channels" />
+      <button id="clearSearch" title="Clear">✕</button>
+    </div>
   </header>
 
-  <main class="container">
-    <!-- Video Player -->
-    <div class="player-container">
-      <video id="videoPlayer" controls autoplay muted></video>
-      <p id="errorMessage"></p>
-    </div>
+  <main class="layout">
+    <aside class="sidebar">
+      <div class="toolbar">
+        <button id="sortAZ" title="Sort A–Z">A–Z</button>
+        <button id="sortZA" title="Sort Z–A">Z–A</button>
+        <button id="shuffle" title="Shuffle">🔀</button>
+      </div>
+      <ul id="channelList" class="channel-list" role="listbox" aria-label="Channel list"></ul>
+    </aside>
 
-    <!-- Search -->
-    <input type="text" id="searchInput" placeholder="Search channels...">
-
-    <!-- Channels List -->
-    <div id="channelsContainer" class="channels-grid"></div>
+    <section class="player-wrap">
+      <div class="video-container">
+        <video id="video" controls playsinline></video>
+      </div>
+      <div class="now-playing">
+        <img id="nowLogo" alt="" />
+        <div class="meta">
+          <h2 id="nowTitle">Select a channel</h2>
+          <p id="nowInfo"></p>
+        </div>
+      </div>
+      <div class="help">
+        <details>
+          <summary>Tips & Shortcuts</summary>
+          <ul>
+            <li><kbd>↑/↓</kbd> navigate list • <kbd>Enter</kbd> play</li>
+            <li><kbd>F</kbd> fullscreen • <kbd>M</kbd> mute</li>
+            <li>Supports <strong>HLS</strong> via hls.js and <strong>DASH</strong> via dash.js</li>
+            <li>Some streams may require CORS/DRM or country access from the source.</li>
+          </ul>
+        </details>
+      </div>
+    </section>
   </main>
 
-  <script src="script.js"></script>
+  <footer class="app-footer">
+    <span id="status">Ready.</span>
+  </footer>
 </body>
 </html>
