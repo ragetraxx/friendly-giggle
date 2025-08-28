@@ -1,29 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>RageTV Stream</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live TV Streaming</title>
+  <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 </head>
 <body>
   <header>
-    <img src="logo.png" class="logo" alt="RageTV Logo" />
-    <h1>RageTV Live Channels</h1>
+    <img src="logo.png" class="main-logo" alt="Logo">
+    <h1>Live TV Streaming</h1>
   </header>
 
   <div class="container">
-    <div class="channel-list" id="channelList"></div>
-    <div class="player-container">
-      <video id="video" controls autoplay></video>
-      <div id="errorMessage"></div>
+    <div class="video-container">
+      <video id="videoPlayer" controls autoplay muted></video>
+      <p id="errorMessage"></p>
     </div>
-  </div>
 
-  <footer>
-    <p>© 2025 RageTV | Powered by SkyTV</p>
-  </footer>
+    <h2>Channels</h2>
+    <div id="channelList" class="channel-grid"></div>
+  </div>
 
   <script src="script.js"></script>
 </body>
