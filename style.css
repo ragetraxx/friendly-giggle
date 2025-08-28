@@ -39,6 +39,30 @@ video {
   background: black;
 }
 
+/* Search Bar */
+.search-container {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  background: #202020;
+}
+
+.search-container input {
+  width: 100%;
+  max-width: 400px;
+  padding: 8px 12px;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  background: #2a2a2a;
+  color: #fff;
+}
+
+.search-container input::placeholder {
+  color: #aaa;
+}
+
 /* Channel List */
 .channel-list {
   display: grid;
