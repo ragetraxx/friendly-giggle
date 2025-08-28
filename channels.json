@@ -1,0 +1,1036 @@
+    {
+        "name": "ALLTV2",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001179/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Thumbnails/35%20AllTV%20(1).JPG",
+        "keyId": "ac137b9e053845bb8331ec85fc051719",
+        "key": "e892d19f54c1440f764a7b2a29d6d002"
+    },
+    {
+        "name": "One PH",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001198/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/One-PH.jpg",
+        "keyId": "db039635d8ce4484aea98443c9556ecd",
+        "key": "8f935b0780c1c0d173fb72f486ae1252"
+    },
+    {
+        "name": "PTV",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001086/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/ptv-4.png",
+        "keyId": "fa81dcb9626144d39a0d34ff5163b00a",
+        "key": "1c952fcc6080539c0e819a19cb484fdb"
+    },
+    {
+        "name": "TV5 Philippines",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001088/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/5.png",
+        "keyId": "7bf59a5927f54ab699e1216286c40ec1",
+        "key": "d005e408e9e4aca9808bea657101826e"
+    },
+    {
+        "name": "One News",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001084/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/One-News.jpg",
+        "keyId": "0ae44e0cf99641f88e9dc82b35f9693b",
+        "key": "1fbf0517f9ce1a76bec5f58bb8ef4bb0"
+    },
+    {
+        "name": "GMA",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001093/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/GMA7.png",
+        "keyId": "1552ce40b5e04a94b02d429b1f43d8c4",
+        "key": "d97c12f58dc91ba7a69cbb34594eeddb"
+    },
+    {
+        "name": "Kapamilya Channel",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001248/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/Kapamilya-Channel-HD.jpg",
+        "keyId": "99e6ac12e81842888aea7527b063f9f5",
+        "key": "5dbf69183180f17e80cf65b394748518"
+    },
+    {
+        "name": "RPTV",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001094/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/rptv%20logo%20final-02.png",
+        "keyId": "e5b89d9b44524c2aa5d0e8766f8fd723",
+        "key": "b828ba9f29d2145dca938f2fcacd23c5"
+    },
+    {
+        "name": "Bilyonaryo News Channel",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001124/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/c/ce/BilyonaryoNewsChannel_Logo_-_Black_%282024%29.png",
+        "keyId": "68c05fb7fa3e419693fbe0e3c5b6b5c8",
+        "key": "11dcb1837902393399caa164983a5799"
+    },
+    {
+        "name": "UNTV",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001091/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/UNTV-2017.png",
+        "keyId": "59936397ad08416ba459df94337aa4ff",
+        "key": "23688772a5f5d2cbba81cea1e4636e28"
+    },
+    {
+        "name": "GTV",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001143/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Thumbnails/GTV-2022.jpg",
+        "keyId": "4f4359f782e24e7cb888d0bb4b992347",
+        "key": "64d4bad4f50bb9544db59da67b963e16"
+    },
+    {
+        "name": "IBC 13",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001089/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/IBC.png",
+        "keyId": "66a774477dd6487cb75367112251910d",
+        "key": "8bf341b1f38bb873df221b3c69a03f52"
+    },
+    {
+        "name": "SMNI",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001155/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Thumbnails/Sonshine.png",
+        "keyId": "26fcd45f38e34ed69c0d466842e7a38a",
+        "key": "bc21913994a4da48af7491e5f78ef56c"
+    },
+    {
+        "name": "Jeepney TV",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001250/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Thumbnails/Jeepney-TV-March-2022-Highlight-Video-Thumbnail.jpg",
+        "keyId": "ecdc7497b5e2425b8c7b2a04aad3c941",
+        "key": "60dfd659a60e5534ea34e50624ae0fcd"
+    },
+    {
+        "name": "Kapamilya Channel HD",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001286/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/Kapamilya-Channel-HD.jpg",
+        "keyId": "4fd4f00a8b7b4a618d5556e9c1070ec9",
+        "key": "9e56555ddf6c092dd4bb2bc55abb888b"
+    },
+    {
+        "name": "DZMM Teleradyo",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001249/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/e/e5/DZMM_TeleRadyo.svg/1024px-DZMM_TeleRadyo.svg.png",
+        "keyId": "33315fb8fe61420b8427bb13785fb2ae",
+        "key": "9e5b055925d85fc8dc78501df5e61771"
+    },
+    {
+        "name": "Abante Radyo",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001317/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/5/52/AbanteRadyoDWAR_Logo.jpg/330px-AbanteRadyoDWAR_Logo.jpg",
+        "keyId": "808c10239eb549779a612de45d4a3981",
+        "key": "3663a2bfd279b8c9a062098e84b49876"
+    },
+    {
+        "name": "DZRH News Television",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001174/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Thumbnails/DZRH.png",
+        "keyId": "32df7e9e78b74db7be6a5a0dbecd64d8",
+        "key": "9c16f8804a55b45bc8ed117d3edc69e4"
+    },
+    {
+        "name": "ANC SD",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001274/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://i.imgur.com/XzVYXaV.png",
+        "keyId": "595b7f134e1a4b18ae06d4301a7bc0bb",
+        "key": "b3d75e03fcfd681884c2babd4f2f72a3"
+    },
+    {
+        "name": "ANC HD",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001216/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://i.imgur.com/XzVYXaV.png",
+        "keyId": "56063a2221cc417ab640a11f48c4fa49",
+        "key": "82360fb1499cac946d15546d88e018a6"
+    },
+    {
+        "name": "A2Z",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001087/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/A2Z_Channel_11_Logo_2020.png",
+        "keyId": "a0f7ee814fce455fa22ae8b89eaf5818",
+        "key": "8b5f1a609cacb8ca2db066654c47eb5f"
+    },
+    {
+        "name": "Aliw Channel 23",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001109/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/Aliw%20Ch.png",
+        "keyId": "f78df7ccff744b7984b958dea78ad59a",
+        "key": "77c5b1a48f6e7f7050c15a06fe64a115"
+    },
+    {
+        "name": "INCTV",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001092/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/INCTV.png",
+        "keyId": "981d836e7379459abd7e96103ac9d3eb",
+        "key": "491b2032601b7365b0e632aa602f47ec"
+    },
+    {
+        "name": "NET 25",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001090/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/Net-25%20Logo%20-2022.jpg",
+        "keyId": "438de6dfd4d44d309f8f8765982f6495",
+        "key": "d3bc4c23e04b640f12a99987489ac195"
+    },
+    {
+        "name": "Solar Flix",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001243/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/Solar%20Logo%20png.png",
+        "keyId": "7eff624660b547e0997c0159fa594e2e",
+        "key": "ae0c7b715728e7d9087c88f211c8cd69"
+    },
+    {
+        "name": "Congress TV",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001328/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://ptvnews.ph/wp-content/uploads/2024/01/Screenshot-2024-01-22-090639-1536x864.png",
+        "keyId": "10d427243b3c4bcbaeca5087916551bb",
+        "key": "e68a19a2ff424bcec835cbdb2041bb03"
+    },
+    {
+        "name": "Golden Nation Network",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001234/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/2/27/GNN_Logo_2025.png",
+        "keyId": "770e4c4e62344af18ec5c4b6b5cebc35",
+        "key": "f6a256159af34d0076fa4f3b4e74645a"
+    },
+    {
+        "name": "Pinoy Xtreme",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001098/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/Oiniy-Extreme.png",
+        "keyId": "c5f7d16342ef42469a2e0dd2d5aeffa6",
+        "key": "ddc353d28072ea0d8a77b06c4a659107"
+    },
+    {
+        "name": "CLTV",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001314/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://upload.wikimedia.org/wikipedia/en/b/ba/CLTV-36_Logo.jpeg",
+        "keyId": "dbfc84a292fd4c92ab9e7ebab5d477ec",
+        "key": "af3ae40708f20f2eab7c88e39a9e78ca"
+    },
+    {
+        "name": "PTV",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001416/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/ptv-4.png",
+        "keyId": "81f40e76f0be41fa85c32e1739ec4bbc",
+        "key": "0e671dc03464c892efe554d67752f1cb"
+    },
+    {
+        "name": "TV5 Broken Link",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001495/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/5.png",
+        "keyId": "7cb09b898b2d40149da14149d299a7d4",
+        "key": "e688c8520e163db9019e0b1eb50bc3b5"
+    },
+    {
+        "name": "NET 25",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001476/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/Net-25%20Logo%20-2022.jpg",
+        "keyId": "2ba2e731efef4577945233bad9c8076e",
+        "key": "1a04d6bc5bafa4afdd8d2acef7d1faf6"
+    },
+    {
+        "name": "PBO",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001078/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/Pinoy-Box-Office.jpg",
+        "keyId": "235af96d28c44bc3bfd0ec4267aa8c06",
+        "key": "c9c0a87c24e8a318db6544be61075ff2"
+    },
+    {
+        "name": "Cinemax",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001108/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/Cinemax.jpg",
+        "keyId": "5e7a3dbdb308468f9e8cd89ac8984abe",
+        "key": "1969918849d8812e3d4eec4e06e7501d"
+    },
+    {
+        "name": "Cinema One",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001283/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/Cinema-One.jpg",
+        "keyId": "be11f3af94b64ed29f5afeccd96eecc8",
+        "key": "241642f9546a8afc66f6fc07d2b3945a"
+    },
+    {
+        "name": "Celestial Movies Pinoy",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001077/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/Celestial-Logo-2022.jpg",
+        "keyId": "0bf3e68b14644ccd80103d46a507f891",
+        "key": "e405a7ca62b5802d304001321bed274b"
+    },
+    {
+        "name": "HBO",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001065/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/HBO.jpg",
+        "keyId": "59e1a0e08aab440388f712fd91327865",
+        "key": "a429a4cb1635efa53fc4d5b985a0d59d"
+    },
+    {
+        "name": "HBO Family",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001246/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Thumbnails/HBO-Family.jpg",
+        "keyId": "f529899afe914aa5922e3c588b085685",
+        "key": "84edbd34545d0b28cce48c74857f6add"
+    },
+    {
+        "name": "HBO Hits",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001284/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/HBO%20Hits-1.jpg",
+        "keyId": "2f2f0434111f475a87916e61b56145ef",
+        "key": "920c0e4c7b0e1d32c2471decf049c1fc"
+    },
+    {
+        "name": "HBO Signature",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001285/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/HB-O-SIG1.png",
+        "keyId": "e39b5bc4fcfa402da1f3624fd5a27230",
+        "key": "66cababf4ab938e52083023f2c5c9e5d"
+    },
+    {
+        "name": "VIVA Cinema",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001079/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/Viva-Cinema.jpg",
+        "keyId": "2911bc14d6754f8b9c60baccc568265b",
+        "key": "92a5cfc71f213481d6bc5809d8988e01"
+    },
+    {
+        "name": "Celestial Classic Movies",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001244/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://i.imgur.com/gWKc50d.png",
+        "keyId": "bdf5cbf824d94b92ba043ef20dce1235",
+        "key": "280d52fe2f27345e6e2d7413910c750b"
+    },
+    {
+        "name": "CinemaWorld",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001158/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Thumbnails/CinemaWorld-Jan-22-Highlights.jpg",
+        "keyId": "8c92eb8744694689845f54bc5f12295f",
+        "key": "805d394d17b50456066a99062818871f"
+    },
+    {
+        "name": "Thrill",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001253/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/THRILL%20copy.png",
+        "keyId": "be6ea96381b1401e812af05d420ebea8",
+        "key": "53a5a55bd4b6fb539c4149dafeb1a898"
+    },
+    {
+        "name": "Cinemo",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001254/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/Cinemo.jpg",
+        "keyId": "1a4163ba0646484c9458cf837809e81c",
+        "key": "8c627e1d0232b906f4a3c0a726efa266"
+    },
+    {
+        "name": "TMC",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001080/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/TMC-Nov-2021-Logo-Updated.png",
+        "keyId": "191f3f0110614a3595bc23ac3efec13b",
+        "key": "e2ed0b3cd856b1f88713f78099a7d952"
+    },
+    {
+        "name": "Tap Movies",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001304/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/Tap-movies.jpg",
+        "keyId": "a946f0200eb94e3c899afbcf6b8675bd",
+        "key": "1079924202cfcd8c2ff063cd50bfbcbc"
+    },
+    {
+        "name": "Tap Actionflix",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001305/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/Tap-Action-Flix.jpg",
+        "keyId": "957e23e500dd44be9ca4f0d74524965b",
+        "key": "ac36d24fd616a834b8e07d9915ffddbd"
+    },
+    {
+        "name": "NBA TV Philippines",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001064/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/NBA-TV-Philippines.jpg",
+        "keyId": "661b158a8489469186f6a7eb36539b9b",
+        "key": "91ac762100fbd921df54dbbcbc13bfcf"
+    },
+    {
+        "name": "Solar Sports",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001081/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://static.wikia.nocookie.net/russel/images/2/2b/Solar_Sports_Logo_2024.png",
+        "keyId": "2c156955d33843b3a7a6ed55506a57e5",
+        "key": "e3cea54d0b534eb30c6ac3f242418b8a"
+    },
+    {
+        "name": "One Sports",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001083/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/OneSPORTS_LOGO-FA-01.png",
+        "keyId": "117d0be8abc2444f94ed89399131e4d5",
+        "key": "1acb110a19aeca2610f68e834f5b9721"
+    },
+    {
+        "name": "Premier Football",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001127/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images//Premier%20Football%20HD.png",
+        "keyId": "6447b77f3c814ec186a9f9a86457d9a9",
+        "key": "e29ee12bd3c92861dbb07befc1f2a7d2"
+    },
+    {
+        "name": "Premier Sports",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001135/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Thumbnails/Premier-Sports.jpg",
+        "keyId": "56ffe826fd5044548505293a8e04b570",
+        "key": "df5b5563514e18dc5e25c6ae38fed0fc"
+    },
+    {
+        "name": "Premier Sports 2",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001204/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Thumbnails/Premier-Sports-2.png",
+        "keyId": "39f54fed3f424c4094e07e6336da3170",
+        "key": "18a1b4fa79f604a41076781a6eacba89"
+    },
+    {
+        "name": "SPOTV",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001133/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images//spotv_cs6-ai.png",
+        "keyId": "11d32a955ced421a9b52158664e56595",
+        "key": "7fe6878fb141a7e6d4db177daecaee8a"
+    },
+    {
+        "name": "SPOTV2",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001200/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/SpoTV-2.jpg",
+        "keyId": "4db42d8b29d4459fbca3dd6cffbeaf22",
+        "key": "e75163394bda268bec3ab37f9c2149d3"
+    },
+    {
+        "name": "Tap Sports",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001151/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Thumbnails/Tap-Sports.jpg",
+        "keyId": "7007f149006247749f1c39b1651ba3ff",
+        "key": "243a5769b8bb4eb5a9e9d060510e736a"
+    },
+    {
+        "name": "Edge Sports",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001406/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://static.wikia.nocookie.net/tvfanon6528/images/5/5a/Edge_Sport_%282020-.n.v.%29.png",
+        "keyId": "712c5c28bdc84c5fa549d6a215a817e9",
+        "key": "84da52441221dc547117e77a7e6a0589"
+    },
+    {
+        "name": "Motorvision",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001245/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://motorvision.tv/wp-content/uploads/2023/09/MV_Logo_positive_light_background-2.png",
+        "keyId": "5cc5b5aa088942ebbce4f945eed9b484",
+        "key": "e01d902fa979cb84a6ee76116ba9d833"
+    },
+    {
+        "name": "NBA TV Philippines",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001485/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/NBA-TV-Philippines.jpg",
+        "keyId": "a81195d662e64c8f9f1f09eb0db866e3",
+        "key": "a9bfc159373e45c1e744d81fa154cd61"
+    },
+    {
+        "name": "Cartoonito",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001125/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/CARTOONITO_BT_LOGO_RGB.png",
+        "keyId": "bb36d82730a34949bb8b7ec827c52f08",
+        "key": "2a984f37cbb977032bcfcf1c5d156c76"
+    },
+    {
+        "name": "Cartoon Network",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001178/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/Cartoon-Network-2022-Logo.jpg",
+        "keyId": "641213c8918a4a17bfef877226c24298",
+        "key": "5c855b43f9c11a7e31d7337e1497411c"
+    },
+    {
+        "name": "Nick Jr",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001215/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/Nick-Jr.jpg",
+        "keyId": "98b123410f4f4169b2fb42c215c3940d",
+        "key": "347809da13e8fddbe31060f898b4d93c"
+    },
+    {
+        "name": "Nickelodeon",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001313/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/NickLogo_Orange_Outline.png",
+        "keyId": "0e7ce52293a04aa3a18dc387caadb0fb",
+        "key": "307b9e21e9497f334fc96c6da7495fd2"
+    },
+    {
+        "name": "Animax",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001315/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/Animax.jpg",
+        "keyId": "47d80af77bcc449c952538687c0912f0",
+        "key": "f41f830a33b652da89f6a48c93f05049"
+    },
+    {
+        "name": "TapTV",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001149/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/Tap-TV.jpg",
+        "keyId": "0a15e04b91fa472c852ffbc1eb8303b0",
+        "key": "47f4ec9dee5b94c41953c3d8dbe11413"
+    },
+    {
+        "name": "Tap Edge",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001150/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/4/46/TapEdge-ph.png",
+        "keyId": "529d32058487464694b0b6c6bc5d313c",
+        "key": "20c0b2cbc47a6947d61064ae7da45421"
+    },
+    {
+        "name": "Lifetime",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001075/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/Lifetime-Logo.jpg",
+        "keyId": "065d2054b9304b88aba3a74bf702ad30",
+        "key": "253ab3bac77f821d0a5df43ce24a5498"
+    },
+    {
+        "name": "AXN",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001182/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/AXN-New-Logo-(Black).jpg",
+        "keyId": "7b250aaab2d04207a202b568bc4c04dd",
+        "key": "1445951e473262ea6297628668cbb5e4"
+    },
+    {
+        "name": "Warner TV",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001096/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/Warner-TV.jpg",
+        "keyId": "0f5e0999a77f4c75a0f62cd5a822ca39",
+        "key": "1fce613318102a03914d19530a74df39"
+    },
+    {
+        "name": "Rock Action",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001325/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/ROCK%20ACTION_3D_HIGH%20RES_BLACK_Print.png",
+        "keyId": "5f6fb8c8a439493188a78626a67b4cad",
+        "key": "f05d8215aa8194ac29dcc1df68e3e723"
+    },
+    {
+        "name": "Rock Entertainment",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001326/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/Rock-Entertainment.jpg",
+        "keyId": "e319a459ea7f4c698daebc4a13227632",
+        "key": "a06967e783ea8dfc946429549536ae17"
+    },
+    {
+        "name": "KIX HD",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001263/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/Kix%20Logo%20-2022.jpg",
+        "keyId": "fdd97043786d4c61944f7c1d77287a02",
+        "key": "4ae84764bfa339a44086d05038125d89"
+    },
+    {
+        "name": "KBS World",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001353/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/KBS.png",
+        "keyId": "eb0fa2596e07401a90fb9e3cd7659cfd",
+        "key": "a8fe44ee591d8727ca1049d3fc6520e1"
+    },
+    {
+        "name": "CNN International",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001073/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/CNN-Feb-2022.jpg",
+        "keyId": "2b958238d54e47709199ba6becb7947b",
+        "key": "66da65ba4fd40ef9bd70eb088288fef7"
+    },
+    {
+        "name": "CNBC",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001344/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/CNBC_LOGO_PRIMARY_FC.png",
+        "keyId": "8fd72a20946f4756ad19bb0114fff343",
+        "key": "5be8d5a9237f355c515f92e71207f0e0"
+    },
+    {
+        "name": "BBC World News",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001095/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/BBC%20News.png",
+        "keyId": "37ea6ae6c4ca4eab959a7dfd9d95eae8",
+        "key": "524fe557fccd3b228dec1ca421431036"
+    },
+    {
+        "name": "Channel News Asia",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001106/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/CNA%20LOGO%20-horizontal%20-%20on%20light%20background.png",
+        "keyId": "b71a335c4a0d466e8009b6e3683f8fd8",
+        "key": "db9b25355c06397474ab6731ed2b8f88"
+    },
+    {
+        "name": "FOX News Channel",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001105/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/Fox-News-Channel.jpg",
+        "keyId": "a387777e77c3437dac6d1771b98bdeb7",
+        "key": "cc36c4636b1b8debe944aea6048fbd92"
+    },
+    {
+        "name": "USA Today",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001199/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/USA_Today_%282020-01-29%29.svg/1024px-USA_Today_%282020-01-29%29.svg.png",
+        "keyId": "6eb3af9c0e7145beab33e339d084339f",
+        "key": "3371e7186dde6d07a5a145610b9b8c26"
+    },
+    {
+        "name": "DW",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001166/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images//DW.png",
+        "keyId": "96995839e90a463c8f4133b0a23f6fd5",
+        "key": "09af8241740a17cc040967bd1b3d8d18"
+    },
+    {
+        "name": "Euronews",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001336/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Euronews._2016_alternative_logo.png/250px-Euronews._2016_alternative_logo.png",
+        "keyId": "8feb0108b9ba4822ad54a19cfedc3683",
+        "key": "98147a467e0d4ff65b82943b4b970115"
+    },
+    {
+        "name": "Al Jazeera",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001343/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/AL-JAZEERA.png",
+        "keyId": "182aff132fef40268db678ecfd3af8b6",
+        "key": "39387312c236d4baabc65ce8738b2b31"
+    },
+    {
+        "name": "Phoenix Info News",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001113/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/1/16/Phoenix_InfoNews.svg/1280px-Phoenix_InfoNews.svg.png",
+        "keyId": "3b43788e913c4e82b036eac3dd5e2a9a",
+        "key": "5a9e1f51012fb20fdd72b88ac2748d04"
+    },
+    {
+        "name": "NHK World japan",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001145/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/NHK-World-Japan.png",
+        "keyId": "1aa09f66d7bd41eab6742dc00a8415eb",
+        "key": "96c6545b30e306e83a2f16b9448df958"
+    },
+    {
+        "name": "CGTN Documentary",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001110/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/2/24/CGTN_Documentary.svg/2560px-CGTN_Documentary.svg.png",
+        "keyId": "8a88bce0214b47ed92d1e0fff6a745b5",
+        "key": "53eae2e801dd3fe57766ebceca25a297"
+    },
+    {
+        "name": "CGTN",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001146/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/CGTN%20new%20channel%20logo.png",
+        "keyId": "d02caa613dd5472f8b866dbbbaaa8c56",
+        "key": "1e5901dfb82fe2bf8e3c3b4fd9e4c3a0"
+    },
+    {
+        "name": "Bloomberg",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001153/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Thumbnails/Bloomberg-2022.jpg",
+        "keyId": "2d3eb5ab344d42348c67c994a0b3c9b0",
+        "key": "7c68524cdd9199001da7f3b330dacc71"
+    },
+    {
+        "name": "France24",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001157/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/France-24.png",
+        "keyId": "0145e1177dd549d7bd6b0a34d46efaa8",
+        "key": "62ffee538e16b8a95e64e63cc9be8528"
+    },
+    {
+        "name": "Rai Italia",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001099/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Rai_Italia_-_Logo_2017.svg/500px-Rai_Italia_-_Logo_2017.svg.png",
+        "keyId": "6c8abbc0ab9a4457a529f5207e625895",
+        "key": "7952e02fbc88fa29a45ba10fd96bfc09"
+    },
+    {
+        "name": "ABC Australia",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001111/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/ABC-Australia.jpg",
+        "keyId": "3b2a1f6eec1e43ea8e7a1a6e79e07f26",
+        "key": "27e146bf9779e147fdf514eafa168735"
+    },
+    {
+        "name": "TVE Internacional",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001112/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Logo_TVE-Internacional.svg/2084px-Logo_TVE-Internacional.svg.png",
+        "keyId": "f108adb8e42c45fcbdf7fb457eba7fa6",
+        "key": "29afd293269c965cfddcd7923af0453a"
+    },
+    {
+        "name": "CCTV4",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001223/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/CCTV-4.png",
+        "keyId": "678f47e627e7457da7926ff0e8515671",
+        "key": "d5e6aa815872869e7ac356c7d83abf21"
+    },
+    {
+        "name": "MYX",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001252/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/Myx.jpg",
+        "keyId": "5e45035835af43b7820ed9b741d9ef83",
+        "key": "c699acd798895ccc2e63c5914c451179"
+    },
+    {
+        "name": "MTV 90s",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001324/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/MTV_90s_2022.svg/1816px-MTV_90s_2022.svg.png",
+        "keyId": "9a5a8a6246484db48642a747aeccba28",
+        "key": "b9b4f1854da9b74189b4063215b6a3df"
+    },
+    {
+        "name": "MEZZO Live",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001506/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Logo_Mezzo_Live_%282023%29.svg/1024px-Logo_Mezzo_Live_%282023%29.svg.png",
+        "keyId": "f440ede8a4b5428bb854188cfab3b867",
+        "key": "aac6636fb71a59c33964c36882735ae0"
+    },
+    {
+        "name": "Hallypop",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001152/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/f/fb/GMA_Hallypop_logo.png",
+        "keyId": "dff2f0d5493240ceb224b8ccce15550a",
+        "key": "7ada89e18c34d7cba313956b58ad8998"
+    },
+    {
+        "name": "RJ DigiTV",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001159/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Thumbnails/RJ-Tv.jpg",
+        "keyId": "55458c23240e4befac872d3bcd8f2e50",
+        "key": "8b6e30f6f93ee5210509b95b100ee93e"
+    },
+    {
+        "name": "RJTV",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001338/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/4/46/DZRJ-DTV_graphic.png",
+        "keyId": "a235d87964e744759053015f0536e4e2",
+        "key": "6781c6c60ced32b5f289f167fd3fe343"
+    },
+    {
+        "name": "Rock TV of Manila",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001177/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://i.imgur.com/YMnMilx.png",
+        "keyId": "7e6c4b17553647f9a94b7dbe2d29ea05",
+        "key": "92a3bb73c97ba70f4fc67e0edaf123f9"
+    },
+    {
+        "name": "The Aquarium Channel",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001287/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://ownassetsmysky.blob.core.windows.net/assetsmysky/production/1428715906_AQUARIUM_LPARTCARD.jpg",
+        "keyId": "5b503b12e95d4012b4509e10bb07fa47",
+        "key": "88fab302820beec24d5e996ad7c41dde"
+    },
+    {
+        "name": "Metro Channel",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001267/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/Metro-Channel.jpg",
+        "keyId": "71c9dde8174c4a66b4d837c5a7413564",
+        "key": "6230faa39a22d79ca2f9c59b509c2a06"
+    },
+    {
+        "name": "Filam TV HD",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001195/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://ml02dtnc01wc.i.optimole.com/w:247/h:57/q:mauto/ig:avif/https://filamtv.us/wp-content/uploads/2021/10/logo.png",
+        "keyId": "7ae69445fec542668e7933f4a169b9db",
+        "key": "d5abdc084def3c7cfc0943d0b2d16f0c"
+    },
+    {
+        "name": "Living Asia HD",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001154/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://i.imgur.com/fiLjSvq.jpeg",
+        "keyId": "2f0f6ad2b18f48a6a8308d3dd0d0268b",
+        "key": "a2379bf38e6a2732785011b5f8deefd9"
+    },
+    {
+        "name": "Vegas Life",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001134/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://www.vegaslifetv.us/assets/images/vltv-wm-white-logo-131x131.png",
+        "keyId": "34d30d6731894db29f245a6fd8ea71b8",
+        "key": "21d42e4ef253d1d04b5cbacb8f9a211e"
+    },
+    {
+        "name": "Mindanow Network",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001123/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://ml02dtnc01wc.i.optimole.com/w:945/h:945/q:mauto/ig:avif/https://mindanownetwork.com/wp-content/uploads/2024/11/Mindanow-Network-Logo-Vertical.png",
+        "keyId": "e9fdf67b52ad432db2371e3e5b91bddc",
+        "key": "6f20e3279768161b4cc46b411e07b8b9"
+    },
+    {
+        "name": "TLC",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001181/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/TLC-(1).png",
+        "keyId": "7bed30f809a04459bda5c00274a314c4",
+        "key": "6ba64d3321892d9e8720705d9d1dc9bb"
+    },
+    {
+        "name": "HGTV",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001162/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/HGTV.png",
+        "keyId": "8a62affa7aef412fb26bc1912de34785",
+        "key": "81cecefef5d868682c86d02ce889c915"
+    },
+    {
+        "name": "Fashion TV",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001102/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/Fashion-TV.jpg",
+        "keyId": "318a769ef0ce43adba42747819d0c20b",
+        "key": "132ca372ed932b072a60bbe022b452f8"
+    },
+    {
+        "name": "Discovery",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001194/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/Discovery%20-%20Logo%20-%2030Oct2019.png",
+        "keyId": "641706cad3ed445e9e3cf242766c8a10",
+        "key": "d60b89ac0ee036fa072afb673a5697e8"
+    },
+    {
+        "name": "Discovery Asia",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001334/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/Discovery-Asia.png",
+        "keyId": "b38d16642bfc46cfb811bc899033ee80",
+        "key": "788c07ab678e36fe0b61da676dfed93f"
+    },
+    {
+        "name": "Animal Planet",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001335/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/Animal-Planet.jpg",
+        "keyId": "042281680eb44aa78df9fadde59e0b8a",
+        "key": "240ff3423c78ddfec4e5d571eb32bf27"
+    },
+    {
+        "name": "Asian Food Network",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001342/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/AFN%20LOGO_CMYK_final.png",
+        "keyId": "56434d55409b40559131789e572bd3c6",
+        "key": "5a85fab3527f91bed86dccecc6a15548"
+    },
+    {
+        "name": "Love Nature",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001515/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://lovenature.com/wp-content/uploads/2025/02/LoveNature2024_Logo_full_colour-copy.png",
+        "keyId": "23fda228ce0b4e63b90f61a33cefa5e8",
+        "key": "d919ef1cc9479202bf3278bf918b5543"
+    },
+    {
+        "name": "Fashion TV",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001458/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/Fashion-TV.jpg",
+        "keyId": "37b6db35c42842a2a37d323bef0fa0c5",
+        "key": "53d07073896da67390ad867945c89de0"
+    },
+    {
+        "name": "Knowledge Channel",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001340/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/Knowledge-Channel.jpg",
+        "keyId": "1ef97978184d4f4b97606c0f710e6b20",
+        "key": "54797a5be77b1ebbf527a71cabf3d5a0"
+    },
+    {
+        "name": "History Channel",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001074/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/History-Updated-Logo-2022.jpg",
+        "keyId": "6b90b7da0d9f44eba47aa3e5c37bff77",
+        "key": "7ac9a236e8513c4910a9f5360c12633d"
+    },
+    {
+        "name": "Crime Investigation",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001144/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Thumbnails/Crime-and-investigation.jpg",
+        "keyId": "077be911efbe4f0c8b39508a05b2c467",
+        "key": "d5994a3d7700cddb0ef7a72e1f90d07f"
+    },
+    {
+        "name": "Global Trekker",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001203/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://i.imgur.com/Atl3E61.png",
+        "keyId": "4b0906412acd4995b91a7c882eed0805",
+        "key": "cf50745e503756772c383a6a3c881e3d"
+    },
+    {
+        "name": "Arirang",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001107/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/ARIRANG.png",
+        "keyId": "8d96c87e67c142bc8a23bb48bcdf7562",
+        "key": "a6f4a9ca6ecd8c781e12e46245c89f8c"
+    },
+    {
+        "name": "TV5 Monde",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001156/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/TV-Monde-Updated-Logo-2021.png",
+        "keyId": "1eca48d1f3b6435f9e7cda3713fb866f",
+        "key": "905eaaedd9f84c32a7e520b2d1a9aeb9"
+    },
+    {
+        "name": "NHK BS",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001214/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://i.imgur.com/6TJbIzp.png",
+        "keyId": "5e2d1a74f8c2449da72e5e01965b3848",
+        "key": "85baee8ed6c50fe3040370db35a8dfb0"
+    },
+    {
+        "name": "Lotus Macau HD",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001457/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Thumbnails/mo-macau-lotus-tv-3757.png",
+        "keyId": "0cb372b1ec874c519f9cc24e30dcf52c",
+        "key": "ceaf14719dfaa8769fcc971dd51e464f"
+    },
+    {
+        "name": "Saudi TV",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001176/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://i.imgur.com/f75ZxcA.jpeg",
+        "keyId": "c27ed3d1c1cd4007918b4b312894e55c",
+        "key": "323eeec6212ecb4a1179a5b1bee77fbc"
+    },
+    {
+        "name": "DD National",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001148/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/b/be/DD_National_2025_logo.png",
+        "keyId": "215f97cac0684f76a071cbfd92e0e067",
+        "key": "a78b458227c9ed415ef69fc7883c3f64"
+    },
+    {
+        "name": "Xingkong",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001337/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://i.imgur.com/JN5t1o2.png",
+        "keyId": "77f8f5b00ed34621b488b764115a399f",
+        "key": "bb9d5577742dd032e185bcb033fd7760"
+    },
+    {
+        "name": "BS Nittele",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001213/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://i.imgur.com/omn9vq0.png",
+        "keyId": "cca530c8503542978a6691eb4f4616a7",
+        "key": "39490586db9e24fd5b0145f0fe5dbaa7"
+    },
+    {
+        "name": "Da Ai Television",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001201/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://pavilion.taicca.tw/wp-content/uploads/2024/09/TZU-CHI-CULTURE-AND-COMMUNICATION-FOUNDATION-DA-AI-TELEVISION_LOGO.jpg",
+        "keyId": "6b551efecbbd4f09b780bbcccc4df488",
+        "key": "67a85c7b34cb067f9bedfcbedfab8959"
+    },
+    {
+        "name": "BS10",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001202/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Japan_BS10_logo.svg/1280px-Japan_BS10_logo.svg.png",
+        "keyId": "8a40862f49fa49288efda325dfd2c104",
+        "key": "4c35b174d0fd002b57b886aa528b40dd"
+    },
+    {
+        "name": "HNTV",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001164/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://upload.wikimedia.org/wikipedia/en/f/f5/HNTV_logo.png",
+        "keyId": "1a7c5bff07a34baa9f943dbe68637862",
+        "key": "fdb6528ce09cefb61b6ec1765b5c59df"
+    },
+    {
+        "name": "BS Fuji",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001165/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/7/74/BSFuji2008Symbol.svg/1024px-BSFuji2008Symbol.svg.png",
+        "keyId": "5ad73c8e246a4e52b8a80ea8dd35c24d",
+        "key": "4a0d9130cf555e6678de3e169d42be2d"
+    },
+    {
+        "name": "Lotus Macau",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001196/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Thumbnails/mo-macau-lotus-tv-3757.png",
+        "keyId": "6f5817ae06964b80983fe1ec953359df",
+        "key": "4b6a0dd7b1a7804a057b16427615de2b"
+    },
+    {
+        "name": "3ABN",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001183/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://3abn.org/img/logos/3abn-logo-md.jpg",
+        "keyId": "c1726273e75841fd978758fd354b0836",
+        "key": "5cbf80c12bfb283a7d9aed28e04757a9"
+    },
+    {
+        "name": "EWTN",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001104/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/EWTN.png",
+        "keyId": "05fad9ecc56f4c549ca74b4316a21590",
+        "key": "f35df8e1f08cc7f98abac6180ecc1811"
+    },
+    {
+        "name": "TBN Asia",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001147/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://i.imgur.com/YSY1pVv.png",
+        "keyId": "93369bb380864434bc82f5b7334cfb18",
+        "key": "c0bcf3b6e58cac5bacdb4aa752b00295"
+    },
+    {
+        "name": "Light TV",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001103/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/ZOELIGHT.png",
+        "keyId": "0b8f10236c1745b884f438feede4ed24",
+        "key": "9932586b716e5fab36ea6b2dfcfb6b72"
+    },
+    {
+        "name": "TV Maria",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001160/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/TV%20MARIA.png",
+        "keyId": "a656e21d48a74f72b1143d4ce1b91519",
+        "key": "e18fa3827bf4a1f914bea87bcd02f5a8"
+    },
+    {
+        "name": "Radio Maria",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001327/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://cms.cignal.tv/Upload/Images/TV%20MARIA.png",
+        "keyId": "1eee8ff5390146898c8cd936e6e57f7f",
+        "key": "98652f58a90def66e6286883afb47c73"
+    },
+    {
+        "name": "Oras ng Himala",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001175/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://i.imgur.com/hS3dpzi.png",
+        "keyId": "2890ed4166e641718481d2bd2631bcc2",
+        "key": "ecea2843b0a83aa9da7fd4075a934a93"
+    },
+    {
+        "name": "RESERVED",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001163/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://www.convergeict.com/wp-content/uploads/2024/02/vision-banner-x.png",
+        "keyId": "f066477aecb2466a959f0f9383ae3f81",
+        "key": "430a887a12fac79ef448f447cae868dc"
+    },
+    {
+        "name": "Advisory Channel",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001339/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://www.convergeict.com/wp-content/uploads/2022/04/VISION-HEAD-LOGO.png",
+        "keyId": "daea6efe0b874c6da914a27eb8d600b8",
+        "key": "171f1363a1daa091dd3bb60c3e3ce75e"
+    },
+    {
+        "name": "The Manila Hotel",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001208/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://i.imgur.com/lKtiRN5.png",
+        "keyId": "26b39ec421614a0e8b03cda587a1100a",
+        "key": "497dd867edcc9079d6748e4277a6a795"
+    },
+    {
+        "name": "Las Casas Filipinas de Acuzar",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001425/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://i.imgur.com/aurh8oc.png",
+        "keyId": "a0e6cd27e65e42559fb088c7030e4daa",
+        "key": "306c487a7a7d5df22fb664b490e2ea43"
+    },
+    {
+        "name": "Best Western Plus",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001435/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://assets.talentronic.com/brands/employers/logos/000/313/831/logo.png",
+        "keyId": "d3cdad9b253540b2ab6bfc18f6829fa3",
+        "key": "127b0390694620cc23fecc27d7d27473"
+    },
+    {
+        "name": "Best Western Plus",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001436/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://assets.talentronic.com/brands/employers/logos/000/313/831/logo.png",
+        "keyId": "560ceb73ee7448d5949d301fbf25b117",
+        "key": "2a304bf618adb04e02de1ff22f6837e6"
+    },
+    {
+        "name": "La Jolla",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001438/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://lajollaph.com/wp-content/uploads/la-jolla-logo.png",
+        "keyId": "6d2d14447d474276865410be908648d5",
+        "key": "16828c413cfbb9696421cc9a43da11d7"
+    },
+    {
+        "name": "Devera Hotel",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001455/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://deverahotel.com/wp-content/uploads/2022/09/Rectangle-55.png",
+        "keyId": "cc9aa710aeff4c1ebfd4b834625fcf38",
+        "key": "d7a64a8ec864f68b66427e593b664a1e"
+    },
+    {
+        "name": "Royce Hotel and Casino",
+        "url": "https://ragetb.onrender.com/001/2/ch00000090990000001465/manifest.mpd?virtualDomain=001.live_hls.zte.com",
+        "logo": "https://static.wixstatic.com/media/86662a_4df8f407913b438fa70735420bc6bd01~mv2.png/v1/fill/w_300,h_166,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/RHC%20LOGO%202023%20-%2002_HORIZONTAL%20-%20WHITE%20FL.png",
+        "keyId": "3d8961cbc68b4b45b94ff31fe0c4759b",
+        "key": "f0a60d4088697610b899b6d7e1b796f5"
+    }
