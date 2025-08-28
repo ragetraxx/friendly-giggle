@@ -1,134 +1,24 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>RageTV Lite Player</title>
-  <link rel="stylesheet" href="style.css" />
-
-  <!-- JW Player core libraries -->
-  <script src="https://cdn.jwplayer.com/libraries/4t00MwmP.js"></script>
-  <script src="https://ssl.p.jwpcdn.com/player/v/8.38.4/jwpsrv.js"></script>
-  <script src="https://ssl.p.jwpcdn.com/player/v/8.38.4/gapro.js"></script>
-  <script src="https://ssl.p.jwpcdn.com/player/v/8.38.4/jwplayer.core.controls.js"></script>
-  <script src="https://ssl.p.jwpcdn.com/player/v/8.38.4/provider.shaka.js"></script>
-
-  <!-- Disable DevTools (optional) -->
-  <script src="https://cdn.jsdelivr.net/npm/disable-devtool@latest"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RageTV Stream</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.5/shaka-player.compiled.js"></script>
 </head>
 <body>
-  <header class="app-header">
-    <div class="branding">
-      <h1>📺 RageTV Lite</h1>
-      <p class="subtitle">Streaming Player</p>
-    </div>
-    <div class="search-wrap">
-      <input id="search" type="search" placeholder="Search channels…" aria-label="Search channels" />
-      <button id="clearSearch">✕</button>
-    </div>
+  <header>
+    <img src="logo.png" class="logo" alt="RageTV Logo" />
+    <h1>RageTV Live Channels</h1>
   </header>
 
-  <main class="layout">
-    <aside class="sidebar">
-      <ul id="channelList" class="channel-list"></ul>
-    </aside>
+  <div class="container">
+    <select id="channelSelect"></select>
+    <video id="video" controls autoplay></video>
+    <div id="errorMessage"></div>
+  </div>
 
-    <section class="player-wrap">
-      <div class="video-container">
-        <!-- JW Player container -->
-        <div id="player"></div>
-      </div>
-      <div class="now-playing">
-        <img id="nowLogo" alt="logo" />
-        <div class="meta">
-          <h2 id="nowTitle">Select a channel</h2>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="app-footer">
-    <span id="status">Ready.</span>
-  </footer>
-
-  <script>
-    let channels = [];
-    const listEl = document.getElementById("channelList");
-    const searchEl = document.getElementById("search");
-    const clearBtn = document.getElementById("clearSearch");
-
-    const nowTitle = document.getElementById("nowTitle");
-    const nowLogo = document.getElementById("nowLogo");
-    const statusEl = document.getElementById("status");
-
-    // Load channels.json
-    fetch("channels.json")
-      .then(r => r.json())
-      .then(data => {
-        channels = data;
-        renderList(channels);
-      })
-      .catch(err => {
-        console.error("Error loading channels.json", err);
-        statusEl.textContent = "Failed to load channels.";
-      });
-
-    // Render channel list
-    function renderList(list) {
-      listEl.innerHTML = "";
-      list.forEach((ch, idx) => {
-        const li = document.createElement("li");
-        li.innerHTML = `<img src="${ch.logo}" alt=""><span>${ch.title}</span>`;
-        li.addEventListener("click", () => playChannel(ch));
-        listEl.appendChild(li);
-      });
-    }
-
-    // Play channel in JWPlayer
-    function playChannel(ch) {
-      nowTitle.textContent = ch.title;
-      nowLogo.src = ch.logo;
-      statusEl.textContent = "Loading " + ch.title + "...";
-
-      jwplayer("player").setup({
-        playlist: [{
-          title: ch.title,
-          image: ch.logo,
-          sources: [
-            {
-              file: ch.src,
-              type: ch.type || "hls"
-            }
-          ]
-        }],
-        width: "100%",
-        height: "100%",
-        aspectratio: "16:9",
-        autostart: true,
-        controls: true
-      });
-
-      jwplayer("player").on("ready", () => {
-        statusEl.textContent = "Playing " + ch.title;
-      });
-
-      jwplayer("player").on("error", (err) => {
-        statusEl.textContent = "Error: " + err.message;
-        console.error("JWPlayer error", err);
-      });
-    }
-
-    // Search filter
-    searchEl.addEventListener("input", () => {
-      const q = searchEl.value.toLowerCase();
-      const filtered = channels.filter(c => c.title.toLowerCase().includes(q));
-      renderList(filtered);
-    });
-
-    clearBtn.addEventListener("click", () => {
-      searchEl.value = "";
-      renderList(channels);
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
