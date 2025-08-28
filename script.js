@@ -1,11 +1,10 @@
-// Fetch channels from channels.json
 let channels = [];
 const videoElement = document.getElementById("video");
 let player;
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {
-    const response = await fetch("channels.json");
+    const response = await fetch("./channels.json"); // load JSON
     channels = await response.json();
     renderChannels(channels);
     initPlayer();
@@ -29,7 +28,7 @@ function initPlayer() {
   }
 }
 
-// Load a channel into the player
+// Load a channel
 function loadChannel(channel) {
   if (!player) return;
 
