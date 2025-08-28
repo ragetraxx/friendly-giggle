@@ -3,30 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Live TV Streaming</title>
+  <title>Live TV Player</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 </head>
 <body>
   <header>
-    <img src="logo.png" alt="Logo" class="site-logo">
-    <h1>Live TV</h1>
+    <img src="logo.png" class="site-logo" alt="Logo">
+    <h1>Live TV Streaming</h1>
   </header>
 
-  <div class="container">
-    <!-- Player -->
+  <main class="container">
+    <!-- Video Player -->
     <div class="player-container">
-      <video id="videoPlayer" controls autoplay></video>
+      <video id="videoPlayer" controls autoplay muted></video>
       <p id="errorMessage"></p>
     </div>
 
     <!-- Search -->
-    <input type="text" id="searchInput" placeholder="Search channels..." />
+    <input type="text" id="searchInput" placeholder="Search channels...">
 
-    <!-- Channels -->
-    <div id="channelList" class="channel-list"></div>
-  </div>
+    <!-- Channels List -->
+    <div id="channelsContainer" class="channels-grid"></div>
+  </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <script src="script.js"></script>
 </body>
 </html>
