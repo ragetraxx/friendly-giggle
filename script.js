@@ -1,52 +1,37 @@
-const channelSelect = document.getElementById("channelSelect");
-const video = document.getElementById("video");
-const errorMessage = document.getElementById("errorMessage");
+const channelSelect = document.getElementById('channelSelect');
+const video = document.getElementById('video');
+const errorMessage = document.getElementById('errorMessage');
 
-// Load channels from channels.json
-fetch("channels.json")
-  .then(response => response.json())
-  .then(channels => {
-    if (channels.length === 0) {
-      errorMessage.textContent = "No channels available.";
-      return;
-    }
+async function loadChannels() {
+  try {
+    const response = await fetch('channels.json');
+    const channels = await response.json();
 
-    // Populate select options
     channels.forEach((channel, index) => {
-      const option = document.createElement("option");
-      option.value = channel.src;
+      const option = document.createElement('option');
+      option.value = index;
       option.textContent = channel.title;
       channelSelect.appendChild(option);
     });
 
-    // Play first channel by default
-    playChannel(channelSelect.value);
+    if (channels.length > 0) {
+      playChannel(channels[0].src);
+    }
 
-    // Change channel on selection
-    channelSelect.addEventListener("change", () => {
-      playChannel(channelSelect.value);
+    channelSelect.addEventListener('change', () => {
+      const selectedChannel = channels[channelSelect.value];
+      playChannel(selectedChannel.src);
     });
-  })
-  .catch(error => {
-    errorMessage.textContent = "Failed to load channels.";
-    console.error(error);
-  });
-
-// Function to play HLS stream
-function playChannel(src) {
-  errorMessage.textContent = "";
-
-  if (Hls.isSupported()) {
-    const hls = new Hls();
-    hls.loadSource(src);
-    hls.attachMedia(video);
-    hls.on(Hls.Events.ERROR, function(event, data) {
-      errorMessage.textContent = "Error loading stream.";
-      console.error(data);
-    });
-  } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-    video.src = src;
-  } else {
-    errorMessage.textContent = "Your browser does not support HLS.";
+  } catch (error) {
+    errorMessage.textContent = 'Failed to load channels.';
   }
 }
+
+function playChannel(src) {
+  video.src = src;
+  video.play().catch(err => {
+    errorMessage.textContent = 'Tap play to start the video.';
+  });
+}
+
+loadChannels();
