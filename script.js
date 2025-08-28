@@ -1,4 +1,3 @@
-// script.js
 const video = document.getElementById("video");
 const channelList = document.getElementById("channelList");
 const nowTitle = document.getElementById("nowTitle");
@@ -22,33 +21,32 @@ fetch("channels.json")
     console.error(err);
   });
 
-// Render list
+// Render channel list
 function renderChannels(list) {
   channelList.innerHTML = "";
-  list.forEach((ch, i) => {
+  list.forEach(ch => {
     const li = document.createElement("li");
     li.textContent = ch.name;
-    li.tabIndex = 0;
     li.onclick = () => playChannel(ch);
     channelList.appendChild(li);
   });
 }
 
-// Play a channel
+// Play channel
 function playChannel(ch) {
   currentChannel = ch;
   nowTitle.textContent = ch.name;
   nowLogo.src = ch.logo || "";
   statusEl.textContent = "Loading " + ch.name + "…";
 
-  if (Hls.isSupported() && ch.url.endsWith(".m3u8")) {
+  if (Hls.isSupported() && ch.url.includes(".m3u8")) {
     const hls = new Hls();
     hls.loadSource(ch.url);
     hls.attachMedia(video);
     hls.on(Hls.Events.MANIFEST_PARSED, () => {
       video.play().catch(() => {});
     });
-  } else if (ch.url.endsWith(".mpd")) {
+  } else if (ch.url.includes(".mpd")) {
     const player = dashjs.MediaPlayer().create();
     player.initialize(video, ch.url, true);
   } else {
