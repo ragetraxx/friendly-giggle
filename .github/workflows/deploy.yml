@@ -70,9 +70,9 @@ jobs:
       - name: Delay Before Streaming
         run: sleep 10
 
-      - name: Run live stream script (stream.py)
+      - name: Run live stream script (restream.py)
         env:
           RTMP_URL: ${{ secrets.RTMP_URL }}
         run: |
           echo "🚀 Starting stream with buffering optimizations..."
-          python3 stream.py
+          python3 restream.py
