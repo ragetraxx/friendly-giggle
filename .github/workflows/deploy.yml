@@ -1,78 +1,47 @@
-name: Play JSON Update & Live Stream Deployment
+name: 🎥 Video Restreamer
 
 on:
-  push:
-    branches:
-      - main
-  schedule:
-    - cron: "0 */6 * * *"  # Runs every 6 hours
+  # Allows manual triggering of the workflow from the GitHub UI
   workflow_dispatch:
-
-concurrency:
-  group: play-json-deploy
-  cancel-in-progress: false
+    inputs:
+      rtmp_url:
+        description: 'RTMP destination URL (e.g., rtmp://server/app/key)'
+        required: true
+        type: string
 
 jobs:
-  update-and-deploy:
+  restream:
     runs-on: ubuntu-latest
-
+    
+    # Optional: Configure job timeout to stop the stream after a set time (e.g., 6 hours)
+    timeout-minutes: 360
+    
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+      - name: ⬇️ Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v5
         with:
-          persist-credentials: true
+          python-version: '3.x'
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.x"
-
-      - name: Install Dependencies
-        run: pip install -r requirements.txt
-
-      - name: Pull Latest Changes
-        run: git pull --rebase origin main
-
-      - name: Run Script (play.py)
-        run: python3 play.py
-
-      - name: Commit and Push Changes
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
-          git add play.json
-          git commit -m "Updated play.json with new movies - $(date '+%Y-%m-%d %H:%M:%S')" --allow-empty
-          git push
-
-      - name: Install FFmpeg (Full Version)
+      - name: 💾 Install FFmpeg
         run: |
           sudo apt-get update
-          sudo apt-get install -y ffmpeg libavcodec-extra
+          sudo apt-get install -y ffmpeg
 
-      - name: Debug Secrets
+      - name: 📥 Download Logo File
+        # Assuming 'live.png' is not in the repo, download a placeholder or replace with your actual file access.
+        # If 'live.png' is in your repo root, you can skip this step.
         run: |
-          echo "Checking if RTMP_URL is set..."
-          if [ -z "${{ secrets.RTMP_URL }}" ]; then
-            echo "❌ ERROR: RTMP_URL is NOT set!"
-            exit 1
-          else
-            echo "✅ RTMP_URL is set."
-          fi
+          # Replace this placeholder command with your actual method to get live.png
+          # Example: wget https://example.com/live.png -O live.png
+          echo "Placeholder for downloading live.png. Please ensure live.png is accessible."
 
-      - name: Pre-allocate Resources (buffer tuning)
-        run: |
-          ulimit -n 8192
-          sysctl -w net.core.rmem_max=16777216
-          sysctl -w net.core.wmem_max=16777216
-          sysctl -w net.ipv4.tcp_rmem='4096 87380 16777216'
-          sysctl -w net.ipv4.tcp_wmem='4096 65536 16777216'
-
-      - name: Delay Before Streaming
-        run: sleep 10
-
-      - name: Run live stream script (restream.py)
+      - name: 🚀 Start Restreaming
+        # The 'timeout' command is used here to ensure the script stops gracefully 
+        # after the job's `timeout-minutes` is reached, triggering SIGTERM.
+        run: python restream.py
         env:
-          RTMP_URL: ${{ secrets.RTMP_URL }}
-        run: |
-          echo "🚀 Starting stream with buffering optimizations..."
-          python3 restream.py
+          # Use the input provided during manual run as the RTMP_URL
+          RTMP_URL: ${{ github.event.inputs.rtmp_url }}
