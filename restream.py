@@ -4,7 +4,7 @@ import sys
 import signal
 
 RTMP_URL = os.getenv("RTMP_URL")
-VIDEO_URL = "https://utube.antang-rage.workers.dev/@HouseofRepresentativesPH/stream.m3u8"
+VIDEO_URL = "http://103.236.179.86:80/live/rictms/rictms/5442.m3u8"
 LOGO_FILE = "live.png"
 
 if not RTMP_URL:
